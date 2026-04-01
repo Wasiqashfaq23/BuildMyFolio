@@ -1,17 +1,23 @@
+require('dotenv').config();
 const express=require("express")
-const userRouter=require("./Routes/User.js")
-const { ConnectToDatabase } = require("./Config/connect.js")
 const app=express()
-const port =8001
+const userRouter=require("./Routes/User.js")
+const templateRouter=require("./Routes/Template.js")
+const portfolioRouter=require("./Routes/Portfolio.js")
+const port =process.env.PORT;
+const { ConnectToDatabase } = require("./Config/connect.js");
+const cookieParser = require('cookie-parser');
 
 
 ConnectToDatabase();
 app.use(express.urlencoded({ extended: false })); 
 app.use(express.static("Public"));
 app.use(express.json())
+app.use(cookieParser())
 
 app.use("/",userRouter)
-
+app.use("/template",templateRouter)
+app.use("/portfolio",portfolioRouter)
 app.listen(port,()=>{
     console.log("Listening on port",port)
 })

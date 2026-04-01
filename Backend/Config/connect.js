@@ -1,6 +1,6 @@
 const mongoose=require("mongoose")
-
+const URL=process.env.MONGO_URI
 async function ConnectToDatabase(){
-    mongoose.connect("mongodb://localhost:27017/")
+    mongoose.connect(URL)
 } 
 module.exports ={ConnectToDatabase}

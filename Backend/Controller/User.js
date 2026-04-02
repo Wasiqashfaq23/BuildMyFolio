@@ -50,4 +50,14 @@ async function handleLogin(req, res) {
     return res.status(201).json("Login success")
 }
 
-module.exports = { handleLogin, handleSignup }
+async function handleLogout(req, res) {
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        expires: new Date(0),
+    });
+    res.json("Logout Done")
+}
+
+module.exports = { handleLogin, handleSignup ,handleLogout}

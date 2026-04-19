@@ -1,0 +1,19 @@
+{
+    "id": "projects",
+    "name": "Projects",
+    "description": "Show what you've built. Perfect for freelancers.",
+    "fields": [
+      { "name": "fullName", "label": "Full Name", "type": "text", "placeholder": "John Doe", "required": true },
+      { "name": "title", "label": "Professional Title", "type": "text", "placeholder": "Freelance Developer", "required": true },
+      { "name": "bio", "label": "Bio", "type": "textarea", "placeholder": "What you do and who you help...", "required": true },
+      { "name": "email", "label": "Email", "type": "email", "placeholder": "you@example.com", "required": true },
+      { "name": "skills", "label": "Skills", "type": "text", "placeholder": "React, Tailwind, MongoDB (comma separated)", "required": true },
+      { "name": "project1Name", "label": "Project 1 — Name", "type": "text", "placeholder": "Portfolio Maker", "required": true },
+      { "name": "project1Desc", "label": "Project 1 — Description", "type": "textarea", "placeholder": "What it does, tech used...", "required": true },
+      { "name": "project1Link", "label": "Project 1 — Link", "type": "url", "placeholder": "https://github.com/...", "required": false },
+      { "name": "project2Name", "label": "Project 2 — Name", "type": "text", "placeholder": "Another Project", "required": false },
+      { "name": "project2Desc", "label": "Project 2 — Description", "type": "textarea", "placeholder": "What it does, tech used...", "required": false },
+      { "name": "project2Link", "label": "Project 2 — Link", "type": "url", "placeholder": "https://github.com/...", "required": false },
+      { "name": "github", "label": "GitHub URL", "type": "url", "placeholder": "https://github.com/username", "required": false }
+    ]
+  }

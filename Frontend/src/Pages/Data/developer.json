@@ -1,0 +1,197 @@
+{
+  "portfolioType": "developer",
+  "templateComponent": "Developer",
+  "title": "Developer Portfolio",
+  "sections": [
+    {
+      "sectionId": "navbar",
+      "label": "Navbar",
+      "instruction": "Set up your navigation bar",
+      "fields": [
+        {
+          "sectionId": "navbar",
+          "fields": [
+            {
+              "name": "openToWork",
+              "label": "Open to Work",
+              "instruction": "Turn on to show a badge that you are available for hire",
+              "type": "boolean",
+              "default": true
+            }
+          ]
+        },
+        {
+          "name": "openToWork",
+          "label": "Open to Work",
+          "instruction": "Turn on to show a badge that you are available for hire",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    {
+      "sectionId": "hero",
+      "label": "Hero Section",
+      "instruction": "This is the first thing visitors see — introduce yourself clearly",
+      "fields": [
+        {
+          "name": "fullName",
+          "label": "Full Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "John doe"
+        },
+        {
+          "name": "role",
+          "label": "Your Role",
+          "type": "text",
+          "required": true,
+          "placeholder": "Full Stack Developer"
+        },
+        {
+          "name": "location",
+          "label": "Location",
+          "type": "text",
+          "placeholder": "Earth"
+        },
+        {
+          "name": "focus",
+          "label": "Focus Areas",
+          "instruction": "Technologies or areas you specialize in",
+          "type": "text",
+          "placeholder": "React, Node.js, MongoDB"
+        },
+        {
+          "name": "tagline",
+          "label": "One Line Tagline",
+          "instruction": "A short sentence that describes what you do",
+          "type": "text",
+          "required": true,
+          "placeholder": "I build fast, clean and scalable web apps"
+        },
+        {
+          "name": "description",
+          "label": "About You",
+          "instruction": "2 to 3 sentences about yourself and who you help",
+          "type": "textarea",
+          "placeholder": "I am a full stack developer with 2 years of experience building web applications for startups and freelance clients..."
+        }
+      ]
+    },
+    {
+      "sectionId": "projects",
+      "label": "Projects",
+      "instruction": "Add your best projects. Minimum 2, maximum 6.",
+      "type": "array",
+      "min": 2,
+      "max": 6,
+      "item": {
+        "fields": [
+          {
+            "name": "name",
+            "label": "Project Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "Portfolio Maker"
+          },
+          {
+            "name": "description",
+            "label": "What does it do?",
+            "type": "textarea",
+            "required": true,
+            "placeholder": "A web app that lets users create beautiful portfolios by filling a simple form..."
+          },
+          {
+            "name": "stack",
+            "label": "Tech Stack",
+            "instruction": "Type a technology and press Enter to add it",
+            "type": "tags",
+            "placeholder": "React"
+          },
+          {
+            "name": "githubLink",
+            "label": "GitHub Repository URL",
+            "instruction": "Visitors will see a View Code button linking here",
+            "type": "link",
+            "placeholder": "https://github.com/John/project"
+          },
+          {
+            "name": "liveLink",
+            "label": "Live / Deployed URL",
+            "instruction": "Visitors will see a Live Demo button linking here",
+            "type": "link",
+            "placeholder": "https://project.vercel.app"
+          },
+          {
+            "name": "status",
+            "label": "Project Status",
+            "type": "text",
+            "placeholder": "Production / Open Source / In Progress"
+          },
+          {
+            "name": "images",
+            "label": "Project Screenshots",
+            "instruction": "Upload up to 4 screenshots",
+            "type": "image",
+            "multiple": true,
+            "max": 4,
+            "required": false
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "skills",
+      "label": "Skills",
+      "instruction": "Group your skills into categories — e.g. Frontend, Backend, Tools",
+      "type": "array",
+      "item": {
+        "fields": [
+          {
+            "name": "categoryName",
+            "label": "Category Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "Frontend"
+          },
+          {
+            "name": "items",
+            "label": "Skills",
+            "instruction": "Type a skill and press Enter to add it",
+            "type": "tags",
+            "placeholder": "React"
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "contact",
+      "label": "Contact",
+      "instruction": "How can people reach you? Navbar #contact link will scroll here.",
+      "fields": [
+        {
+          "name": "email",
+          "label": "Email Address",
+          "instruction": "Visitors can email you directly by clicking the contact button",
+          "type": "email",
+          "required": true,
+          "placeholder": "John@example.com"
+        },
+        {
+          "name": "github",
+          "label": "GitHub Profile URL",
+          "type": "link",
+          "required": true,
+          "placeholder": "https://github.com/John"
+        },
+        {
+          "name": "linkedin",
+          "label": "LinkedIn Profile URL",
+          "type": "link",
+          "required": true,
+          "placeholder": "https://linkedin.com/in/John"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,279 @@
+{
+  "portfolioType": "freelancer",
+  "templateComponent": "Freelancer",
+  "title": "Freelancer Portfolio",
+  "sections": [
+    {
+      "sectionId": "navbar",
+      "label": "Navbar",
+      "instruction": "Set up your navigation bar",
+      "fields": [
+        {
+          "name": "navItems",
+          "label": "Navigation Links",
+          "instruction": "Add 2 to 5 links. Use #section-id to scroll to a section on your page.",
+          "type": "array",
+          "min": 2,
+          "max": 5,
+          "item": {
+            "fields": [
+              {
+                "name": "label",
+                "label": "Link Text",
+                "type": "text",
+                "required": true,
+                "placeholder": "Services"
+              },
+              {
+                "name": "href",
+                "label": "Where it goes",
+                "instruction": "Use #services, #testimonials, #contact to scroll — or paste a full URL",
+                "type": "text",
+                "required": true,
+                "placeholder": "#services"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ctaButton",
+          "label": "Top Right Button",
+          "instruction": "This button appears on the top right — usually used to book a call or contact you",
+          "type": "object",
+          "fields": [
+            {
+              "name": "label",
+              "label": "Button Text",
+              "type": "text",
+              "default": "Book a call",
+              "placeholder": "Book a call"
+            },
+            {
+              "name": "href",
+              "label": "Where it goes",
+              "instruction": "Link to Calendly, WhatsApp, or your contact section using #contact",
+              "type": "text",
+              "placeholder": "#contact"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sectionId": "hero",
+      "label": "Hero Section",
+      "instruction": "This is the first thing visitors see — make it count",
+      "fields": [
+        {
+          "name": "fullName",
+          "label": "Full Name",
+          "instruction": "Your name — will be used across the portfolio",
+          "type": "text",
+          "required": true,
+          "placeholder": "John Ali"
+        },
+        {
+          "name": "availabilityText",
+          "label": "Availability Badge",
+          "instruction": "Short text shown in a badge at the top of your hero",
+          "type": "text",
+          "default": "OPEN FOR PROJECTS",
+          "placeholder": "OPEN FOR PROJECTS"
+        },
+        {
+          "name": "headline",
+          "label": "Main Headline",
+          "instruction": "Your strongest value proposition — what you do and for whom",
+          "type": "text",
+          "required": true,
+          "placeholder": "I design and build websites that win clients"
+        },
+        {
+          "name": "subtext",
+          "label": "Supporting Text",
+          "instruction": "A short paragraph expanding on your headline",
+          "type": "textarea",
+          "placeholder": "I help startups and small businesses create a strong online presence through clean design and fast development..."
+        },
+        {
+          "name": "ctaButtons",
+          "label": "Call to Action Buttons",
+          "instruction": "Add up to 2 buttons — e.g. See My Work, Contact Me",
+          "type": "array",
+          "max": 2,
+          "item": {
+            "fields": [
+              {
+                "name": "label",
+                "label": "Button Text",
+                "type": "text",
+                "placeholder": "See My Work"
+              },
+              {
+                "name": "href",
+                "label": "Where it goes",
+                "instruction": "Use #services, #contact to scroll — or paste a full URL",
+                "type": "text",
+                "placeholder": "#services"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "sectionId": "stats",
+      "label": "Stats",
+      "instruction": "Show numbers that build trust — e.g. projects completed, years of experience. Optional — skip if you are just starting out.",
+      "type": "array",
+      "min": 0,
+      "max": 4,
+      "item": {
+        "fields": [
+          {
+            "name": "value",
+            "label": "Number or Value",
+            "type": "text",
+            "required": true,
+            "placeholder": "50+"
+          },
+          {
+            "name": "label",
+            "label": "What it represents",
+            "type": "text",
+            "required": true,
+            "placeholder": "Projects Completed"
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "clients",
+      "label": "Clients",
+      "instruction": "Type a client or platform name and press Enter — e.g. Fiverr, Upwork, Local Business. Skip if you have no clients yet.",
+      "type": "tags",
+      "placeholder": "Fiverr"
+    },
+    {
+      "sectionId": "services",
+      "label": "Services",
+      "instruction": "List the services you offer. Add at least 2.",
+      "type": "array",
+      "min": 2,
+      "item": {
+        "fields": [
+          {
+            "name": "icon",
+            "label": "Icon",
+            "instruction": "Add a single emoji to represent this service",
+            "type": "text",
+            "placeholder": "🎨"
+          },
+          {
+            "name": "title",
+            "label": "Service Title",
+            "type": "text",
+            "required": true,
+            "placeholder": "UI/UX Design"
+          },
+          {
+            "name": "description",
+            "label": "Service Description",
+            "instruction": "Briefly describe what this service includes",
+            "type": "textarea",
+            "placeholder": "Clean, modern and user-friendly interface design for web and mobile apps..."
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "testimonials",
+      "label": "Testimonials",
+      "instruction": "Add reviews from past clients. At least 1. These build trust with new visitors.",
+      "type": "array",
+      "min": 1,
+      "item": {
+        "fields": [
+          {
+            "name": "quote",
+            "label": "What they said",
+            "type": "textarea",
+            "required": true,
+            "placeholder": "John delivered exactly what we needed, on time and with great attention to detail..."
+          },
+          {
+            "name": "name",
+            "label": "Client Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "John Smith"
+          },
+          {
+            "name": "role",
+            "label": "Client Role or Company",
+            "type": "text",
+            "placeholder": "CEO at TechStartup"
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "contact",
+      "label": "Contact",
+      "instruction": "How potential clients can reach out to you. Navbar #contact link will scroll here.",
+      "fields": [
+        {
+          "name": "heading",
+          "label": "Section Heading",
+          "type": "text",
+          "required": true,
+          "placeholder": "Let's work together"
+        },
+        {
+          "name": "subtext",
+          "label": "Supporting Text",
+          "type": "textarea",
+          "placeholder": "Have a project in mind? I would love to hear about it. Send me a message and I will get back to you within 24 hours."
+        },
+        {
+          "name": "email",
+          "label": "Your Email Address",
+          "instruction": "Visitors will be able to email you directly by clicking the contact button",
+          "type": "email",
+          "required": true,
+          "placeholder": "John@example.com"
+        },
+        {
+          "name": "buttonLabel",
+          "label": "Contact Button Text",
+          "type": "text",
+          "default": "Send me a message",
+          "placeholder": "Send me a message"
+        }
+      ]
+    },
+    {
+      "sectionId": "directContact",
+      "label": "Direct Contact Links",
+      "instruction": "Add any direct contact options — WhatsApp, Telegram, Fiverr, Upwork etc.",
+      "type": "array",
+      "item": {
+        "fields": [
+          {
+            "name": "platform",
+            "label": "Platform Name",
+            "type": "text",
+            "placeholder": "WhatsApp"
+          },
+          {
+            "name": "href",
+            "label": "Phone Number or Profile Link",
+            "instruction": "Add a clickable link — e.g. https://wa.me/923001234567 for WhatsApp",
+            "type": "text",
+            "placeholder": "https://wa.me/923001234567"
+          }
+        ]
+      }
+    }
+  ]
+}

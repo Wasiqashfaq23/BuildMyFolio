@@ -1,23 +1,27 @@
 require('dotenv').config();
-const express=require("express")
-const app=express()
-const userRouter=require("./Routes/User.js")
-const templateRouter=require("./Routes/Template.js")
-const portfolioRouter=require("./Routes/Portfolio.js")
-const port =process.env.PORT;
+const express = require("express")
+const app = express()
+const userRouter = require("./Routes/User.js")
+const templateRouter = require("./Routes/Template.js")
+const portfolioRouter = require("./Routes/Portfolio.js")
+const port = process.env.PORT;
 const { ConnectToDatabase } = require("./Config/connect.js");
 const cookieParser = require('cookie-parser');
+const cors = require("cors")
 
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
-ConnectToDatabase();
-app.use(express.urlencoded({ extended: false })); 
+app.use(express.urlencoded({ extended: false }));
 app.use(express.static("Public"));
 app.use(express.json())
 app.use(cookieParser())
 
-app.use("/",userRouter)
-app.use("/template",templateRouter)
-app.use("/portfolio",portfolioRouter)
-app.listen(port,()=>{
-    console.log("Listening on port",port)
-})
+app.use("/", userRouter)
+app.use("/template", templateRouter)
+app.use("/portfolio", portfolioRouter)
+
+ConnectToDatabase().then(() => {
+    console.log("MongoDB connected "); app.listen(port, () => {
+        console.log("Listening on port", port)
+    })
+}).catch((err) => { console.error("DB Error:", err.message); process.exit(1) });

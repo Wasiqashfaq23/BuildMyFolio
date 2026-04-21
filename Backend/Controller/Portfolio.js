@@ -1,95 +1,122 @@
 const { v4: uuidv4 } = require('uuid');
-const Portfolio = require("../Model/Portfolio")
+const Portfolio = require("../Model/Portfolio");
 
-async function getPortfolio(req, res) {
-    if (!req || !req.body) {
-        return res.status(400).json("No req or body found")
-    }
-    const slug = req.params.slug;
-    if (!slug) {
-        return res.status(404).json("No slug found")
-    }
-    const userPortfolio = await Portfolio.findOne({ slug })
-    if (!userPortfolio) {
-        return res.status(404).status("No such portfolio found/Invalid Url")
-    }
-    return res.status(200).json(userPortfolio)
+function generateSlug(fullName) {
+  if (!fullName) throw new Error("No full name provided");
+  const baseSlug = fullName.toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .slice(0, 30);;
+  return `${baseSlug}-${uuidv4().slice(0, 8)}`;
 }
 
-function generateSlug(username) {
-    if (!username) {
-        res.status(400).json("No username found")
+async function getPortfolio(req, res) {
+  try {
+    const { slug } = req.params;
+    if (!slug) {
+      return res.status(400).json({ message: "No slug provided" });
     }
-    const baseSlug = username.toLowerCase().replace(/\s+/g, '-')
-    const slug = `${baseSlug}-${uuidv4()}`
-    console.log(slug)
-    return slug
+    const portfolio = await Portfolio.findOne({ slug }).populate("templateId");
+    if (!portfolio) {
+      return res.status(404).json({ message: "Portfolio not found" });
+    }
+    return res.status(200).json(portfolio);
+  } catch (err) {
+    console.error("getPortfolio error:", err.message);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+async function getPortfolioById(req, res) {
+  try {
+    const { id } = req.params;
+    const portfolio = await Portfolio.findById(id).populate("templateId");
+    if (!portfolio) {
+      return res.status(404).json({ message: "Portfolio not found" });
+    }
+    return res.status(200).json(portfolio);
+  } catch (err) {
+    console.error("getPortfolioById error:", err.message);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 }
 
 async function createPortfolio(req, res) {
-    if (!req || !req.body) {
-        return res.status(400).json("No req or body found")
-    }
+  try {
     const { userData, templateId } = req.body;
     if (!templateId || !userData) {
-        return res.status(400).json("No data found")
+      return res.status(400).json({ message: "userData and templateId are required" });
     }
-    const userId = req.user._id
-    const slug = await generateSlug(userData.userName)
-    const isPresent = await Portfolio.findOne({ userId, templateId })
+    const userId = req.user._id;
+    const isPresent = await Portfolio.findOne({ userId, templateId });
     if (isPresent) {
-        return res.status(400).json("Portfolio with same details already present")
+      return res.status(409).json({ message: "Portfolio with same template already exists" });
     }
-    const portfolioDetails = {
-        userId,
-        userData,
-        templateId,
-        slug
-    }
-    await Portfolio.create(portfolioDetails)
-    return res.status(201).json("Portfolio created", slug)
-
+    const slug = generateSlug(userData?.hero?.fullName || "portfolio");
+    const portfolio = await Portfolio.create({ userId, userData, templateId, slug });
+    return res.status(201).json({ message: "Portfolio created", slug, portfolio });
+  } catch (err) {
+    console.error("createPortfolio error:", err.message);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 }
+
 async function updatePortfolio(req, res) {
+  try {
     const { id } = req.params;
     const { userData } = req.body;
-
+    if (!id) {
+      return res.status(400).json({ message: "No id provided" });
+    }
     if (!userData) {
-        return res.status(400).json({ error: "No data to update" });
+      return res.status(400).json({ message: "No data to update" });
     }
     const portfolio = await Portfolio.findByIdAndUpdate(
-        id,
-        { userData },
-        { new: true },
+      id,
+      { userData },
+      { new: true }
     );
     if (!portfolio) {
-        return res.status(404).json("Portfolio not found");
+      return res.status(404).json({ message: "Portfolio not found" });
     }
-    return res.status(200).json("Portfolio updated");
-
+    return res.status(200).json({ message: "Portfolio updated", portfolio });
+  } catch (err) {
+    console.error("updatePortfolio error:", err.message);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 }
+
 async function deletePortfolio(req, res) {
-    const { id } = req.params;
-    console.log(req);
-    if (!id) {
-        res.status(404).json("No id found")
-    }
-    const deletedTemplate = await Portfolio.findByIdAndDelete({ _id: id })
-    if (!deletedTemplate) {
-        return res.status(404).json({ error: "Portfolio not found" });
-    }
-    return res.status(200).json("Deleted portfolio")
-}
-async function getAllPortfolios(req, res) {
+  try {
     const { id } = req.params;
     if (!id) {
-        res.status(404).json("No id found")
+      return res.status(400).json({ message: "No id provided" });
     }
-    const portfolios = await Portfolio.find({ userId: id })
-    if (!portfolios) {
-        return res.status(404).json({ error: "Portfolios not found" });
+    const portfolio = await Portfolio.findByIdAndDelete(id);
+    if (!portfolio) {
+      return res.status(404).json({ message: "Portfolio not found" });
     }
-    return res.status(200).json(portfolios)
+    return res.status(200).json({ message: "Portfolio deleted" });
+  } catch (err) {
+    console.error("deletePortfolio error:", err.message);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 }
 
-module.exports = { createPortfolio, getPortfolio, updatePortfolio, deletePortfolio, getAllPortfolios }
+async function getAllPortfolios(req, res) {
+  try {
+    const userId = req.user._id;
+    const portfolios = await Portfolio.find({ userId });
+    if (!portfolios || portfolios.length === 0) {
+      return res.status(404).json({ message: "No portfolios found" });
+    }
+    return res.status(200).json(portfolios);
+  } catch (err) {
+    console.error("getAllPortfolios error:", err.message);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+module.exports = { createPortfolio, getPortfolio, updatePortfolio, deletePortfolio, getAllPortfolios,getPortfolioById };

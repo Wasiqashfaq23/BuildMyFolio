@@ -1,16 +1,33 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
-const Schema = new mongoose.Schema({
+const templateSchema = new mongoose.Schema({
     templateName: {
         type: String,
         required: true,
-        unique:true,
+        unique: true,
     },
-    category: { 
+    category: {
         type: String,
-        required:true,
+        required: true,
     },
-})
+    image: {
+        type: String,
+        required: true,
+    },
+    portfolioType: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        default: "",
+    },
+    isActive: {
+        type: Boolean,
+        default: true,
+    },
+}, { timestamps: true });
 
-const Template=mongoose.model("template",Schema)
-module.exports=Template
+
+const Template = mongoose.model("template", templateSchema)
+module.exports = Template

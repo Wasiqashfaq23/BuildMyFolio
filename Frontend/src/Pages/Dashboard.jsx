@@ -15,7 +15,7 @@ const Dashboard = () => {
   const [deletingId, setDeletingId] = useState(null)
 
   useEffect(() => {
-    fetch(`${VITE_API_URL}/portfolio/all/${user?.id}`, {
+    fetch(`${VITE_API_URL}/portfolio/all`, {
       credentials: "include",
     })
       .then(res => res.json())
@@ -49,7 +49,7 @@ const Dashboard = () => {
       <nav className="flex justify-between items-center mb-10 border-b border-[#1a1a1a] pb-5">
         <h1 className="text-xl font-bold tracking-widest uppercase">Portfolio.</h1>
         <div className="flex items-center gap-4">
-        <span className="text-sm text-[#555]">Welcome, {user?.email.split('@')[0]}</span>
+          <span className="text-sm text-[#555]">Welcome, {user?.email.split('@')[0]}</span>
           <button
             onClick={logout}
             className="flex items-center gap-2 border cursor-pointer border-[#222] text-[#888] px-3 py-1.5 rounded-lg text-sm hover:border-[#444] hover:text-[#f5f5f5] transition"
@@ -146,6 +146,13 @@ const Dashboard = () => {
                   >
                     <FiEye size={11} />
                     View
+                  </button>
+                  <button
+                    onClick={() => navigate(`/edit/${p._id}`)}
+                    className="flex items-center gap-1.5 cursor-pointer border border-[#222] text-[#666] px-3 py-1.5 rounded-lg text-xs hover:border-[#444] hover:text-[#f5f5f5] transition"
+                  >
+                    <FiEdit2 size={11} />
+                    Edit
                   </button>
                   <button
                     onClick={() => handleDelete(p._id)}

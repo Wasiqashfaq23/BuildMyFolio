@@ -9,7 +9,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     fetch(`${API_URL}/me`, { credentials: "include" })
-      .then(res => { return res.ok ? res.json() : null })
+      .then(res => { return res.ok ? res.json() : null; })
       .then(data =>
         setUser(data?.user || null)
       )

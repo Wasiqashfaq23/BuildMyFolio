@@ -16,7 +16,7 @@ function PublicPortfolio() {
   const [copied, setCopied] = useState(false);
 
   const publicUrl = `${window.location.origin}/p/${slug}`;
- const navigate = useNavigate();
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -54,7 +54,12 @@ function PublicPortfolio() {
     <div className="min-h-screen bg-[#080808] flex flex-col items-center justify-center gap-3">
       <p className="text-2xl font-medium text-[#f5f5f5]">404</p>
       <p className="text-[#555] text-sm">This portfolio doesn't exist or has been removed.</p>
-      <a href="/" className="text-xs text-[#444] hover:text-[#888] transition mt-2">← Go home</a>
+      <button
+        onClick={() => navigate(user ? "/dashboard" : "/")}
+        className="text-xs text-[#444] hover:text-[#888] transition mt-2"
+      >
+        ← {user ? "Go to dashboard" : "Go home"}
+      </button>
     </div>
   );
 
@@ -82,7 +87,7 @@ function PublicPortfolio() {
         <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-[#111] border border-[#222] rounded-xl px-4 py-2.5 shadow-xl">
           <button
             onClick={() => navigate("/dashboard")}
-            className="text-xs text-[#555] hover:text-[#f5f5f5] transition"
+            className="text-xs text-[#cbcbcb] hover:text-[#f5f5f5] transition"
           >
             ← Dashboard
           </button>
@@ -97,7 +102,7 @@ function PublicPortfolio() {
           </button>
         </div>
       )}
-    
+
 
       <PortfolioComponent data={portfolio.userData} />
     </div>

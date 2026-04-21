@@ -11,6 +11,8 @@ import PublicPortfolio from "./Pages/PublicPortfolio";
 import ProtectedRoute from "./Pages/ProtectedRoutes";
 import { AuthProvider } from "./Pages/Context/AuthProvider";
 import OnBoarding from "./Pages/OnBoarding";
+import EditPortfolio from "./Pages/EditPortfolio";
+
 
 const App = () => {
   return (
@@ -29,9 +31,14 @@ const App = () => {
           <Route path="/templates" element={<ProtectedRoute><Templates /></ProtectedRoute>} />
           <Route path="/create/:templateId" element={<ProtectedRoute><CreatePortfolio /></ProtectedRoute>} />
           <Route path="/preview" element={<ProtectedRoute><Preview /></ProtectedRoute>} />
+          <Route path="/edit/:portfolioId" element={<ProtectedRoute><EditPortfolio /></ProtectedRoute>} />
 
           {/* admin only */}
-          <Route path="/admin/template/upload" element={<ProtectedRoute><AdminUploadTemplate /></ProtectedRoute>} />
+          <Route path="/admin/template/upload" element={
+            <ProtectedRoute adminOnly>
+              <AdminUploadTemplate />
+            </ProtectedRoute>
+          } />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

@@ -1,30 +1,41 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from './Pages/Login'
+import Login from './Pages/Login';
 import Signup from './Pages/Signup';
-import Dashboard from './Pages/Dashboard'
-import LandingPage from './Pages/LandingPage'
-import Onboarding from "./Pages/OnBoarding"
-import DesignerPortfolio from "./Pages/Portfolios/Designer";
-import PhotographerPortfolio from "./Pages/Portfolios/Photographer";
+import Dashboard from './Pages/Dashboard';
+import LandingPage from './Pages/LandingPage';
 import CreatePortfolio from "./Pages/CreatePortfolio";
 import Preview from "./Pages/Preview";
+import Templates from "./Pages/Template";
+import AdminUploadTemplate from "./Pages/UploadTemplate";
+import PublicPortfolio from "./Pages/PublicPortfolio";
+import ProtectedRoute from "./Pages/ProtectedRoutes";
+import { AuthProvider } from "./Pages/Context/AuthProvider";
+import OnBoarding from "./Pages/OnBoarding";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/onboarding" element={<Onboarding />} />
-        <Route path="/designer" element={<DesignerPortfolio />} />
-        <Route path="/create/:templateId" element={<CreatePortfolio />} />
-        <Route path="/photographer" element={<PhotographerPortfolio />} />
-        <Route path="/preview" element={<Preview />} />
-      </Routes>
-    </BrowserRouter>
-  )
-}
+      <AuthProvider>
+        <Routes>
+          {/* public routes */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/onboarding" element={<OnBoarding />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/p/:slug" element={<PublicPortfolio />} />
 
-export default App
+          {/* protected routes */}
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/templates" element={<ProtectedRoute><Templates /></ProtectedRoute>} />
+          <Route path="/create/:templateId" element={<ProtectedRoute><CreatePortfolio /></ProtectedRoute>} />
+          <Route path="/preview" element={<ProtectedRoute><Preview /></ProtectedRoute>} />
+
+          {/* admin only */}
+          <Route path="/admin/template/upload" element={<ProtectedRoute><AdminUploadTemplate /></ProtectedRoute>} />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
+  );
+};
+
+export default App;

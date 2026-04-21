@@ -1,16 +1,24 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiLink, FiCheck, FiArrowLeft } from "react-icons/fi";
-import Developer from "./Portfolios/Developer";
 
-const templateMap = {
-  "Developer": Developer,
-};
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8001";
 
 function Preview() {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const [copied, setCopied] = useState(false);
+  // const [copied, setCopied] = useState(false);
+  const [PortfolioComponent, setPortfolioComponent] = useState(null);
+  const [loadError, setLoadError] = useState(false);
+  const [publishing, setPublishing] = useState(false);
+  const [publishError, setPublishError] = useState("");
+
+  useEffect(() => {
+    if (!state?.templateComponent) return;
+    import(`./Portfolios/${state.templateComponent}.jsx`)
+      .then(module => setPortfolioComponent(() => module.default))
+      .catch(() => setLoadError(true));
+  }, [state?.templateComponent]);
 
   if (!state) {
     return (
@@ -20,21 +28,37 @@ function Preview() {
     );
   }
 
-  const { data, templateComponent } = state;
-  const PortfolioComponent = templateMap[templateComponent];
+  const { data, templateComponent, templateId } = state;
 
-  const name = data?.hero?.fullName?.toLowerCase().replace(/\s+/g, "-") || "portfolio";
-  const publicUrl = `${window.location.origin}/p/${name}`;
-
-  function handleCopy() {
-    navigator.clipboard.writeText(publicUrl);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  async function handlePublish() {
+    if (!templateId) {
+      setPublishError("Template ID missing — go back and try again");
+      return;
+    }
+    setPublishing(true);
+    setPublishError("");
+    try {
+      const res = await fetch(`${API_URL}/portfolio`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userData: data, templateId }),
+      });
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.message || "Failed to publish");
+      sessionStorage.removeItem(`portfolio_${templateId}`);
+      navigate(`/p/${result.slug}`);
+    } catch (err) {
+      setPublishError(err.message);
+    } finally {
+      setPublishing(false);
+    }
   }
 
   return (
     <div>
       <div className="sticky top-0 z-50 bg-[#080808] border-b border-[#1a1a1a] px-6 py-3 flex items-center justify-between">
+
         <button
           onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-sm text-[#555] hover:text-[#f5f5f5] transition"
@@ -43,25 +67,33 @@ function Preview() {
           Back to editor
         </button>
 
-        <div className="flex items-center gap-2 bg-[#111] border border-[#222] rounded-lg px-3 py-1.5">
-          <span className="text-xs text-[#444] max-w-60 truncate">{publicUrl}</span>
+        <span className="text-xs text-[#333]">Preview mode</span>
+
+        <div className="flex items-center gap-3">
+          {publishError && (
+            <p className="text-red-400 text-xs max-w-48 text-right">{publishError}</p>
+          )}
+          <button
+            onClick={handlePublish}
+            disabled={publishing}
+            className="bg-[#f5f5f5] text-[#080808] px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-white transition disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            {publishing ? "Publishing..." : "Publish →"}
+          </button>
         </div>
 
-        <button
-          onClick={handleCopy}
-          className="flex items-center gap-2 bg-[#f5f5f5] text-[#080808] px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-white transition"
-        >
-          {copied ? <FiCheck size={13} /> : <FiLink size={13} />}
-          {copied ? "Copied!" : "Copy link"}
-        </button>
       </div>
 
-      {PortfolioComponent ? (
-        <PortfolioComponent data={data} />
-      ) : (
+      {loadError ? (
         <div className="min-h-screen bg-[#080808] flex items-center justify-center">
-          <p className="text-[#555] text-sm">Template not found: {templateComponent}</p>
+          <p className="text-[#555] text-sm">Template "{templateComponent}" not found.</p>
         </div>
+      ) : !PortfolioComponent ? (
+        <div className="min-h-screen bg-[#080808] flex items-center justify-center">
+          <p className="text-[#555] text-sm">Loading template...</p>
+        </div>
+      ) : (
+        <PortfolioComponent data={data} />
       )}
     </div>
   );

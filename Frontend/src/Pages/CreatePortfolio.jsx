@@ -1,10 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import developerTemplate from "./Data/developer.json";
-
-const templates = {
-  developer: developerTemplate,
-};
 
 const inputClass = "w-full bg-[#111] border border-[#222] rounded-lg px-3 py-2.5 text-sm text-[#f5f5f5] outline-none focus:border-[#444] transition placeholder:text-[#333]";
 
@@ -59,7 +54,6 @@ function FieldRenderer({ field, value, onChange }) {
         setInput("");
       }
     }
-
     return (
       <div>
         {field.instruction && <p className="text-xs text-[#444] mb-2">{field.instruction}</p>}
@@ -117,20 +111,16 @@ function FieldRenderer({ field, value, onChange }) {
 
   if (field.type === "array") {
     const items = value || [];
-
     function addItem() {
       if (field.max && items.length >= field.max) return;
       onChange([...items, {}]);
     }
-
     function updateItem(index, subField, subValue) {
       onChange(items.map((item, i) => i === index ? { ...item, [subField]: subValue } : item));
     }
-
     function removeItem(index) {
       onChange(items.filter((_, i) => i !== index));
     }
-
     return (
       <div className="flex flex-col gap-3">
         {field.instruction && <p className="text-xs text-[#444]">{field.instruction}</p>}
@@ -194,24 +184,44 @@ function FieldRenderer({ field, value, onChange }) {
 function CreatePortfolio() {
   const { templateId } = useParams();
   const navigate = useNavigate();
-  const template = templates[templateId];
 
-  const [formData, setFormData] = useState(() => {
-    const saved = sessionStorage.getItem(`portfolio_${templateId}`);
-    return saved ? JSON.parse(saved) : {};
-  });
-
+  const [template, setTemplate] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  if (!template) {
-    return (
-      <div className="min-h-screen bg-[#080808] flex items-center justify-center">
-        <p className="text-[#555] text-sm">Template not found.</p>
-      </div>
-    );
-  }
+useEffect(() => {
+  fetch(`${import.meta.env.VITE_API_URL}/template/${templateId}`, {
+    credentials: "include",
+  })
+    .then(res => res.json())
+    .then(data => {
+      setTemplate(data);
+      return import(`./Data/${data.portfolioType}.json`);
+    })
+    .then(json => {
+      setTemplate(prev => ({ ...prev, sections: json.default }));
+      const saved = sessionStorage.getItem(`portfolio_${templateId}`);
+      if (saved) setFormData(JSON.parse(saved));
+    })
+    .catch(err => setError(err.message))
+    .finally(() => setLoading(false));
+}, [templateId]);
 
-  const sections = template.sections;
+  if (loading) return (
+    <div className="min-h-screen bg-[#080808] flex items-center justify-center">
+      <p className="text-[#555] text-sm">Loading template...</p>
+    </div>
+  );
+
+  if (error || !template) return (
+    <div className="min-h-screen bg-[#080808] flex items-center justify-center">
+      <p className="text-red-400 text-sm">{error || "Template not found."}</p>
+    </div>
+  );
+
+  const sections = template.sections.sections;
   const currentSection = sections[currentIndex];
   const isLast = currentIndex === sections.length - 1;
   const isFirst = currentIndex === 0;
@@ -232,11 +242,11 @@ function CreatePortfolio() {
   }
 
   function handleSubmit() {
-    sessionStorage.setItem(`portfolio_${templateId}`, JSON.stringify(formData));
     navigate("/preview", {
       state: {
         data: formData,
-        templateComponent: template.templateComponent,
+        templateId: templateId,
+        templateComponent: template.portfolioType, 
       }
     });
   }
@@ -253,6 +263,12 @@ function CreatePortfolio() {
           <div className="w-32 h-1 bg-[#1a1a1a] rounded-full overflow-hidden">
             <div className="h-full bg-[#f5f5f5] rounded-full transition-all" style={{ width: `${progress}%` }} />
           </div>
+          <button
+      onClick={() => navigate("/dashboard")}
+      className="text-s text-[#aaa] hover:text-[#f5f5f5] border border-[#222] px-3 py-1.5 rounded-lg transition"
+    >
+      ← Dashboard
+    </button>
         </div>
       </div>
 
@@ -267,7 +283,7 @@ function CreatePortfolio() {
               onClick={() => setCurrentIndex(i)}
               className={`text-left px-3 py-2 rounded-lg text-sm transition flex items-center gap-2 ${currentIndex === i ? "bg-[#161616] text-[#f5f5f5]" : "text-[#555] hover:text-[#888]"}`}
             >
-              <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${i < currentIndex ? "bg-[#f5f5f5]" : i === currentIndex ? "bg-[#f5f5f5]" : "bg-[#333]"}`} />
+              <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${i <= currentIndex ? "bg-[#f5f5f5]" : "bg-[#333]"}`} />
               {section.label}
             </button>
           ))}

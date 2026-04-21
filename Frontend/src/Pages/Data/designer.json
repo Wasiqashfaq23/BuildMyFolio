@@ -1,0 +1,176 @@
+{
+  "portfolioType": "designer",
+  "templateComponent": "Designer",
+  "title": "Designer Portfolio",
+  "sections": [
+    {
+      "sectionId": "hero",
+      "label": "Hero Section",
+      "instruction": "Introduce yourself and your design philosophy",
+      "fields": [
+        {
+          "name": "fullName",
+          "label": "Full Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Sofia Andreou"
+        },
+        {
+          "name": "location",
+          "label": "Location",
+          "type": "text",
+          "placeholder": "Athens / Berlin"
+        },
+        {
+          "name": "tagline",
+          "label": "Main Tagline",
+          "instruction": "Your headline — what you craft or believe",
+          "type": "text",
+          "required": true,
+          "placeholder": "Crafting brands that endure."
+        },
+        {
+          "name": "bio",
+          "label": "Short Bio",
+          "type": "textarea",
+          "placeholder": "8 years shaping visual identities for fashion houses, cultural institutions, and forward-thinking startups."
+        },
+        {
+          "name": "availableForFreelance",
+          "label": "Available for Freelance",
+          "instruction": "Show availability badge next to your CTA button",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    {
+      "sectionId": "skills",
+      "label": "Skills",
+      "instruction": "These appear as a scrolling ribbon below your hero. Type a skill and press Enter.",
+      "type": "tags",
+      "placeholder": "Brand Strategy"
+    },
+    {
+      "sectionId": "projects",
+      "label": "Projects",
+      "instruction": "Add your selected work. Each project appears as a card in the grid.",
+      "type": "array",
+      "min": 2,
+      "max": 9,
+      "item": {
+        "fields": [
+          {
+            "name": "title",
+            "label": "Project Title",
+            "type": "text",
+            "required": true,
+            "placeholder": "Brand Identity"
+          },
+          {
+            "name": "category",
+            "label": "Category",
+            "instruction": "Used for filtering — e.g. Branding, UI/UX, Print, Motion",
+            "type": "text",
+            "required": true,
+            "placeholder": "Branding"
+          },
+          {
+            "name": "year",
+            "label": "Year",
+            "type": "text",
+            "placeholder": "2024"
+          },
+          {
+            "name": "color",
+            "label": "Accent Color",
+            "instruction": "Hex color for this project card — e.g. #C9A84C",
+            "type": "text",
+            "placeholder": "#C9A84C"
+          },
+          {
+            "name": "link",
+            "label": "Project Link",
+            "type": "link",
+            "placeholder": "https://behance.net/your-project"
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "about",
+      "label": "About",
+      "instruction": "This appears in the about section below your projects",
+      "fields": [
+        {
+          "name": "aboutHeadline",
+          "label": "About Headline",
+          "type": "textarea",
+          "placeholder": "I believe design is a conversation between maker and receiver."
+        },
+        {
+          "name": "aboutBio",
+          "label": "About Bio",
+          "type": "textarea",
+          "placeholder": "Trained at the Bauhaus-Universität Weimar, I've spent a decade learning that the best design disappears..."
+        },
+        {
+          "name": "stat1Value",
+          "label": "Stat 1 — Value",
+          "type": "text",
+          "placeholder": "24+"
+        },
+        {
+          "name": "stat1Label",
+          "label": "Stat 1 — Label",
+          "type": "text",
+          "placeholder": "Projects"
+        },
+        {
+          "name": "stat2Value",
+          "label": "Stat 2 — Value",
+          "type": "text",
+          "placeholder": "8"
+        },
+        {
+          "name": "stat2Label",
+          "label": "Stat 2 — Label",
+          "type": "text",
+          "placeholder": "Years"
+        },
+        {
+          "name": "stat3Value",
+          "label": "Stat 3 — Value",
+          "type": "text",
+          "placeholder": "3"
+        },
+        {
+          "name": "stat3Label",
+          "label": "Stat 3 — Label",
+          "type": "text",
+          "placeholder": "Awards"
+        }
+      ]
+    },
+    {
+      "sectionId": "contact",
+      "label": "Contact",
+      "instruction": "Your contact section at the bottom",
+      "fields": [
+        {
+          "name": "contactHeadline",
+          "label": "Contact Headline",
+          "type": "text",
+          "placeholder": "Let's build something worth remembering."
+        },
+        {
+          "name": "email",
+          "label": "Email Address",
+          "type": "email",
+          "required": true,
+          "placeholder": "sofia@studio.com"
+        }
+      ]
+    }
+  ]
+}

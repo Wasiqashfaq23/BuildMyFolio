@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FiUserPlus } from "react-icons/fi";
-
+import {useAuth} from "./Context/AuthContext"
 const inputClass = "w-full bg-[#111] border border-[#222] rounded-lg px-3 py-2.5 text-sm text-[#f5f5f5] outline-none focus:border-[#444] transition placeholder:text-[#444]";
 
 function Signup() {
@@ -10,6 +10,9 @@ function Signup() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+   const { login } = useAuth();
+  
+
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
@@ -17,15 +20,16 @@ function Signup() {
     setError("");
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8001/signup", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/signup`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Invalid credentials");
-      navigate("/dashboard");
+      if (!res.ok) throw new Error(data.message || "Signup failed");
+      login(data.user)
+      navigate("/onboarding");
     } catch (err) {
       setError(err.message);
     } finally {

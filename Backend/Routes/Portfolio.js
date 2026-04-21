@@ -4,8 +4,20 @@ const { getPortfolio, createPortfolio, deletePortfolio, updatePortfolio, getAllP
 const verifyToken = require("../Middleware/Auth")
 router.get("/all", verifyToken, getAllPortfolios);
 router.get("/id/:id", verifyToken, getPortfolioById);
-router.post("/", verifyToken, createPortfolio);
-router.put("/:id", verifyToken, updatePortfolio);
+
+router.post("/", verifyToken, (req, res, next) => {
+  upload.any()(req, res, (err) => {
+    if (err) return res.status(400).json({ message: err.message });
+    next();
+  });
+}, createPortfolio);
+
+router.put("/:id", verifyToken, (req, res, next) => {
+  upload.any()(req, res, (err) => {
+    if (err) return res.status(400).json({ message: err.message });
+    next();
+  });
+}, updatePortfolio);
 router.delete("/:id", verifyToken, deletePortfolio);
 router.get("/:slug", getPortfolio);
 

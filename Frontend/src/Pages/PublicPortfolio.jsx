@@ -84,24 +84,23 @@ function PublicPortfolio() {
   return (
     <div>
       {user && (
-        <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-[#111] border border-[#222] rounded-xl px-4 py-2.5 shadow-xl">
+        <div className="fixed bottom-5 left-4 right-4 sm:left-1/2 sm:right-auto sm:-translate-x-1/2 z-50 flex items-center gap-2 sm:gap-3 bg-[#111] border border-[#222] rounded-xl px-3 sm:px-4 py-2.5 shadow-xl">
           <button
             onClick={() => navigate("/dashboard")}
-            className="text-xs text-[#cbcbcb] hover:text-[#f5f5f5] transition"
+            className="text-xs text-[#cbcbcb] hover:text-[#f5f5f5] transition shrink-0"
           >
             ← Dashboard
           </button>
-          <span className="text-xs text-[#333]">|</span>
-          <span className="text-xs text-[#555] max-w-52 truncate">{publicUrl}</span>
+          <span className="text-xs text-[#333] shrink-0">|</span>
+          <span className="text-xs text-[#555] truncate min-w-0 flex-1 sm:flex-none sm:max-w-52">{publicUrl}</span>
           <button
             onClick={handleCopy}
-            className="flex items-center gap-1.5 bg-[#f5f5f5] text-[#080808] px-3 py-1 rounded-lg text-xs font-medium hover:bg-white transition"
+            className="flex items-center gap-1.5 bg-[#f5f5f5] text-[#080808] px-3 py-1 rounded-lg text-xs font-medium hover:bg-white transition shrink-0"
           >
             {copied ? <FiCheck size={11} /> : <FiLink size={11} />}
             {copied ? "Copied!" : "Copy link"}
           </button>
-        </div>
-      )}
+        </div>)}
 
 
       <PortfolioComponent data={portfolio.userData} />

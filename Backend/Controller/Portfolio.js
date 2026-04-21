@@ -8,20 +8,40 @@ function generateSlug(fullName) {
     .replace(/[^a-z0-9\s-]/g, "")
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-")
-    .slice(0, 30);;
+    .slice(0, 30);
   return `${baseSlug}-${uuidv4().slice(0, 8)}`;
+}
+
+function setNestedValue(obj, path, value) {
+  const parts = path.replace(/\[(\d+)\]/g, ".$1").split(".");
+  let current = obj;
+  for (let i = 0; i < parts.length - 1; i++) {
+    if (current[parts[i]] === undefined) current[parts[i]] = {};
+    current = current[parts[i]];
+  }
+  const lastKey = parts[parts.length - 1];
+  if (Array.isArray(current[lastKey])) {
+    current[lastKey].push(value);
+  } else if (current[lastKey]) {
+    current[lastKey] = [current[lastKey], value];
+  } else {
+    current[lastKey] = value;
+  }
+}
+
+function injectFiles(parsedUserData, files) {
+  if (!files || files.length === 0) return;
+  files.forEach((file) => {
+    setNestedValue(parsedUserData, file.fieldname, file.path);
+  });
 }
 
 async function getPortfolio(req, res) {
   try {
     const { slug } = req.params;
-    if (!slug) {
-      return res.status(400).json({ message: "No slug provided" });
-    }
+    if (!slug) return res.status(400).json({ message: "No slug provided" });
     const portfolio = await Portfolio.findOne({ slug }).populate("templateId");
-    if (!portfolio) {
-      return res.status(404).json({ message: "Portfolio not found" });
-    }
+    if (!portfolio) return res.status(404).json({ message: "Portfolio not found" });
     return res.status(200).json(portfolio);
   } catch (err) {
     console.error("getPortfolio error:", err.message);
@@ -33,9 +53,7 @@ async function getPortfolioById(req, res) {
   try {
     const { id } = req.params;
     const portfolio = await Portfolio.findById(id).populate("templateId");
-    if (!portfolio) {
-      return res.status(404).json({ message: "Portfolio not found" });
-    }
+    if (!portfolio) return res.status(404).json({ message: "Portfolio not found" });
     return res.status(200).json(portfolio);
   } catch (err) {
     console.error("getPortfolioById error:", err.message);
@@ -46,16 +64,22 @@ async function getPortfolioById(req, res) {
 async function createPortfolio(req, res) {
   try {
     const { userData, templateId } = req.body;
-    if (!templateId || !userData) {
+    const parsedUserData = typeof userData === "string" ? JSON.parse(userData) : userData;
+
+    if (!templateId || !parsedUserData) {
       return res.status(400).json({ message: "userData and templateId are required" });
     }
+
     const userId = req.user._id;
     const isPresent = await Portfolio.findOne({ userId, templateId });
     if (isPresent) {
       return res.status(409).json({ message: "Portfolio with same template already exists" });
     }
-    const slug = generateSlug(userData?.hero?.fullName || "portfolio");
-    const portfolio = await Portfolio.create({ userId, userData, templateId, slug });
+
+    injectFiles(parsedUserData, req.files);
+
+    const slug = generateSlug(parsedUserData?.hero?.fullName || "portfolio");
+    const portfolio = await Portfolio.create({ userId, userData: parsedUserData, templateId, slug });
     return res.status(201).json({ message: "Portfolio created", slug, portfolio });
   } catch (err) {
     console.error("createPortfolio error:", err.message);
@@ -66,21 +90,20 @@ async function createPortfolio(req, res) {
 async function updatePortfolio(req, res) {
   try {
     const { id } = req.params;
+    if (!id) return res.status(400).json({ message: "No id provided" });
+
     const { userData } = req.body;
-    if (!id) {
-      return res.status(400).json({ message: "No id provided" });
-    }
-    if (!userData) {
-      return res.status(400).json({ message: "No data to update" });
-    }
+    const parsedUserData = typeof userData === "string" ? JSON.parse(userData) : userData;
+    if (!parsedUserData) return res.status(400).json({ message: "No data to update" });
+
+    injectFiles(parsedUserData, req.files);
+
     const portfolio = await Portfolio.findByIdAndUpdate(
       id,
-      { userData },
+      { userData: parsedUserData },
       { new: true }
     );
-    if (!portfolio) {
-      return res.status(404).json({ message: "Portfolio not found" });
-    }
+    if (!portfolio) return res.status(404).json({ message: "Portfolio not found" });
     return res.status(200).json({ message: "Portfolio updated", portfolio });
   } catch (err) {
     console.error("updatePortfolio error:", err.message);
@@ -91,13 +114,9 @@ async function updatePortfolio(req, res) {
 async function deletePortfolio(req, res) {
   try {
     const { id } = req.params;
-    if (!id) {
-      return res.status(400).json({ message: "No id provided" });
-    }
+    if (!id) return res.status(400).json({ message: "No id provided" });
     const portfolio = await Portfolio.findByIdAndDelete(id);
-    if (!portfolio) {
-      return res.status(404).json({ message: "Portfolio not found" });
-    }
+    if (!portfolio) return res.status(404).json({ message: "Portfolio not found" });
     return res.status(200).json({ message: "Portfolio deleted" });
   } catch (err) {
     console.error("deletePortfolio error:", err.message);
@@ -119,4 +138,4 @@ async function getAllPortfolios(req, res) {
   }
 }
 
-module.exports = { createPortfolio, getPortfolio, updatePortfolio, deletePortfolio, getAllPortfolios,getPortfolioById };
+module.exports = { createPortfolio, getPortfolio, updatePortfolio, deletePortfolio, getAllPortfolios, getPortfolioById };

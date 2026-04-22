@@ -12,30 +12,6 @@ function generateSlug(fullName) {
   return `${baseSlug}-${uuidv4().slice(0, 8)}`;
 }
 
-function setNestedValue(obj, path, value) {
-  const parts = path.replace(/\[(\d+)\]/g, ".$1").split(".");
-  let current = obj;
-  for (let i = 0; i < parts.length - 1; i++) {
-    if (current[parts[i]] === undefined) current[parts[i]] = {};
-    current = current[parts[i]];
-  }
-  const lastKey = parts[parts.length - 1];
-  if (Array.isArray(current[lastKey])) {
-    current[lastKey].push(value);
-  } else if (current[lastKey]) {
-    current[lastKey] = [current[lastKey], value];
-  } else {
-    current[lastKey] = value;
-  }
-}
-
-function injectFiles(parsedUserData, files) {
-  if (!files || files.length === 0) return;
-  files.forEach((file) => {
-    setNestedValue(parsedUserData, file.fieldname, file.path);
-  });
-}
-
 async function getPortfolio(req, res) {
   try {
     const { slug } = req.params;
@@ -63,10 +39,9 @@ async function getPortfolioById(req, res) {
 
 async function createPortfolio(req, res) {
   try {
-    const { userData, templateId } = req.body;
-    const parsedUserData = typeof userData === "string" ? JSON.parse(userData) : userData;
+    const { templateId, userData } = req.body;
 
-    if (!templateId || !parsedUserData) {
+    if (!templateId || !userData) {
       return res.status(400).json({ message: "userData and templateId are required" });
     }
 
@@ -76,10 +51,8 @@ async function createPortfolio(req, res) {
       return res.status(409).json({ message: "Portfolio with same template already exists" });
     }
 
-    injectFiles(parsedUserData, req.files);
-
-    const slug = generateSlug(parsedUserData?.hero?.fullName || "portfolio");
-    const portfolio = await Portfolio.create({ userId, userData: parsedUserData, templateId, slug });
+    const slug = generateSlug(userData?.hero?.fullName || "portfolio");
+    const portfolio = await Portfolio.create({ userId, userData, templateId, slug });
     return res.status(201).json({ message: "Portfolio created", slug, portfolio });
   } catch (err) {
     console.error("createPortfolio error:", err.message);
@@ -93,14 +66,11 @@ async function updatePortfolio(req, res) {
     if (!id) return res.status(400).json({ message: "No id provided" });
 
     const { userData } = req.body;
-    const parsedUserData = typeof userData === "string" ? JSON.parse(userData) : userData;
-    if (!parsedUserData) return res.status(400).json({ message: "No data to update" });
-
-    injectFiles(parsedUserData, req.files);
+    if (!userData) return res.status(400).json({ message: "No data to update" });
 
     const portfolio = await Portfolio.findByIdAndUpdate(
       id,
-      { userData: parsedUserData },
+      { userData },
       { new: true }
     );
     if (!portfolio) return res.status(404).json({ message: "Portfolio not found" });
@@ -138,4 +108,11 @@ async function getAllPortfolios(req, res) {
   }
 }
 
-module.exports = { createPortfolio, getPortfolio, updatePortfolio, deletePortfolio, getAllPortfolios, getPortfolioById };
+module.exports = {
+  createPortfolio,
+  getPortfolio,
+  updatePortfolio,
+  deletePortfolio,
+  getAllPortfolios,
+  getPortfolioById,
+};

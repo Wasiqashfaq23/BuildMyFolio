@@ -41,7 +41,6 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-[#080808] text-[#f5f5f5] p-4 sm:p-6 lg:p-8">
 
-      {/* Nav */}
       <nav className="flex justify-between items-center mb-8 sm:mb-10 border-b border-[#1a1a1a] pb-4 sm:pb-5">
         <h1 className="text-base sm:text-xl font-bold tracking-widest uppercase">Portfolio.</h1>
         <div className="flex items-center gap-2 sm:gap-4">
@@ -56,18 +55,16 @@ const Dashboard = () => {
         </div>
       </nav>
 
-      {/* Header */}
       <header className="mb-6 sm:mb-8">
         <h2 className="text-xl sm:text-2xl font-medium tracking-tight mb-1">Dashboard</h2>
         <p className="text-sm text-[#555]">Manage your portfolios</p>
       </header>
 
-      {/* Stats */}
       <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-6 sm:mb-8">
         {[
-          { label: "Total Portfolios", value: portfolios.length },
+          
+            { label: "Total Portfolios", value: portfolios.length },
           { label: "Published", value: publishedCount },
-          { label: "Drafts", value: portfolios.length - publishedCount },
         ].map((stat) => (
           <div key={stat.label} className="bg-[#0f0f0f] border border-[#1a1a1a] hover:border-[#444] rounded-xl p-3 sm:p-4">
             <p className="text-[10px] sm:text-xs text-[#444] mb-1 sm:mb-2 uppercase tracking-wider">{stat.label}</p>
@@ -76,7 +73,6 @@ const Dashboard = () => {
         ))}
       </div>
 
-      {/* Portfolio list header */}
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-medium text-[#888]">Your Portfolios</h3>
         <button
@@ -88,7 +84,6 @@ const Dashboard = () => {
         </button>
       </div>
 
-      {/* States */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
           <p className="text-[#555] text-sm">Loading portfolios...</p>
@@ -119,7 +114,6 @@ const Dashboard = () => {
                 key={p._id}
                 className="bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl px-4 sm:px-5 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 hover:border-[#2a2a2a] transition"
               >
-                {/* Info */}
                 <div className="flex flex-col gap-1 min-w-0">
                   <h4 className="text-sm font-medium text-[#e5e5e5] truncate">{name}</h4>
                   <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
@@ -140,7 +134,6 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                {/* Actions */}
                 <div className="flex items-center gap-2 shrink-0">
                   <button
                     onClick={() => navigate(`/p/${p.slug}`)}

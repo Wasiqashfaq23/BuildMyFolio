@@ -10,7 +10,7 @@ function TypingText({ text, speed = 60 }) {
       else clearInterval(interval);
     }, speed);
     return () => clearInterval(interval);
-  }, [text]);
+  }, [text, speed]);
   return (
     <span>
       {displayed}
@@ -55,14 +55,12 @@ export default function Developer({ data = {} }) {
         }
       `}</style>
 
-      {/* Nav */}
       <nav style={{
         padding: "1rem 1.5rem",
         display: "flex", justifyContent: "space-between", alignItems: "center",
         borderBottom: "1px solid #E5E5E5", background: "#FFFFFF",
         position: "relative"
       }}>
-        {/* Logo */}
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#00FF88" }} />
           <span style={{ fontSize: "14px", fontWeight: "bold" }}>
@@ -70,7 +68,6 @@ export default function Developer({ data = {} }) {
           </span>
         </div>
 
-        {/* Desktop links */}
         <div className="dev-nav-links" style={{ display: "flex", gap: "2.5rem" }}>
           {["./projects", "./skills", "./contact"].map(item => (
             <a key={item} href={`#${item}`} onClick={(e) => {
@@ -80,24 +77,21 @@ export default function Developer({ data = {} }) {
           ))}
         </div>
 
-        {/* Right side */}
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           {navbar.openToWork && (
             <div className="dev-open-to-work" style={{ background: "#00FF88", color: "#111", fontSize: "11px", padding: "6px 14px", fontWeight: "bold" }}>
               OPEN TO WORK
             </div>
           )}
-          {/* Hamburger */}
           <button
             className="dev-hamburger"
             onClick={() => setMenuOpen(v => !v)}
             style={{ background: "none", border: "none", cursor: "pointer", padding: "4px", display: "none", flexDirection: "column", gap: "5px" }}
           >
-            {[0,1,2].map(i => <div key={i} style={{ width: "20px", height: "2px", background: "#111" }} />)}
+            {[0, 1, 2].map(i => <div key={i} style={{ width: "20px", height: "2px", background: "#111" }} />)}
           </button>
         </div>
 
-        {/* Mobile dropdown */}
         {menuOpen && (
           <div style={{
             position: "absolute", top: "60px", left: 0, right: 0,
@@ -116,7 +110,6 @@ export default function Developer({ data = {} }) {
         )}
       </nav>
 
-      {/* Hero */}
       <section className="dev-hero-section" style={{ padding: "6rem 5rem 4rem", maxWidth: "900px" }}>
         <div style={{ background: "#111111", borderRadius: "8px", padding: "1.5rem", marginBottom: "3rem", overflowX: "auto" }}>
           <div style={{ display: "flex", gap: "6px", marginBottom: "1.5rem" }}>
@@ -160,7 +153,7 @@ export default function Developer({ data = {} }) {
         </div>
       </section>
 
-      {/* Projects */}
+
       <section id="./projects" className="dev-section" style={{ padding: "3rem 5rem 4rem", background: "#FFFFFF", borderTop: "1px solid #E5E5E5" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2.5rem" }}>
           <div style={{ width: "4px", height: "24px", background: "#00FF88" }} />
@@ -168,29 +161,40 @@ export default function Developer({ data = {} }) {
         </div>
         <div className="dev-projects-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1.5rem" }}>
           {projects.map((p, i) => (
-            <div key={i} style={{ border: "1px solid #E5E5E5", padding: "1.75rem", borderRadius: "4px", background: "#FAFAF8" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.75rem", gap: "8px" }}>
-                <span style={{ fontSize: "18px", fontWeight: "bold", color: "#111" }}>{p.name}</span>
-                {p.status && (
-                  <div style={{
-                    fontSize: "10px", padding: "3px 8px", whiteSpace: "nowrap",
-                    background: p.status === "Production" ? "#F0FDF4" : "#EFF6FF",
-                    color: p.status === "Production" ? "#16A34A" : "#2563EB",
-                    border: `1px solid ${p.status === "Production" ? "#BBF7D0" : "#BFDBFE"}`,
-                    borderRadius: "20px"
-                  }}>{p.status}</div>
-                )}
-              </div>
-              <p style={{ fontSize: "13px", color: "#555", lineHeight: "1.6", margin: "0 0 1.25rem" }}>{p.description}</p>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px" }}>
-                <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
-                  {(p.stack || []).map(tech => (
-                    <span key={tech} style={{ fontSize: "11px", padding: "2px 8px", background: "#F0F0F0", color: "#555", borderRadius: "2px" }}>{tech}</span>
-                  ))}
+            <div key={i} style={{ border: "1px solid #E5E5E5", borderRadius: "4px", background: "#FAFAF8", overflow: "hidden" }}>
+
+              {(Array.isArray(p.images) ? p.images[0] : p.image) && (
+                <img
+                  src={Array.isArray(p.images) ? p.images[0] : p.images}
+                  alt={p.name}
+                  style={{ width: "100%", height: "180px", objectFit: "cover", display: "block" }}
+                />
+              )}
+
+              <div style={{ padding: "1.75rem" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.75rem", gap: "8px" }}>
+                  <span style={{ fontSize: "18px", fontWeight: "bold", color: "#111" }}>{p.name}</span>
+                  {p.status && (
+                    <div style={{
+                      fontSize: "10px", padding: "3px 8px", whiteSpace: "nowrap",
+                      background: p.status === "Production" ? "#F0FDF4" : "#EFF6FF",
+                      color: p.status === "Production" ? "#16A34A" : "#2563EB",
+                      border: `1px solid ${p.status === "Production" ? "#BBF7D0" : "#BFDBFE"}`,
+                      borderRadius: "20px"
+                    }}>{p.status}</div>
+                  )}
                 </div>
-                <div style={{ display: "flex", gap: "8px" }}>
-                  {p.githubLink && <a href={p.githubLink} target="_blank" rel="noreferrer" style={{ fontSize: "11px", color: "#666", textDecoration: "none" }}>Code →</a>}
-                  {p.liveLink && <a href={p.liveLink} target="_blank" rel="noreferrer" style={{ fontSize: "11px", color: "#00FF88", textDecoration: "none" }}>Live →</a>}
+                <p style={{ fontSize: "13px", color: "#555", lineHeight: "1.6", margin: "0 0 1.25rem" }}>{p.description}</p>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px" }}>
+                  <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
+                    {(p.stack || []).map(tech => (
+                      <span key={tech} style={{ fontSize: "11px", padding: "2px 8px", background: "#F0F0F0", color: "#555", borderRadius: "2px" }}>{tech}</span>
+                    ))}
+                  </div>
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    {p.githubLink && <a href={p.githubLink} target="_blank" rel="noreferrer" style={{ fontSize: "11px", color: "#666", textDecoration: "none" }}>Code →</a>}
+                    {p.liveLink && <a href={p.liveLink} target="_blank" rel="noreferrer" style={{ fontSize: "11px", color: "#00FF88", textDecoration: "none" }}>Live →</a>}
+                  </div>
                 </div>
               </div>
             </div>
@@ -198,7 +202,6 @@ export default function Developer({ data = {} }) {
         </div>
       </section>
 
-      {/* Skills */}
       <section id="./skills" className="dev-section" style={{ padding: "4rem 5rem", borderTop: "1px solid #E5E5E5" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2.5rem" }}>
           <div style={{ width: "4px", height: "24px", background: "#00FF88" }} />
@@ -222,7 +225,6 @@ export default function Developer({ data = {} }) {
         </div>
       </section>
 
-      {/* Contact */}
       <section id="./contact" className="dev-contact-section" style={{ padding: "5rem", background: "#111111", color: "#FAFAF8" }}>
         <div style={{ fontSize: "12px", letterSpacing: "0.2em", color: "#00FF88", marginBottom: "1.5rem" }}>// GET IN TOUCH</div>
         <h2 className="dev-contact-h2" style={{ fontSize: "42px", fontWeight: "700", margin: "0 0 1rem", color: "#FAFAF8" }}>

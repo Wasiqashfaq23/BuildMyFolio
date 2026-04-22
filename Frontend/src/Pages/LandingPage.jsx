@@ -7,7 +7,6 @@ function Landing() {
   return (
     <div className="bg-[#080808] min-h-screen">
 
-      {/* Nav */}
       <nav className="flex items-center justify-between px-4 sm:px-8 lg:px-10 py-4 sm:py-5 border-b border-[#1a1a1a]">
         <div className="text-base sm:text-xl font-bold text-[#f5f5f5] tracking-widest uppercase">
           Portfolio<span className="text-blue-700">.</span>
@@ -25,7 +24,6 @@ function Landing() {
         </div>
       </nav>
 
-      {/* Hero */}
       <div className="text-center px-4 sm:px-10 pt-16 sm:pt-24 pb-12 sm:pb-16">
         <div className="inline-block border border-[#222] rounded-2xl px-4 py-1 mb-5 sm:mb-6">
           <span className="text-[11px] text-[#ffffff] tracking-widest uppercase">Portfolio.</span>
@@ -49,7 +47,6 @@ function Landing() {
 
       <div className="border-t border-[#111] mx-4 sm:mx-10" />
 
-      {/* Features grid */}
       <div className="grid grid-cols-1 sm:grid-cols-3 mx-4 sm:mx-10 mt-0 rounded-xl overflow-hidden border border-[#111]">
         <div className="bg-[#080808] p-6 sm:p-7 border-b sm:border-b-0 sm:border-r border-[#111]">
           <div className="w-8 h-8 border border-[#222] rounded-lg flex items-center justify-center mb-4">
@@ -82,7 +79,6 @@ function Landing() {
         </div>
       </div>
 
-      {/* CTA */}
       <div className="text-center px-4 sm:px-10 py-12 sm:py-16">
         <div className="text-xl sm:text-[22px] font-medium text-[#f5f5f5] mb-2 tracking-tight">
           Ready to stand out?

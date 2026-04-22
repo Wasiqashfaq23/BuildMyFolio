@@ -47,7 +47,6 @@ export default function Templates() {
           {templates.map((t) => (
             <div key={t._id} className="bg-[#0f0f0f] border border-[#1a1a1a] rounded-2xl overflow-hidden hover:border-[#333] transition group">
 
-              {/* Image — padded so it never touches the card edges */}
               <div className="p-3 pb-0">
                 <div className="w-full h-44 sm:h-48 rounded-xl overflow-hidden bg-[#161616]">
                   <img

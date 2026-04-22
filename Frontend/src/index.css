@@ -1,5 +1,54 @@
 @import "tailwindcss";
 
+@layer base {
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    color: #e8e8e8;
+    background: #080808;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    color: inherit;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #9a9a9a;
+    opacity: 1;
+  }
+
+  a[href]:hover,
+  button:hover,
+  [role="button"]:hover,
+  input[type="button"]:hover,
+  input[type="submit"]:hover,
+  input[type="reset"]:hover {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  input:disabled {
+    cursor: not-allowed;
+  }
+
+  .text-\[\#555\] { color: #b9b9b9 !important; }
+  .text-\[\#444\] { color: #a8a8a8 !important; }
+  .text-\[\#333\] { color: #939393 !important; }
+  .text-\[\#666\] { color: #cccccc !important; }
+  .text-\[\#888\] { color: #e0e0e0 !important; }
+}
+
 
 @keyframes fadein {
   from {

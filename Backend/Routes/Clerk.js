@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { syncClerkUser, handleClerkWebhook } = require("../Controller/Clerk")
-router.post('/webhooks/clerk', handleClerkWebhook)
+const { syncClerkUser } = require("../Controller/Clerk")
 router.post('/clerk-sync', syncClerkUser)
 
 module.exports = router

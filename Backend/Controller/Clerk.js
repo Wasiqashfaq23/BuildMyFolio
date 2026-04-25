@@ -40,15 +40,4 @@ res.json({
 }
 
 
-const handleClerkWebhook = async (req, res) => {
-    const { type, data } = req.body
-    if (type === 'user.created') {
-        await User.create({
-            clerkId: data.id,
-            email: data.email_addresses[0].email_address,
-            authType: data.external_accounts[0]?.provider || 'google'
-        })
-    }
-    res.json({ received: true })
-}
-module.exports = { syncClerkUser, handleClerkWebhook }
+module.exports = { syncClerkUser }

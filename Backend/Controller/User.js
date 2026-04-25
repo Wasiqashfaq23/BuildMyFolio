@@ -66,6 +66,7 @@ async function handleLogin(req, res) {
 
 async function handleLogout(req, res) {
   try {
+    
     res.clearCookie("token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",

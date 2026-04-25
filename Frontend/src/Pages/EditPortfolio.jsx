@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-const inputClass =
-  "w-full bg-[#111] border border-[#222] rounded-lg px-3 py-2.5 text-sm text-[#f5f5f5] outline-none focus:border-[#444] transition placeholder:text-[#333]";
+const inputClass = "w-full bg-[#111] border border-[#222] rounded-lg px-3 py-2.5 text-sm text-[#f5f5f5] outline-none focus:border-[#444] transition placeholder:text-[#333]";
 
 async function uploadToCloudinary(file) {
   const fd = new FormData();
@@ -253,6 +252,7 @@ function EditPortfolio() {
   async function handleSave() {
     setSaving(true);
     setSaveError("");
+    (true)
     try {
       const payload = pruneEmptyValue(formData) || {};
       const res = await fetch(`${import.meta.env.VITE_API_URL}/portfolio/${portfolioId}`, {

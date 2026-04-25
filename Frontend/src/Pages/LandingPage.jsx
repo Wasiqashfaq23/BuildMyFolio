@@ -13,9 +13,6 @@ function Landing() {
         </div>
         <div className="flex items-center gap-4 sm:gap-8">
           <button onClick={() => navigate("/login")} className="cursor-pointer text-[#888] hover:text-[#f5f5f5] transition text-sm">
-            Me
-          </button>
-          <button onClick={() => navigate("/login")} className="cursor-pointer text-[#888] hover:text-[#f5f5f5] transition text-sm">
             Login
           </button>
           <button onClick={() => navigate("/signup")} className="bg-[#f5f5f5] text-[#080808] cursor-pointer px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-sm font-medium hover:bg-white transition">
@@ -38,9 +35,6 @@ function Landing() {
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button onClick={() => navigate("/signup")} className="bg-[#f5f5f5] cursor-pointer text-[#080808] px-7 py-3 rounded-lg text-sm font-medium hover:bg-white transition">
             Create your portfolio
-          </button>
-          <button className="bg-transparent border cursor-pointer border-[#2a2a2a] text-[#888] px-7 py-3 rounded-lg text-sm hover:border-[#444] hover:text-[#aaa] transition">
-            See examples
           </button>
         </div>
       </div>

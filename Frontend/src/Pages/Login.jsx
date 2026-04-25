@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FiUser } from "react-icons/fi";
 import { useAuth } from "./Context/AuthContext";
-
+import { useSignIn } from '@clerk/clerk-react'
+import { FcGoogle } from 'react-icons/fc'
+import { FaGithub } from 'react-icons/fa'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 const inputClass = "w-full bg-[#111] border border-[#222] rounded-lg px-3 py-2.5 text-sm text-[#f5f5f5] outline-none focus:border-[#444] transition placeholder:text-[#444]";
 
@@ -11,9 +15,45 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const { signIn } = useSignIn()
+  const { user } = useAuth();
   const navigate = useNavigate();
   const { login } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard', { replace: true })
+    }
+  }, [user])
+
+
+  const handleGoogle = async () => {
+    NProgress.start()
+    try {
+      await signIn.authenticateWithRedirect({
+        strategy: "oauth_google",
+        redirectUrl: "/dashboard",
+        redirectUrlComplete: "/dashboard"
+
+      })
+    }
+    finally {
+      NProgress.done()
+    }
+  }
+  const handleGithub = async () => {
+    NProgress.start()
+    try {
+      await signIn.authenticateWithRedirect({
+        strategy: "oauth_github",
+        redirectUrl: "/dashboard",
+        redirectUrlComplete: "/dashboard"
+      })
+    }
+    finally {
+      NProgress.done()
+    }
+  } 
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -102,8 +142,15 @@ function Login() {
               Sign up
             </Link>
           </p>
+          <div className="flex justify-center space-x-4 mt-4 border-t border-[#111] pt-4">
+            <button onClick={handleGoogle} className="bg-[#111] hover:bg-[#222] text-[#f5f5f5] py-2 px-4 rounded-lg transition">
+              <FcGoogle size={30} />
+            </button>
+            <button onClick={handleGithub} className="bg-[#111] hover:bg-[#222] text-[#f5f5f5] py-2 px-4 rounded-lg transition">
+              <FaGithub size={30} />
+            </button>
+          </div>
         </div>
-
       </div>
     </div>
   );

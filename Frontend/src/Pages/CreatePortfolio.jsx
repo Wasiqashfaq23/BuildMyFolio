@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 const inputClass =
   "w-full bg-[#111] border border-[#222] rounded-lg px-3 py-2.5 text-sm text-[#f5f5f5] outline-none focus:border-[#444] transition placeholder:text-[#333]";
@@ -287,6 +289,7 @@ function CreatePortfolio() {
   }
 
   async function handleSubmit() {
+    NProgress.start()
     setSubmitError("");
     try {
       const payload = pruneEmptyValue(formData) || {};
@@ -309,6 +312,9 @@ function CreatePortfolio() {
       }
     } catch (err) {
       setSubmitError(err.message);
+    }
+    finally {
+      NProgress.done()
     }
   }
 

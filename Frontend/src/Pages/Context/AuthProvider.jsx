@@ -45,6 +45,7 @@ export function AuthProvider({ children }) {
       }
     }
     syncUser()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoaded, isSignedIn, clerkUser])
 
 

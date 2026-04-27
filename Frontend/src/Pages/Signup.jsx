@@ -71,7 +71,6 @@ function Signup() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Signup failed");
       login(data.user)
-      navigate("/onboarding");
     } catch (err) {
       setError(err.message);
     } finally {

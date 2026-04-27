@@ -6,26 +6,26 @@
     {
       "sectionId": "navbar",
       "label": "Navbar",
-      "instruction": "Set up your navigation bar",
+      "instruction": "Configure the navigation bar.",
       "fields": [
         {
           "name": "logoText",
           "label": "Logo Text",
-          "instruction": "This appears on the top left of your site",
+          "instruction": "Show this in the top-left corner of the site.",
           "type": "text",
           "placeholder": "My Portfolio"
         },
         {
           "name": "showGithubButton",
           "label": "Show GitHub Button",
-          "instruction": "Turn on to show a GitHub button in the navbar",
+          "instruction": "Enable this to show a GitHub button in the navbar.",
           "type": "boolean",
           "default": true
         },
         {
           "name": "githubButtonText",
           "label": "GitHub Button Text",
-          "instruction": "Text shown on the GitHub button",
+          "instruction": "Set the text shown on the GitHub button.",
           "type": "text",
           "placeholder": "Github Profile"
         }
@@ -34,12 +34,12 @@
     {
       "sectionId": "hero",
       "label": "Hero Section",
-      "instruction": "This is the very first thing visitors see when they open your portfolio — make it count",
+      "instruction": "Use this first section to make a strong introduction.",
       "fields": [
         {
           "name": "fullName",
           "label": "Your Full Name",
-          "instruction": "This will be displayed as the main heading",
+          "instruction": "Display this as the main heading.",
           "type": "text",
           "required": true,
           "placeholder": "John Doe"
@@ -47,7 +47,7 @@
         {
           "name": "description",
           "label": "Short Bio",
-          "instruction": "Write 2 to 3 sentences about who you are and what you do",
+          "instruction": "Write 2-3 sentences about who you are and what you do.",
           "type": "textarea",
           "required": true,
           "placeholder": "I am a passionate developer with experience in building web applications for startups and clients..."
@@ -55,7 +55,7 @@
         {
           "name": "profileImage",
           "label": "Your Profile Photo",
-          "instruction": "This will be shown as a circular image on the right side of the hero section",
+          "instruction": "Show this as a circular image on the right side of the hero section.",
           "type": "image",
           "multiple": false,
           "required": false
@@ -63,7 +63,7 @@
         {
           "name": "resumeLink",
           "label": "Resume Link",
-          "instruction": "Paste a link to your resume — visitors will click a button to view it",
+          "instruction": "Add a resume link used by the resume button.",
           "type": "link",
           "placeholder": "https://drive.google.com/your-resume-link"
         }
@@ -72,7 +72,7 @@
     {
       "sectionId": "skills",
       "label": "Skills",
-      "instruction": "Group your skills into categories — for example Frontend, Backend, Tools, Design etc.",
+      "instruction": "Group your skills into categories (for example, Frontend, Backend, Tools, Design).",
       "type": "array",
       "min": 1,
       "max": 6,
@@ -81,7 +81,7 @@
           {
             "name": "title",
             "label": "Category Name",
-            "instruction": "Give this group of skills a name",
+            "instruction": "Set a name for this skill group.",
             "type": "text",
             "required": true,
             "placeholder": "Frontend"
@@ -89,7 +89,7 @@
           {
             "name": "skills",
             "label": "Skills",
-            "instruction": "Type a skill name and press Enter or click Add to add it",
+            "instruction": "Enter a skill and press Enter (or click Add) to include it.",
             "type": "tags",
             "placeholder": "React"
           }
@@ -99,33 +99,33 @@
     {
       "sectionId": "experience",
       "label": "Work Experience",
-      "instruction": "Add your work history here. If you are a student or fresher with no experience, turn off the toggle below",
+      "instruction": "Add your work history here; disable the section if you have no experience.",
       "fields": [
         {
           "name": "showExperience",
           "label": "Show Work Experience Section",
-          "instruction": "Turn off if you have no work experience — the section will be hidden from your portfolio",
+          "instruction": "Disable this to hide the section when you have no work experience.",
           "type": "boolean",
           "default": true
         },
         {
           "name": "sectionTitle",
           "label": "Section Heading",
-          "instruction": "The title shown at the top of this section",
+          "instruction": "Set the title shown at the top of this section.",
           "type": "text",
           "placeholder": "Work Experience"
         },
         {
           "name": "sectionDesc",
           "label": "Section Description",
-          "instruction": "A short line describing your experience",
+          "instruction": "Write a short line describing your experience.",
           "type": "textarea",
           "placeholder": "Here is a summary of my professional journey so far..."
         },
         {
           "name": "items",
           "label": "Experience Entries",
-          "instruction": "Add each job or internship as a separate entry",
+          "instruction": "Add each job or internship as a separate entry.",
           "type": "array",
           "min": 0,
           "max": 10,
@@ -134,7 +134,7 @@
               {
                 "name": "role",
                 "label": "Your Job Title",
-                "instruction": "The position or role you held",
+                "instruction": "Set the position or role you held.",
                 "type": "text",
                 "required": true,
                 "placeholder": "Frontend Developer"
@@ -149,14 +149,14 @@
               {
                 "name": "companyLink",
                 "label": "Company Website",
-                "instruction": "Optional — visitors can click the company name to visit their site",
+                "instruction": "Optionally add a company URL so visitors can open the company site.",
                 "type": "link",
                 "placeholder": "https://google.com"
               },
               {
                 "name": "date",
                 "label": "Duration",
-                "instruction": "When did you work here",
+                "instruction": "Set the time period for this role.",
                 "type": "text",
                 "required": true,
                 "placeholder": "Jan 2023 - Present"
@@ -164,21 +164,21 @@
               {
                 "name": "desc",
                 "label": "What did you do?",
-                "instruction": "Describe your responsibilities and achievements",
+                "instruction": "Describe your responsibilities and achievements.",
                 "type": "textarea",
                 "placeholder": "Built and maintained web applications, worked with a team of 5 developers..."
               },
               {
                 "name": "skills",
                 "label": "Skills Used",
-                "instruction": "What technologies or tools did you use in this role",
+                "instruction": "List the technologies or tools used in this role.",
                 "type": "tags",
                 "placeholder": "React"
               },
               {
                 "name": "companyLogo",
                 "label": "Company Logo",
-                "instruction": "Upload the company logo — shown as a small image next to the role",
+                "instruction": "Upload a company logo shown next to the role.",
                 "type": "image",
                 "multiple": false,
                 "required": false
@@ -186,14 +186,14 @@
               {
                 "name": "showDoc",
                 "label": "Attach Experience Letter or Certificate",
-                "instruction": "Turn on if you want to show a document like an experience letter or internship certificate",
+                "instruction": "Enable this to show an experience letter or internship certificate.",
                 "type": "boolean",
                 "default": false
               },
               {
                 "name": "doc",
                 "label": "Document Image",
-                "instruction": "Upload your experience letter or certificate as an image — only visible if the toggle above is on",
+                "instruction": "Upload the experience letter or certificate image (shown only when enabled above).",
                 "type": "image",
                 "multiple": false,
                 "required": false
@@ -206,7 +206,7 @@
     {
       "sectionId": "projects",
       "label": "Projects",
-      "instruction": "Showcase your best work here. Add at least 1 project, up to 8.",
+      "instruction": "Showcase your best work here (minimum 1 project, maximum 8).",
       "type": "array",
       "min": 1,
       "max": 8,
@@ -228,7 +228,7 @@
           {
             "name": "description",
             "label": "What does this project do?",
-            "instruction": "Explain what the project does and what problem it solves",
+            "instruction": "Explain what the project does and what problem it solves.",
             "type": "textarea",
             "required": true,
             "placeholder": "A full stack e-commerce platform where users can browse, add to cart and checkout products..."
@@ -236,7 +236,7 @@
           {
             "name": "image",
             "label": "Project Thumbnail",
-            "instruction": "This image is shown on the project card — use a screenshot or banner",
+            "instruction": "Upload an image shown on the project card (screenshot or banner).",
             "type": "image",
             "multiple": false,
             "required": false
@@ -244,35 +244,35 @@
           {
             "name": "tags",
             "label": "Technologies Used",
-            "instruction": "Type a technology and press Enter to add it",
+            "instruction": "Enter a technology and press Enter to add it.",
             "type": "tags",
             "placeholder": "React"
           },
           {
             "name": "github",
             "label": "GitHub Repository Link",
-            "instruction": "Visitors will see a View Code button linking here",
+            "instruction": "Link this to the View Code button.",
             "type": "link",
             "placeholder": "https://github.com/yourname/project"
           },
           {
             "name": "webapp",
             "label": "Live Demo Link",
-            "instruction": "Visitors will see a View Live App button linking here",
+            "instruction": "Link this to the View Live App button.",
             "type": "link",
             "placeholder": "https://yourproject.vercel.app"
           },
           {
             "name": "showMembers",
             "label": "Was this a Team Project?",
-            "instruction": "Turn on if multiple people worked on this project — you can add their details below",
+            "instruction": "Enable this if multiple people worked on this project.",
             "type": "boolean",
             "default": false
           },
           {
             "name": "member",
             "label": "Team Members",
-            "instruction": "Add each team member — only shown if the toggle above is on",
+            "instruction": "Add team members (shown only when enabled above).",
             "type": "array",
             "min": 0,
             "max": 6,
@@ -287,7 +287,7 @@
                 {
                   "name": "img",
                   "label": "Member Photo",
-                  "instruction": "Small circular avatar shown on the project card",
+                  "instruction": "Upload a small circular avatar for the project card.",
                   "type": "image",
                   "multiple": false,
                   "required": false
@@ -313,7 +313,7 @@
     {
       "sectionId": "education",
       "label": "Education",
-      "instruction": "Add your educational background — university, college or any formal degree",
+      "instruction": "Add your educational background (university, college, or formal degree).",
       "fields": [
         {
           "name": "sectionTitle",
@@ -324,14 +324,14 @@
         {
           "name": "sectionDesc",
           "label": "Section Description",
-          "instruction": "A short line about your educational background",
+          "instruction": "Write a short line about your educational background.",
           "type": "textarea",
           "placeholder": "Here is a summary of my educational journey..."
         },
         {
           "name": "items",
           "label": "Education Entries",
-          "instruction": "Add each degree or program as a separate entry",
+          "instruction": "Add each degree or program as a separate entry.",
           "type": "array",
           "min": 1,
           "max": 6,
@@ -361,28 +361,28 @@
               {
                 "name": "showGrade",
                 "label": "Show Grade or GPA",
-                "instruction": "Turn off if you do not want your grade to be visible",
+                "instruction": "Disable this if you do not want to show your grade.",
                 "type": "boolean",
                 "default": true
               },
               {
                 "name": "grade",
                 "label": "Grade or GPA",
-                "instruction": "Only shown if the toggle above is on",
+                "instruction": "Show this only when the toggle above is enabled.",
                 "type": "text",
                 "placeholder": "3.5 GPA"
               },
               {
                 "name": "desc",
                 "label": "Description",
-                "instruction": "What did you study or achieve during this program",
+                "instruction": "Describe what you studied or achieved during this program.",
                 "type": "textarea",
                 "placeholder": "Studied core subjects like data structures, algorithms, databases and software engineering..."
               },
               {
                 "name": "img",
                 "label": "Institute Logo",
-                "instruction": "Upload your university or school logo — shown as a small thumbnail",
+                "instruction": "Upload your university or school logo as a small thumbnail.",
                 "type": "image",
                 "multiple": false,
                 "required": false
@@ -395,19 +395,19 @@
     {
       "sectionId": "certifications",
       "label": "Certifications",
-      "instruction": "Add any online courses or certifications you have completed. Turn off if you have none.",
+      "instruction": "Add completed online courses or certifications; disable the section if you have none.",
       "fields": [
         {
           "name": "showCertifications",
           "label": "Show Certifications Section",
-          "instruction": "Turn off if you have no certifications — the section will be hidden from your portfolio",
+          "instruction": "Disable this to hide certifications when you have none.",
           "type": "boolean",
           "default": false
         },
         {
           "name": "items",
           "label": "Certifications",
-          "instruction": "Add each certification as a separate entry",
+          "instruction": "Add each certification as a separate entry.",
           "type": "array",
           "min": 0,
           "max": 10,
@@ -423,7 +423,7 @@
               {
                 "name": "issuer",
                 "label": "Issued By",
-                "instruction": "The platform or organization that gave you this certification",
+                "instruction": "Set the platform or organization that issued this certification.",
                 "type": "text",
                 "placeholder": "Amazon Web Services"
               },
@@ -436,14 +436,14 @@
               {
                 "name": "credentialLink",
                 "label": "Verification Link",
-                "instruction": "Paste a link where visitors can verify your certificate",
+                "instruction": "Add a link where visitors can verify this certificate.",
                 "type": "link",
                 "placeholder": "https://credentials.example.com/cert/123"
               },
               {
                 "name": "image",
                 "label": "Certificate Image",
-                "instruction": "Upload an image of your certificate if you want to display it",
+                "instruction": "Upload a certificate image if you want to display it.",
                 "type": "image",
                 "multiple": false,
                 "required": false
@@ -456,12 +456,12 @@
     {
       "sectionId": "contact",
       "label": "Contact and Social Links",
-      "instruction": "Let visitors know how to reach you and find you online",
+      "instruction": "Add contact details and social links so visitors can reach you.",
       "fields": [
         {
           "name": "email",
           "label": "Your Email Address",
-          "instruction": "Visitors can click a button to email you directly",
+          "instruction": "Use this so visitors can email you directly.",
           "type": "email",
           "required": true,
           "placeholder": "yourname@example.com"
@@ -469,7 +469,7 @@
         {
           "name": "github",
           "label": "GitHub Profile Link",
-          "instruction": "Your public GitHub profile",
+          "instruction": "Add your public GitHub profile URL.",
           "type": "link",
           "required": true,
           "placeholder": "https://github.com/yourname"
@@ -483,42 +483,42 @@
         {
           "name": "showFacebook",
           "label": "Show Facebook Link",
-          "instruction": "Turn on to display a Facebook icon in the footer",
+          "instruction": "Enable this to display a Facebook icon in the footer.",
           "type": "boolean",
           "default": false
         },
         {
           "name": "facebook",
           "label": "Facebook Profile Link",
-          "instruction": "Only shown if the toggle above is on",
+          "instruction": "Show this only when the toggle above is enabled.",
           "type": "link",
           "placeholder": "https://facebook.com/yourname"
         },
         {
           "name": "showTwitter",
           "label": "Show Twitter / X Link",
-          "instruction": "Turn on to display a Twitter icon in the footer",
+          "instruction": "Enable this to display a Twitter icon in the footer.",
           "type": "boolean",
           "default": false
         },
         {
           "name": "twitter",
           "label": "Twitter / X Profile Link",
-          "instruction": "Only shown if the toggle above is on",
+          "instruction": "Show this only when the toggle above is enabled.",
           "type": "link",
           "placeholder": "https://twitter.com/yourname"
         },
         {
           "name": "showInstagram",
           "label": "Show Instagram Link",
-          "instruction": "Turn on to display an Instagram icon in the footer",
+          "instruction": "Enable this to display an Instagram icon in the footer.",
           "type": "boolean",
           "default": false
         },
         {
           "name": "instagram",
           "label": "Instagram Profile Link",
-          "instruction": "Only shown if the toggle above is on",
+          "instruction": "Show this only when the toggle above is enabled.",
           "type": "link",
           "placeholder": "https://instagram.com/yourname"
         }
@@ -527,12 +527,12 @@
     {
       "sectionId": "footer",
       "label": "Footer",
-      "instruction": "Customize the bottom section of your portfolio",
+      "instruction": "Customize the footer section of your portfolio.",
       "fields": [
         {
           "name": "footerName",
           "label": "Your Name in Footer",
-          "instruction": "Shown as the footer logo or brand name",
+          "instruction": "Show this as the footer logo or brand name.",
           "type": "text",
           "placeholder": "John Doe"
         },

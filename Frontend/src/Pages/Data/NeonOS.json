@@ -1,0 +1,488 @@
+{
+  "portfolioType": "neonOS",
+  "templateComponent": "NeonOS",
+  "title": "NeonOS — Cinematic Developer Portfolio",
+  "sections": [
+    {
+      "sectionId": "navbar",
+      "label": "Navigation Bar",
+      "instruction": "This is the strip at the very top of your page. Put your handle and brand here — visitors see this first.",
+      "fields": [
+        {
+          "name": "handle",
+          "label": "Username / Handle",
+          "type": "text",
+          "placeholder": "@alex_dev",
+          "instruction": "Write your username or handle. This shows in the OS status bar at the top of your portfolio.",
+          "required": true
+        },
+        {
+          "name": "logo",
+          "label": "Monogram / Short ID",
+          "type": "text",
+          "placeholder": "AD",
+          "instruction": "Use 2–3 characters as your logo mark — usually your initials. Shows in the top-left corner."
+        },
+        {
+          "name": "systemName",
+          "label": "OS / System Name",
+          "type": "text",
+          "placeholder": "PORTFOLIO_OS v2.0",
+          "instruction": "A creative name for your portfolio OS. Shows in the center of the top bar. Keep it short and techy."
+        }
+      ]
+    },
+    {
+      "sectionId": "hero",
+      "label": "Hero Section (Your Big Intro)",
+      "instruction": "This is the first big thing visitors see — your name, title, photo, and a short intro. Make it confident and clear.",
+      "fields": [
+        {
+          "name": "name",
+          "label": "Your Full Name",
+          "type": "text",
+          "placeholder": "Alex Devlin",
+          "required": true
+        },
+        {
+          "name": "title",
+          "label": "What You Do (Job Title)",
+          "type": "text",
+          "placeholder": "Systems Engineer & Open Source Builder",
+          "instruction": "Your role in a few words. This shows up big and bold under your name.",
+          "required": true
+        },
+        {
+          "name": "subtitle",
+          "label": "Your Skills (Short Version)",
+          "type": "text",
+          "placeholder": "Rust · WebAssembly · Distributed Systems",
+          "instruction": "A quick line listing your main skills. Separate them with dots or commas."
+        },
+        {
+          "name": "bio",
+          "label": "About You (Short Bio)",
+          "type": "textarea",
+          "placeholder": "I architect systems that scale to millions and ship tools developers actually love. 7 years turning caffeine into reliable infrastructure.",
+          "instruction": "Write 2–3 sentences about yourself. What do you build? What makes you good at it? Be confident — this is your pitch."
+        },
+        {
+          "name": "avatar",
+          "label": "Your Photo",
+          "type": "image",
+          "multiple": false,
+          "placeholder": "",
+          "instruction": "Upload one clear photo of yourself. It will appear inside an animated frame on the page."
+        },
+        {
+          "name": "statusBadge",
+          "label": "Availability Status Badge",
+          "type": "text",
+          "placeholder": "Open to work · Remote",
+          "instruction": "A small floating label near your photo showing your availability. Keep it short — e.g. 'Open to work · Remote'."
+        },
+        {
+          "name": "resumeLink",
+          "label": "Link to Your CV / Resume",
+          "type": "link",
+          "placeholder": "https://drive.google.com/your-cv",
+          "instruction": "Paste the full link to your CV. Upload it to Google Drive and share the link. Must start with https://"
+        },
+        {
+          "name": "yearsExp",
+          "label": "Years of Experience",
+          "type": "text",
+          "placeholder": "7",
+          "instruction": "Just the number. Shows as a floating stat badge near your photo."
+        },
+        {
+          "name": "projectsCount",
+          "label": "Projects Shipped",
+          "type": "text",
+          "placeholder": "40+",
+          "instruction": "How many projects have you built? Shows as another floating badge."
+        },
+        {
+          "name": "coffeeCount",
+          "label": "Fun Stat Label",
+          "type": "text",
+          "placeholder": "∞ coffees",
+          "instruction": "A third floating badge for a fun or creative stat about yourself. Keep it light."
+        }
+      ]
+    },
+    {
+      "sectionId": "skills",
+      "label": "Skills",
+      "instruction": "Group your skills by category. Each group becomes one glowing panel. You can add up to 8 groups. Example groups: Core Languages, Frontend, Backend, Tools.",
+      "type": "array",
+      "min": 1,
+      "max": 8,
+      "item": {
+        "fields": [
+          {
+            "name": "title",
+            "label": "Skill Category Name",
+            "type": "text",
+            "placeholder": "Core Languages",
+            "instruction": "What type of skills are in this group? e.g. Core Languages, Frontend, Backend, DevOps, Tools.",
+            "required": true
+          },
+          {
+            "name": "skills",
+            "label": "Skills in This Category",
+            "type": "tags",
+            "placeholder": "Rust, Go, TypeScript, Python",
+            "instruction": "List your skills separated by commas. These appear as glowing tags on the panel.",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "experience",
+      "label": "Work Experience",
+      "instruction": "List the jobs you've had. Each job becomes a timeline entry in the OS log view. Put newest jobs first. If you have no experience yet, just turn the section off below.",
+      "fields": [
+        {
+          "name": "showExperience",
+          "label": "Show Work Experience Section?",
+          "type": "boolean",
+          "default": true,
+          "instruction": "Turn this OFF if you have no work experience yet. The section will be completely hidden from your portfolio."
+        }
+      ],
+      "type": "array",
+      "min": 0,
+      "max": 10,
+      "item": {
+        "fields": [
+          {
+            "name": "role",
+            "label": "Your Job Title",
+            "type": "text",
+            "placeholder": "Principal Engineer",
+            "instruction": "What was your role? e.g. Junior Developer, Principal Engineer, Freelance Developer, Intern.",
+            "required": true
+          },
+          {
+            "name": "company",
+            "label": "Company or Client Name",
+            "type": "text",
+            "placeholder": "Vercel",
+            "instruction": "Name of the company or client. If you freelanced, write the client's name or just 'Self-employed'.",
+            "required": true
+          },
+          {
+            "name": "period",
+            "label": "When Did You Work There?",
+            "type": "text",
+            "placeholder": "2022 – Present",
+            "instruction": "Write the time period naturally. e.g. 'Jan 2022 – Present' or '2021 – 2023'."
+          },
+          {
+            "name": "location",
+            "label": "Location",
+            "type": "text",
+            "placeholder": "Remote",
+            "instruction": "City name or 'Remote' if you worked online."
+          },
+          {
+            "name": "description",
+            "label": "What Did You Do There?",
+            "type": "textarea",
+            "placeholder": "Owned the edge runtime infrastructure powering 3M+ deployments/day. Reduced cold start latency by 70% through custom V8 isolate pooling.",
+            "instruction": "Describe your work in 2–3 sentences. What did you build? What did you achieve? Numbers help — e.g. 'reduced latency by 70%'."
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "projects",
+      "label": "Projects",
+      "instruction": "Your main work showcase. Each project gets an interactive OS window card with an image, description, and links. Add up to 12 projects. Your best work goes first.",
+      "type": "array",
+      "min": 0,
+      "max": 12,
+      "item": {
+        "fields": [
+          {
+            "name": "title",
+            "label": "Project Name",
+            "type": "text",
+            "placeholder": "NeuralCache",
+            "instruction": "The name of your project.",
+            "required": true
+          },
+          {
+            "name": "date",
+            "label": "Year Built",
+            "type": "text",
+            "placeholder": "2024",
+            "instruction": "Just the year, or a range like '2023 – 2024'."
+          },
+          {
+            "name": "description",
+            "label": "What Is This Project?",
+            "type": "textarea",
+            "placeholder": "An adaptive caching layer using ML to predict cache eviction patterns, achieving 94% hit rate on production workloads.",
+            "instruction": "Explain what the project does and what makes it interesting. 2–3 sentences max. What problem does it solve?"
+          },
+          {
+            "name": "image",
+            "label": "Project Screenshot",
+            "type": "image",
+            "multiple": false,
+            "placeholder": "",
+            "instruction": "Upload a screenshot or preview image of your project. Wide (landscape) images look best. This is the first thing visitors notice on the card."
+          },
+          {
+            "name": "tags",
+            "label": "Technologies Used",
+            "type": "tags",
+            "placeholder": "Rust, Redis, PyTorch, Kubernetes",
+            "instruction": "What did you build it with? Separate with commas."
+          },
+          {
+            "name": "github",
+            "label": "GitHub Link",
+            "type": "link",
+            "placeholder": "https://github.com/you/neuralcache",
+            "instruction": "Link to the project's GitHub repository. Only add this if the repo is public."
+          },
+          {
+            "name": "webapp",
+            "label": "Live Project Link",
+            "type": "link",
+            "placeholder": "https://neuralcache.dev",
+            "instruction": "Link to the live hosted version of your project. If it's not hosted yet, leave this empty."
+          },
+          {
+            "name": "showMembers",
+            "label": "Did You Build This With a Team?",
+            "type": "boolean",
+            "default": false,
+            "instruction": "Turn ON if this was a group project. You can then add your teammates' names and GitHub links."
+          },
+          {
+            "name": "member",
+            "label": "Team Members",
+            "type": "array",
+            "min": 0,
+            "max": 6,
+            "item": {
+              "fields": [
+                {
+                  "name": "name",
+                  "label": "Teammate's Name",
+                  "type": "text",
+                  "placeholder": "Sara Chen"
+                },
+                {
+                  "name": "github",
+                  "label": "Teammate's GitHub Link",
+                  "type": "link",
+                  "placeholder": "https://github.com/sarachen"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "education",
+      "label": "Education",
+      "instruction": "Your academic background. Each entry becomes a card in the OS directory view. Online courses count too — add them if you have no formal degree. Up to 6 entries.",
+      "type": "array",
+      "min": 0,
+      "max": 6,
+      "item": {
+        "fields": [
+          {
+            "name": "degree",
+            "label": "Degree or Course Name",
+            "type": "text",
+            "placeholder": "M.Sc. Computer Science",
+            "instruction": "The full name of your degree or course. e.g. 'M.Sc. Computer Science' or 'Full Stack Web Dev Bootcamp (Udemy)'.",
+            "required": true
+          },
+          {
+            "name": "institution",
+            "label": "University, College, or Platform",
+            "type": "text",
+            "placeholder": "Carnegie Mellon University",
+            "instruction": "Where did you study? For online courses, write the platform name e.g. Udemy, Coursera.",
+            "required": true
+          },
+          {
+            "name": "period",
+            "label": "When Did You Study?",
+            "type": "text",
+            "placeholder": "2015 – 2019",
+            "instruction": "Write the years. e.g. '2020 – 2024' or just '2023' for a short course."
+          },
+          {
+            "name": "grade",
+            "label": "Grade or Distinction (Optional)",
+            "type": "text",
+            "placeholder": "4.0 / 4.0",
+            "instruction": "Your grade, GPA, or any honours. Skip this field if you'd rather not show it."
+          },
+          {
+            "name": "description",
+            "label": "Extra Notes (Optional)",
+            "type": "textarea",
+            "placeholder": "Specialization in distributed systems. Thesis: Self-healing microservice meshes using reinforcement learning.",
+            "instruction": "Anything extra worth mentioning — your thesis topic, a club, a specialization, or a major achievement."
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "certifications",
+      "label": "Certifications",
+      "instruction": "Certificates you've earned — Udemy, Coursera, Google, CNCF, anything counts. Each one becomes a verified achievement tile. Up to 12 certifications.",
+      "fields": [
+        {
+          "name": "showCertifications",
+          "label": "Show Certifications Section?",
+          "type": "boolean",
+          "default": true,
+          "instruction": "Turn this OFF if you have no certifications. The section will be hidden from your portfolio."
+        }
+      ],
+      "type": "array",
+      "min": 0,
+      "max": 12,
+      "item": {
+        "fields": [
+          {
+            "name": "name",
+            "label": "Certificate Name",
+            "type": "text",
+            "placeholder": "Certified Kubernetes Administrator (CKA)",
+            "instruction": "The official name of the certificate exactly as it appears on the certificate.",
+            "required": true
+          },
+          {
+            "name": "issuer",
+            "label": "Who Gave You This Certificate?",
+            "type": "text",
+            "placeholder": "Cloud Native Computing Foundation",
+            "instruction": "The platform or organization that issued it. e.g. Udemy, Google, Coursera, CNCF, Meta."
+          },
+          {
+            "name": "date",
+            "label": "When Did You Get It?",
+            "type": "text",
+            "placeholder": "Nov 2023",
+            "instruction": "Month and year is enough. e.g. 'November 2023'."
+          },
+          {
+            "name": "link",
+            "label": "Verification Link (Optional)",
+            "type": "link",
+            "placeholder": "https://credly.com/badges/...",
+            "instruction": "The shareable link to verify your certificate. Udemy, Coursera, and Credly give you one after completion. Paste it here so people can check it."
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "contact",
+      "label": "Contact",
+      "instruction": "How people get in touch with you. At minimum, add your email. Only add social links for platforms you actually use.",
+      "fields": [
+        {
+          "name": "email",
+          "label": "Your Email Address",
+          "type": "email",
+          "placeholder": "alex@example.com",
+          "instruction": "Use an email you actually check. This is how clients will contact you.",
+          "required": true
+        },
+        {
+          "name": "github",
+          "label": "GitHub Profile Link",
+          "type": "link",
+          "placeholder": "https://github.com/alexdev",
+          "instruction": "Your full GitHub profile URL. e.g. https://github.com/alexdev"
+        },
+        {
+          "name": "linkedin",
+          "label": "LinkedIn Profile Link",
+          "type": "link",
+          "placeholder": "https://linkedin.com/in/alexdev"
+        },
+        {
+          "name": "twitter",
+          "label": "Twitter / X Profile Link",
+          "type": "link",
+          "placeholder": "https://twitter.com/alexdev"
+        },
+        {
+          "name": "showTwitter",
+          "label": "Show Twitter on Portfolio?",
+          "type": "boolean",
+          "default": true,
+          "instruction": "Turn OFF if you don't want Twitter shown."
+        },
+        {
+          "name": "facebook",
+          "label": "Facebook Profile Link",
+          "type": "link",
+          "placeholder": "https://facebook.com/alexdev"
+        },
+        {
+          "name": "showFacebook",
+          "label": "Show Facebook on Portfolio?",
+          "type": "boolean",
+          "default": false,
+          "instruction": "Turn ON if you want Facebook shown."
+        },
+        {
+          "name": "instagram",
+          "label": "Instagram Profile Link",
+          "type": "link",
+          "placeholder": "https://instagram.com/alexdev"
+        },
+        {
+          "name": "showInstagram",
+          "label": "Show Instagram on Portfolio?",
+          "type": "boolean",
+          "default": false,
+          "instruction": "Turn ON if you want Instagram shown."
+        },
+        {
+          "name": "location",
+          "label": "Your Location",
+          "type": "text",
+          "placeholder": "Berlin, Germany",
+          "instruction": "Your city or 'Remote' if you work online. Clients like knowing where you're based."
+        },
+        {
+          "name": "availability",
+          "label": "Availability Note",
+          "type": "text",
+          "placeholder": "Available for freelance & full-time roles from Jan 2025",
+          "instruction": "A short friendly line that appears above your contact info. Think of it as an invitation to reach out."
+        }
+      ]
+    },
+    {
+      "sectionId": "footer",
+      "label": "Footer",
+      "instruction": "The very last line at the bottom of your page. Usually your name and the year.",
+      "fields": [
+        {
+          "name": "text",
+          "label": "Footer Text",
+          "type": "text",
+          "placeholder": "Designed & built by Alex Devlin — no frameworks were harmed.",
+          "instruction": "One short line. Keep it simple — your name and year is enough, or add a fun personal touch."
+        }
+      ]
+    }
+  ]
+}

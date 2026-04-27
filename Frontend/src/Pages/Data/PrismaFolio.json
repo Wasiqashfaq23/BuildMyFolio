@@ -1,0 +1,516 @@
+{
+  "portfolioType": "PrismaFolio",
+  "templateComponent": "PrismaFolio",
+  "title": "Prisma — Bold Editorial Portfolio",
+  "sections": [
+    {
+      "sectionId": "navbar",
+      "label": "Navigation Bar",
+      "instruction": "This is the strip at the very top of your page. Put your name or brand here — visitors see this first.",
+      "fields": [
+        {
+          "name": "logo",
+          "label": "Your Name or Brand",
+          "type": "text",
+          "placeholder": "Kai Oduya",
+          "instruction": "Write your name or a short brand name. This shows in the top-left corner of your portfolio.",
+          "required": true
+        },
+        {
+          "name": "ctaLabel",
+          "label": "Top Button Text",
+          "type": "text",
+          "placeholder": "Work Together",
+          "instruction": "The clickable button in the top-right corner. Keep it short and action-y — e.g. 'Hire Me', 'Work Together', 'Get in Touch'."
+        }
+      ]
+    },
+    {
+      "sectionId": "hero",
+      "label": "Hero Section (Your Big Intro)",
+      "instruction": "This is the first big thing visitors see — your name dominates the screen in bold editorial style. Make it confident and clear.",
+      "fields": [
+        {
+          "name": "name",
+          "label": "Your Full Name",
+          "type": "text",
+          "placeholder": "Kai Oduya",
+          "required": true
+        },
+        {
+          "name": "role",
+          "label": "What You Do (Job Title)",
+          "type": "text",
+          "placeholder": "Full-Stack Engineer",
+          "instruction": "Your role in a few words. This shows up big and bold under your name.",
+          "required": true
+        },
+        {
+          "name": "descriptor",
+          "label": "One-Line Descriptor",
+          "type": "text",
+          "placeholder": "Crafting digital products people actually love.",
+          "instruction": "A single punchy sentence that sums up your approach or philosophy. Think of it as your personal tagline."
+        },
+        {
+          "name": "bio",
+          "label": "About You (Short Bio)",
+          "type": "textarea",
+          "placeholder": "6 years turning complex problems into elegant solutions. I care deeply about performance, accessibility, and the tiny details that make the difference between good and great.",
+          "instruction": "Write 2–3 sentences about yourself. What do you build? What makes you good at it? Be confident — this is your pitch."
+        },
+        {
+          "name": "avatar",
+          "label": "Your Photo",
+          "type": "image",
+          "multiple": false,
+          "placeholder": "",
+          "instruction": "Upload one clear photo of yourself. It will appear in the hero section alongside your intro."
+        },
+        {
+          "name": "tag1",
+          "label": "Expertise Tag 1",
+          "type": "text",
+          "placeholder": "React",
+          "instruction": "A short keyword for your top skill or specialty. Shows as a highlighted tag near your name."
+        },
+        {
+          "name": "tag2",
+          "label": "Expertise Tag 2",
+          "type": "text",
+          "placeholder": "Node.js",
+          "instruction": "A second skill tag. Keep it short — one word or a short phrase."
+        },
+        {
+          "name": "tag3",
+          "label": "Expertise Tag 3",
+          "type": "text",
+          "placeholder": "System Design",
+          "instruction": "A third skill tag. Together the three tags give visitors a quick snapshot of what you do."
+        },
+        {
+          "name": "stat1Label",
+          "label": "Stat 1 Label",
+          "type": "text",
+          "placeholder": "Years Building",
+          "instruction": "The label for your first stat. e.g. 'Years Building', 'Years Experience'."
+        },
+        {
+          "name": "stat1Value",
+          "label": "Stat 1 Value",
+          "type": "text",
+          "placeholder": "6",
+          "instruction": "The number or value for Stat 1. e.g. '6' or '6+'."
+        },
+        {
+          "name": "stat2Label",
+          "label": "Stat 2 Label",
+          "type": "text",
+          "placeholder": "Projects Shipped",
+          "instruction": "The label for your second stat. e.g. 'Projects Shipped', 'Apps Built'."
+        },
+        {
+          "name": "stat2Value",
+          "label": "Stat 2 Value",
+          "type": "text",
+          "placeholder": "50+",
+          "instruction": "The number or value for Stat 2. e.g. '50+' or '30'."
+        },
+        {
+          "name": "stat3Label",
+          "label": "Stat 3 Label",
+          "type": "text",
+          "placeholder": "Happy Clients",
+          "instruction": "The label for your third stat. e.g. 'Happy Clients', 'Satisfied Clients'."
+        },
+        {
+          "name": "stat3Value",
+          "label": "Stat 3 Value",
+          "type": "text",
+          "placeholder": "20+",
+          "instruction": "The number or value for Stat 3. e.g. '20+' or '15'."
+        },
+        {
+          "name": "resumeLink",
+          "label": "Link to Your CV / Resume",
+          "type": "link",
+          "placeholder": "https://drive.google.com/your-cv",
+          "instruction": "Paste the full link to your CV. Upload it to Google Drive and share the link. Must start with https://"
+        }
+      ]
+    },
+    {
+      "sectionId": "skills",
+      "label": "Skills",
+      "instruction": "Group your skills by category. Each group becomes one card. You can add up to 8 groups. Example groups: Frontend, Backend, Tools, Design.",
+      "type": "array",
+      "min": 1,
+      "max": 8,
+      "item": {
+        "fields": [
+          {
+            "name": "title",
+            "label": "Skill Category Name",
+            "type": "text",
+            "placeholder": "Frontend",
+            "instruction": "What type of skills are in this group? e.g. Frontend, Backend, Tools, Design.",
+            "required": true
+          },
+          {
+            "name": "skills",
+            "label": "Skills in This Category",
+            "type": "tags",
+            "placeholder": "React, TypeScript, Next.js, Framer Motion",
+            "instruction": "List your skills separated by commas. These appear as tags on the card.",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "experience",
+      "label": "Work Experience",
+      "instruction": "List the jobs you've had. Each job becomes a large numbered timeline entry. Put newest jobs first. If you have no experience yet, just turn the section off below.",
+      "fields": [
+        {
+          "name": "showExperience",
+          "label": "Show Work Experience Section?",
+          "type": "boolean",
+          "default": true,
+          "instruction": "Turn this OFF if you have no work experience yet. The section will be completely hidden from your portfolio."
+        }
+      ],
+      "type": "array",
+      "min": 0,
+      "max": 10,
+      "item": {
+        "fields": [
+          {
+            "name": "role",
+            "label": "Your Job Title",
+            "type": "text",
+            "placeholder": "Senior Engineer",
+            "instruction": "What was your role? e.g. Junior Developer, Senior Engineer, Freelance Developer, Intern.",
+            "required": true
+          },
+          {
+            "name": "company",
+            "label": "Company or Client Name",
+            "type": "text",
+            "placeholder": "Linear",
+            "instruction": "Name of the company or client. If you freelanced, write the client's name or just 'Self-employed'.",
+            "required": true
+          },
+          {
+            "name": "period",
+            "label": "When Did You Work There?",
+            "type": "text",
+            "placeholder": "2021 – Present",
+            "instruction": "Write the time period naturally. e.g. 'Jan 2021 – Present' or '2020 – 2022'."
+          },
+          {
+            "name": "location",
+            "label": "Location",
+            "type": "text",
+            "placeholder": "Remote",
+            "instruction": "City name or 'Remote' if you worked online."
+          },
+          {
+            "name": "description",
+            "label": "What Did You Do There?",
+            "type": "textarea",
+            "placeholder": "Rebuilt the core rendering pipeline, cutting frame drop rate by 80% on low-end devices.",
+            "instruction": "Describe your work in 2–3 sentences. What did you build? What did you achieve? Numbers help — e.g. 'reduced latency by 80%'."
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "projects",
+      "label": "Projects",
+      "instruction": "Your main work showcase. Each project gets a full-width editorial card with an image, description, and links. Add up to 12 projects. Your best work goes first.",
+      "type": "array",
+      "min": 0,
+      "max": 12,
+      "item": {
+        "fields": [
+          {
+            "name": "title",
+            "label": "Project Name",
+            "type": "text",
+            "placeholder": "Volta — Real-Time Analytics",
+            "instruction": "The name of your project.",
+            "required": true
+          },
+          {
+            "name": "date",
+            "label": "Year Built",
+            "type": "text",
+            "placeholder": "2024",
+            "instruction": "Just the year, or a range like '2023 – 2024'."
+          },
+          {
+            "name": "description",
+            "label": "What Is This Project?",
+            "type": "textarea",
+            "placeholder": "Event-driven analytics engine processing 1M+ events/day with sub-100ms query times. Built entirely in TypeScript.",
+            "instruction": "Explain what the project does and what makes it interesting. 2–3 sentences max. What problem does it solve?"
+          },
+          {
+            "name": "image",
+            "label": "Project Screenshot",
+            "type": "image",
+            "multiple": false,
+            "placeholder": "",
+            "instruction": "Upload a screenshot or preview image of your project. Wide (landscape) images look best. This is the first thing visitors notice on the card."
+          },
+          {
+            "name": "tags",
+            "label": "Technologies Used",
+            "type": "tags",
+            "placeholder": "TypeScript, ClickHouse, Kafka, React",
+            "instruction": "What did you build it with? Separate with commas."
+          },
+          {
+            "name": "github",
+            "label": "GitHub Link",
+            "type": "link",
+            "placeholder": "https://github.com/you/volta",
+            "instruction": "Link to the project's GitHub repository. Only add this if the repo is public."
+          },
+          {
+            "name": "webapp",
+            "label": "Live Project Link",
+            "type": "link",
+            "placeholder": "https://volta.dev",
+            "instruction": "Link to the live hosted version of your project. If it's not hosted yet, leave this empty."
+          },
+          {
+            "name": "showMembers",
+            "label": "Did You Build This With a Team?",
+            "type": "boolean",
+            "default": false,
+            "instruction": "Turn ON if this was a group project. You can then add your teammates' names and GitHub links."
+          },
+          {
+            "name": "member",
+            "label": "Team Members",
+            "type": "array",
+            "min": 0,
+            "max": 6,
+            "item": {
+              "fields": [
+                {
+                  "name": "name",
+                  "label": "Teammate's Name",
+                  "type": "text",
+                  "placeholder": "Sam Reyes"
+                },
+                {
+                  "name": "github",
+                  "label": "Teammate's GitHub Link",
+                  "type": "link",
+                  "placeholder": "https://github.com/samreyes"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "education",
+      "label": "Education",
+      "instruction": "Your academic background. Each entry becomes a clean list card. Online courses count too — add them if you have no formal degree. Up to 6 entries.",
+      "type": "array",
+      "min": 0,
+      "max": 6,
+      "item": {
+        "fields": [
+          {
+            "name": "degree",
+            "label": "Degree or Course Name",
+            "type": "text",
+            "placeholder": "B.Sc. Computer Science",
+            "instruction": "The full name of your degree or course. e.g. 'B.Sc. Computer Science' or 'Full Stack Web Dev Bootcamp (Udemy)'.",
+            "required": true
+          },
+          {
+            "name": "institution",
+            "label": "University, College, or Platform",
+            "type": "text",
+            "placeholder": "University of Cape Town",
+            "instruction": "Where did you study? For online courses, write the platform name e.g. Udemy, Coursera.",
+            "required": true
+          },
+          {
+            "name": "period",
+            "label": "When Did You Study?",
+            "type": "text",
+            "placeholder": "2014 – 2018",
+            "instruction": "Write the years. e.g. '2020 – 2024' or just '2023' for a short course."
+          },
+          {
+            "name": "grade",
+            "label": "Grade or Distinction (Optional)",
+            "type": "text",
+            "placeholder": "First Class Honours",
+            "instruction": "Your grade, GPA, or any honours. Skip this field if you'd rather not show it."
+          },
+          {
+            "name": "description",
+            "label": "Extra Notes (Optional)",
+            "type": "textarea",
+            "placeholder": "Thesis: Optimising graph traversal algorithms for social network analysis.",
+            "instruction": "Anything extra worth mentioning — your thesis topic, a club, a specialization, or a major achievement."
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "certifications",
+      "label": "Certifications",
+      "instruction": "Certificates you've earned — Udemy, Coursera, AWS, Google, anything counts. Each one becomes a bold list item. Up to 12 certifications.",
+      "fields": [
+        {
+          "name": "showCertifications",
+          "label": "Show Certifications Section?",
+          "type": "boolean",
+          "default": true,
+          "instruction": "Turn this OFF if you have no certifications. The section will be hidden from your portfolio."
+        }
+      ],
+      "type": "array",
+      "min": 0,
+      "max": 12,
+      "item": {
+        "fields": [
+          {
+            "name": "name",
+            "label": "Certificate Name",
+            "type": "text",
+            "placeholder": "AWS Solutions Architect — Professional",
+            "instruction": "The official name of the certificate exactly as it appears on the certificate.",
+            "required": true
+          },
+          {
+            "name": "issuer",
+            "label": "Who Gave You This Certificate?",
+            "type": "text",
+            "placeholder": "Amazon Web Services",
+            "instruction": "The platform or organization that issued it. e.g. AWS, Google, Coursera, Meta, Udemy."
+          },
+          {
+            "name": "date",
+            "label": "When Did You Get It?",
+            "type": "text",
+            "placeholder": "Aug 2023",
+            "instruction": "Month and year is enough. e.g. 'August 2023'."
+          },
+          {
+            "name": "link",
+            "label": "Verification Link (Optional)",
+            "type": "link",
+            "placeholder": "https://credly.com/badges/...",
+            "instruction": "The shareable link to verify your certificate. Udemy, Coursera, and Credly give you one after completion. Paste it here so people can check it."
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "contact",
+      "label": "Contact",
+      "instruction": "How people get in touch with you. At minimum, add your email. Only add social links for platforms you actually use.",
+      "fields": [
+        {
+          "name": "email",
+          "label": "Your Email Address",
+          "type": "email",
+          "placeholder": "kai@studio.com",
+          "instruction": "Use an email you actually check. This is how clients will contact you.",
+          "required": true
+        },
+        {
+          "name": "github",
+          "label": "GitHub Profile Link",
+          "type": "link",
+          "placeholder": "https://github.com/kaioduya",
+          "instruction": "Your full GitHub profile URL. e.g. https://github.com/kaioduya"
+        },
+        {
+          "name": "linkedin",
+          "label": "LinkedIn Profile Link",
+          "type": "link",
+          "placeholder": "https://linkedin.com/in/kaioduya"
+        },
+        {
+          "name": "twitter",
+          "label": "Twitter / X Profile Link",
+          "type": "link",
+          "placeholder": "https://twitter.com/kaioduya"
+        },
+        {
+          "name": "showTwitter",
+          "label": "Show Twitter on Portfolio?",
+          "type": "boolean",
+          "default": true,
+          "instruction": "Turn OFF if you don't want Twitter shown."
+        },
+        {
+          "name": "facebook",
+          "label": "Facebook Profile Link",
+          "type": "link",
+          "placeholder": "https://facebook.com/kaioduya"
+        },
+        {
+          "name": "showFacebook",
+          "label": "Show Facebook on Portfolio?",
+          "type": "boolean",
+          "default": false,
+          "instruction": "Turn ON if you want Facebook shown."
+        },
+        {
+          "name": "instagram",
+          "label": "Instagram Profile Link",
+          "type": "link",
+          "placeholder": "https://instagram.com/kaioduya"
+        },
+        {
+          "name": "showInstagram",
+          "label": "Show Instagram on Portfolio?",
+          "type": "boolean",
+          "default": false,
+          "instruction": "Turn ON if you want Instagram shown."
+        },
+        {
+          "name": "location",
+          "label": "Your Location",
+          "type": "text",
+          "placeholder": "Lagos, Nigeria · Open to Remote",
+          "instruction": "Your city or 'Remote' if you work online. Clients like knowing where you're based."
+        },
+        {
+          "name": "ctaHeadline",
+          "label": "Contact Section Tagline",
+          "type": "text",
+          "placeholder": "Got a project in mind?",
+          "instruction": "A short friendly line that appears above your contact info. Think of it as an invitation to reach out."
+        }
+      ]
+    },
+    {
+      "sectionId": "footer",
+      "label": "Footer",
+      "instruction": "The very last line at the bottom of your page. Usually your name and the year.",
+      "fields": [
+        {
+          "name": "text",
+          "label": "Footer Text",
+          "type": "text",
+          "placeholder": "Designed & built by Kai Oduya — 2024",
+          "instruction": "One short line. Keep it simple — your name and year is enough, or add a personal touch."
+        }
+      ]
+    }
+  ]
+}

@@ -9,7 +9,6 @@ import AdminUploadTemplate from "./Pages/UploadTemplate";
 import PublicPortfolio from "./Pages/PublicPortfolio";
 import ProtectedRoute from "./Pages/ProtectedRoutes";
 import { AuthProvider } from "./Pages/Context/AuthProvider";
-import OnBoarding from "./Pages/OnBoarding";
 import EditPortfolio from "./Pages/EditPortfolio";
 
 
@@ -20,7 +19,6 @@ const App = () => {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/onboarding" element={<OnBoarding />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/p/:slug" element={<PublicPortfolio />} />
 

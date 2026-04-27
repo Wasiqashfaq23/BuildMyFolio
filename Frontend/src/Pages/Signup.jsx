@@ -24,6 +24,7 @@ function Signup() {
     if (user) {
       navigate('/dashboard', { replace: true })
     }
+//eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
   const handleGithub = async () => {

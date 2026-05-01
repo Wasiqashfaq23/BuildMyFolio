@@ -8,7 +8,7 @@ import { FaGithub } from 'react-icons/fa'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
-const inputClass = "w-full bg-[#111] border border-[#222] rounded-lg px-3 py-2.5 text-sm text-[#f5f5f5] outline-none focus:border-[#444] transition placeholder:text-[#444]";
+const inputClass = "w-full bg-input border border-border rounded-lg px-3 py-2.5 text-sm text-foreground outline-none focus:border-ring focus:ring-1 focus:ring-ring transition placeholder:text-muted-foreground";
 
 function Login() {
   const [email, setEmail] = useState("");

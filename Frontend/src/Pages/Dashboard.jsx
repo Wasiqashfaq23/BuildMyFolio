@@ -106,7 +106,7 @@ const Dashboard = () => {
       ) : (
         <div className="flex flex-col gap-3">
           {portfolios.map((p) => {
-            const name = p.userData?.hero?.fullName || "Untitled"
+            const name = user?.email.split('@')[0] || "Untitled"
             const publicUrl = `${window.location.origin}/p/${p.slug}`
 
             return (

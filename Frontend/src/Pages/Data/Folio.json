@@ -1,0 +1,452 @@
+{
+  "portfolioType": "folio",
+  "templateComponent": "Folio",
+  "title": "Folio — Modern Minimal Portfolio",
+  "sections": [
+    {
+      "sectionId": "navbar",
+      "label": "Navigation Bar",
+      "instruction": "This appears at the very top of every page. It shows your name and a button visitors can click to contact you.",
+      "fields": [
+        {
+          "name": "name",
+          "label": "Your Name or Brand",
+          "type": "text",
+          "placeholder": "Alex Morgan",
+          "instruction": "This is the name shown in the top-left corner of your site. Use your real name or a short brand name.",
+          "required": true
+        },
+        {
+          "name": "ctaLabel",
+          "label": "Top Button Text",
+          "type": "text",
+          "placeholder": "Get in Touch",
+          "instruction": "The text on the button at the top-right. Keep it short — like 'Hire Me', 'Let's Talk', or 'Get in Touch'."
+        }
+      ]
+    },
+    {
+      "sectionId": "hero",
+      "label": "Introduction — First Thing Visitors See",
+      "instruction": "This is the opening screen of your portfolio. Your name is shown large and bold, with a short description of who you are. First impressions matter — keep it clear and confident.",
+      "fields": [
+        {
+          "name": "name",
+          "label": "Your Full Name",
+          "type": "text",
+          "placeholder": "Alex Morgan",
+          "instruction": "Type your full name. This will appear as the biggest text on the page.",
+          "required": true
+        },
+        {
+          "name": "title",
+          "label": "Your Job Title or Role",
+          "type": "text",
+          "placeholder": "Full-Stack Developer",
+          "instruction": "What do you do? For example: Frontend Developer, Data Scientist, UX Designer, or Software Engineer.",
+          "required": true
+        },
+        {
+          "name": "bio",
+          "label": "A Short Bio About Yourself",
+          "type": "textarea",
+          "placeholder": "I build clean, fast web products that people love using. 4 years of experience working with startups and agencies across 3 continents.",
+          "instruction": "Write 2 to 3 sentences about yourself. What do you do, how long have you been doing it, and what makes you different? Write like you are talking to a real person — no need to be overly formal."
+        },
+        {
+          "name": "avatar",
+          "label": "Your Profile Photo",
+          "type": "image",
+          "multiple": false,
+          "instruction": "Upload a clear photo of yourself. A headshot with a plain background works best. This helps visitors connect with you."
+        },
+        {
+          "name": "location",
+          "label": "Where You Are Based",
+          "type": "text",
+          "placeholder": "Lagos, Nigeria",
+          "instruction": "Type your city and country. For example: Berlin, Germany. Visitors and employers often want to know where you are located."
+        },
+        {
+          "name": "availableForWork",
+          "label": "Are You Available for Work?",
+          "type": "boolean",
+          "default": true,
+          "instruction": "Turn this ON if you are currently looking for jobs, freelance projects, or new opportunities. A small 'Available' badge will appear on your profile."
+        },
+        {
+          "name": "resumeLink",
+          "label": "Link to Your Resume",
+          "type": "link",
+          "placeholder": "https://drive.google.com/your-resume",
+          "instruction": "If your resume is saved online (for example on Google Drive), paste the link here. Make sure the file is set to 'Anyone with the link can view' before sharing."
+        }
+      ]
+    },
+    {
+      "sectionId": "skills",
+      "label": "Skills",
+      "instruction": "List everything you know how to do — grouped into neat categories. For example, one group for programming languages, one for design tools, one for frameworks. Add as many groups as you need.",
+      "type": "array",
+      "min": 1,
+      "max": 6,
+      "item": {
+        "fields": [
+          {
+            "name": "title",
+            "label": "Skill Category Name",
+            "type": "text",
+            "placeholder": "Frontend",
+            "instruction": "Give this group a name. For example: Languages, Frameworks, Tools, Design, Cloud, or Databases.",
+            "required": true
+          },
+          {
+            "name": "skills",
+            "label": "Skills in This Category",
+            "type": "tags",
+            "placeholder": "React, TypeScript, Tailwind CSS",
+            "instruction": "Type each skill and press Enter to add it to the list. Add as many as you like.",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "experience",
+      "label": "Work Experience",
+      "instruction": "Add the jobs, internships, or freelance work you have done. If you have no work experience yet, that is completely fine — just turn this section off using the toggle below.",
+      "fields": [
+        {
+          "name": "showExperience",
+          "label": "Show Work Experience on My Portfolio?",
+          "type": "boolean",
+          "default": true,
+          "instruction": "Keep this ON if you have work experience to display. Switch it OFF if you have not worked yet and want to hide this section."
+        }
+      ],
+      "type": "array",
+      "min": 0,
+      "max": 8,
+      "item": {
+        "fields": [
+          {
+            "name": "role",
+            "label": "Your Job Title",
+            "type": "text",
+            "placeholder": "Frontend Developer",
+            "instruction": "What was your official title at this job? For example: Software Engineer, Intern, or Freelance Developer.",
+            "required": true
+          },
+          {
+            "name": "company",
+            "label": "Company or Organisation Name",
+            "type": "text",
+            "placeholder": "Stripe",
+            "instruction": "The name of the company or organisation you worked at.",
+            "required": true
+          },
+          {
+            "name": "period",
+            "label": "When Did You Work There?",
+            "type": "text",
+            "placeholder": "Jan 2022 – Present",
+            "instruction": "Enter the start and end dates. If you still work there, write 'Present' as the end date. Example: Jan 2022 – Present."
+          },
+          {
+            "name": "location",
+            "label": "Location",
+            "type": "text",
+            "placeholder": "Remote",
+            "instruction": "Where was this job? You can write a city, a country, or just 'Remote' if you worked from home."
+          },
+          {
+            "name": "description",
+            "label": "What Did You Do?",
+            "type": "textarea",
+            "placeholder": "Built and maintained the company's main dashboard. Improved page load times by 45% and reduced bugs by introducing automated tests.",
+            "instruction": "Describe your key responsibilities and any results you are proud of. Try to mention real numbers if you can — for example: 'Reduced load time by 40%'. Keep it to 2 or 3 sentences."
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "projects",
+      "label": "Projects",
+      "instruction": "This is the most important section of your portfolio. Add the best things you have built — personal projects, university work, freelance work, or anything you are proud of. Employers look here first.",
+      "type": "array",
+      "min": 1,
+      "max": 8,
+      "item": {
+        "fields": [
+          {
+            "name": "title",
+            "label": "Project Name",
+            "type": "text",
+            "placeholder": "Budget Tracker App",
+            "instruction": "What is this project called?",
+            "required": true
+          },
+          {
+            "name": "date",
+            "label": "When Did You Build It?",
+            "type": "text",
+            "placeholder": "2024",
+            "instruction": "Type the year or month you completed it. For example: 2024 or March 2024."
+          },
+          {
+            "name": "description",
+            "label": "What Does This Project Do?",
+            "type": "textarea",
+            "placeholder": "A personal finance app that helps users track income and expenses. Built with React and Firebase, used by 300+ people.",
+            "instruction": "Describe your project in plain language. What problem does it solve? Who uses it? Mention any impressive numbers if you have them. Write 2 to 3 sentences.",
+            "required": true
+          },
+          {
+            "name": "image",
+            "label": "Project Screenshot",
+            "type": "image",
+            "multiple": false,
+            "instruction": "Upload a screenshot or preview image of your project. Pick the most visually appealing view of your project — this is what visitors see first."
+          },
+          {
+            "name": "tags",
+            "label": "Technologies Used",
+            "type": "tags",
+            "placeholder": "React, Firebase, CSS",
+            "instruction": "List the main tools and technologies used. Type each one and press Enter."
+          },
+          {
+            "name": "github",
+            "label": "GitHub Code Link",
+            "type": "link",
+            "placeholder": "https://github.com/you/project",
+            "instruction": "Paste the GitHub link where visitors can read your code. Leave this empty if the project is private."
+          },
+          {
+            "name": "webapp",
+            "label": "Live Website Link",
+            "type": "link",
+            "placeholder": "https://yourproject.vercel.app",
+            "instruction": "If your project is live on the internet, paste the link here so visitors can try it out."
+          },
+          {
+            "name": "showMembers",
+            "label": "Did Others Work on This With You?",
+            "type": "boolean",
+            "default": false,
+            "instruction": "Turn this ON if this was a group or team project. You will be able to add your teammates' names below."
+          },
+          {
+            "name": "member",
+            "label": "Team Members",
+            "type": "array",
+            "min": 0,
+            "max": 5,
+            "item": {
+              "fields": [
+                {
+                  "name": "name",
+                  "label": "Team Member's Name",
+                  "type": "text",
+                  "placeholder": "Sara Ali",
+                  "instruction": "Type the full name of this team member."
+                },
+                {
+                  "name": "github",
+                  "label": "Their GitHub Link",
+                  "type": "link",
+                  "placeholder": "https://github.com/saraali",
+                  "instruction": "Paste their GitHub link so visitors can find them. This is optional."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "education",
+      "label": "Education",
+      "instruction": "Add your academic background. Include your university, college, or any formal degree or diploma. You can also add online bootcamps here if they involved a structured learning programme.",
+      "type": "array",
+      "min": 0,
+      "max": 4,
+      "item": {
+        "fields": [
+          {
+            "name": "degree",
+            "label": "Degree or Qualification",
+            "type": "text",
+            "placeholder": "B.Sc. Computer Science",
+            "instruction": "What did you study or earn? For example: Bachelor of Computer Science, A-Levels in Maths and Physics, or Diploma in Graphic Design.",
+            "required": true
+          },
+          {
+            "name": "institution",
+            "label": "School or University Name",
+            "type": "text",
+            "placeholder": "University of Lagos",
+            "instruction": "Type the full name of the school, college, or university.",
+            "required": true
+          },
+          {
+            "name": "period",
+            "label": "Years Attended",
+            "type": "text",
+            "placeholder": "2019 – 2023",
+            "instruction": "When did you start and finish? If you are still studying, write your expected year of completion."
+          },
+          {
+            "name": "grade",
+            "label": "Grade or GPA (Optional)",
+            "type": "text",
+            "placeholder": "First Class / 3.8 GPA",
+            "instruction": "Add your grade if you want to show it. For example: First Class Honours, 3.8 GPA, or Distinction. Leave this empty if you prefer not to share it."
+          },
+          {
+            "name": "description",
+            "label": "Anything Worth Highlighting? (Optional)",
+            "type": "textarea",
+            "placeholder": "Focused on machine learning and distributed systems. Graduated top of class.",
+            "instruction": "Add any extra detail you want visitors to know — like key subjects, your thesis topic, or an achievement. This is completely optional."
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "certifications",
+      "label": "Certifications",
+      "instruction": "Add any certificates you have earned from online courses or professional programmes — for example from Coursera, Udemy, Google, AWS, or Microsoft. If you have none, turn this section off below.",
+      "fields": [
+        {
+          "name": "showCertifications",
+          "label": "Show Certifications on My Portfolio?",
+          "type": "boolean",
+          "default": true,
+          "instruction": "Keep this ON to display your certificates. Switch it OFF to hide this section if you have none yet."
+        }
+      ],
+      "type": "array",
+      "min": 0,
+      "max": 8,
+      "item": {
+        "fields": [
+          {
+            "name": "name",
+            "label": "Certificate or Course Name",
+            "type": "text",
+            "placeholder": "Google UX Design Certificate",
+            "instruction": "Type the full name of the certificate exactly as it appears on the certificate.",
+            "required": true
+          },
+          {
+            "name": "issuer",
+            "label": "Issued By",
+            "type": "text",
+            "placeholder": "Google / Coursera",
+            "instruction": "Who gave you this certificate? For example: Google, AWS, Udemy, or Meta."
+          },
+          {
+            "name": "date",
+            "label": "Date Completed",
+            "type": "text",
+            "placeholder": "August 2023",
+            "instruction": "Type the month and year you completed this. For example: August 2023."
+          },
+          {
+            "name": "link",
+            "label": "Verification Link (Optional)",
+            "type": "link",
+            "placeholder": "https://coursera.org/verify/abc123",
+            "instruction": "If your certificate has a link that proves it is real, paste it here. Visitors can click it to verify your certificate. This is optional but builds trust."
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "contact",
+      "label": "Contact Information",
+      "instruction": "How should people reach you? Add your email and any social profile links you are comfortable sharing. Employers and clients will use these to get in touch.",
+      "fields": [
+        {
+          "name": "email",
+          "label": "Your Email Address",
+          "type": "email",
+          "placeholder": "alex@example.com",
+          "instruction": "Enter the email address you want people to contact you on. This is the most important contact detail — make sure it is one you check regularly.",
+          "required": true
+        },
+        {
+          "name": "github",
+          "label": "Your GitHub Profile Link",
+          "type": "link",
+          "placeholder": "https://github.com/alexmorgan",
+          "instruction": "Paste the link to your GitHub profile. Employers will click this to look at your code. For example: https://github.com/yourname."
+        },
+        {
+          "name": "linkedin",
+          "label": "Your LinkedIn Profile Link",
+          "type": "link",
+          "placeholder": "https://linkedin.com/in/alexmorgan",
+          "instruction": "Paste your LinkedIn profile link. LinkedIn is the most popular platform for professional networking and job searching."
+        },
+        {
+          "name": "twitter",
+          "label": "Your Twitter / X Profile Link",
+          "type": "link",
+          "placeholder": "https://twitter.com/alexmorgan",
+          "instruction": "Paste your Twitter or X profile link if you use it professionally. Leave this empty if you do not."
+        },
+        {
+          "name": "showTwitter",
+          "label": "Show Twitter / X Link?",
+          "type": "boolean",
+          "default": false,
+          "instruction": "Turn this ON to show your Twitter link on your portfolio."
+        },
+        {
+          "name": "facebook",
+          "label": "Your Facebook Profile Link",
+          "type": "link",
+          "placeholder": "https://facebook.com/alexmorgan",
+          "instruction": "Paste your Facebook profile link if you want to include it."
+        },
+        {
+          "name": "showFacebook",
+          "label": "Show Facebook Link?",
+          "type": "boolean",
+          "default": false,
+          "instruction": "Turn this ON to show your Facebook link on your portfolio."
+        },
+        {
+          "name": "instagram",
+          "label": "Your Instagram Profile Link",
+          "type": "link",
+          "placeholder": "https://instagram.com/alexmorgan",
+          "instruction": "Paste your Instagram profile link if you want to include it."
+        },
+        {
+          "name": "showInstagram",
+          "label": "Show Instagram Link?",
+          "type": "boolean",
+          "default": false,
+          "instruction": "Turn this ON to show your Instagram link on your portfolio."
+        }
+      ]
+    },
+    {
+      "sectionId": "footer",
+      "label": "Footer",
+      "instruction": "This short line appears at the very bottom of your portfolio. It is your final sign-off.",
+      "fields": [
+        {
+          "name": "text",
+          "label": "Footer Message",
+          "type": "text",
+          "placeholder": "Designed & built by Alex Morgan · 2024",
+          "instruction": "Write a short closing line. Usually just your name and the year, or a fun personal touch. For example: Made with care by Alex · 2024."
+        }
+      ]
+    }
+  ]
+}

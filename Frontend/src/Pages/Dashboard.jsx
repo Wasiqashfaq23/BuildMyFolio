@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FiPlus, FiFolder, FiCheckCircle, FiEdit, FiTrash2, FiExternalLink, FiLogOut, FiLayout, FiEye } from 'react-icons/fi'
+import { FiPlus, FiFolder, FiCheckCircle, FiEdit, FiTrash2, FiExternalLink, FiLogOut, FiEye } from 'react-icons/fi'
+import logo from '../assets/logo.png'
 import { useAuth } from './Context/AuthContext'
 import Spinner from '../components/common/Spinner'
 
@@ -50,13 +51,10 @@ const Dashboard = () => {
           <div className="flex items-center justify-between h-14">
             <button
               onClick={() => navigate("/dashboard")}
-              className="flex items-center gap-2.5"
+              className="flex items-center"
               aria-label="Go to dashboard"
             >
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center" aria-hidden="true">
-                <FiLayout className="text-white" size={15} />
-              </div>
-              <span className="text-base font-bold text-slate-900 hidden sm:inline">BuildMyFolio</span>
+              <img src={logo} alt="BuildMyFolio" className="h-10" />
             </button>
             <div className="flex items-center gap-3">
               <span className="text-sm text-slate-600 font-medium hidden sm:inline">{displayName}</span>

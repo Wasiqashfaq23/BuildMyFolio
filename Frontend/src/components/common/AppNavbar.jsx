@@ -1,19 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { FiLayout, FiArrowLeft } from "react-icons/fi";
+import { FiArrowLeft } from "react-icons/fi";
+import logo from "../../assets/logo.png";
 
 const AppNavbar = ({ backTo, backLabel }) => {
   const navigate = useNavigate();
 
-  const logo = (
+  const logoEl = (
     <button
       onClick={() => navigate("/dashboard")}
-      className="flex items-center gap-2.5"
+      className="flex items-center"
       aria-label="Go to dashboard"
     >
-      <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center" aria-hidden="true">
-        <FiLayout className="text-white" size={15} />
-      </div>
-      <span className="text-base font-bold text-slate-900 hidden sm:inline">BuildMyFolio</span>
+      <img src={logo} alt="BuildMyFolio" className="h-10" />
     </button>
   );
 
@@ -31,11 +29,11 @@ const AppNavbar = ({ backTo, backLabel }) => {
                 <FiArrowLeft size={16} aria-hidden="true" />
                 <span className="hidden sm:inline">{backLabel || "Back"}</span>
               </button>
-              {logo}
+              {logoEl}
             </>
           ) : (
             <>
-              {logo}
+              {logoEl}
               <div />
             </>
           )}

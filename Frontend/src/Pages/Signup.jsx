@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { FiLayout } from "react-icons/fi";
 import { useAuth } from "./Context/AuthContext";
 import Spinner from "../components/common/Spinner";
+import logo from "../assets/logo.png";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -45,11 +45,8 @@ function Signup() {
       <header className="bg-white border-b border-slate-200 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-start h-14">
-            <button onClick={() => navigate("/")} className="flex items-center gap-2.5" aria-label="Go to home page">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center" aria-hidden="true">
-                <FiLayout className="text-white" size={15} />
-              </div>
-              <span className="text-base font-bold text-slate-900 hidden sm:inline">BuildMyFolio</span>
+            <button onClick={() => navigate("/")} className="flex items-center" aria-label="Go to home page">
+              <img src={logo} alt="BuildMyFolio" className="h-10" />
             </button>
           </div>
         </div>

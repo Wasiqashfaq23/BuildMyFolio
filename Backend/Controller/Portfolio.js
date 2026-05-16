@@ -50,6 +50,10 @@ async function createPortfolio(req, res) {
     }
 
     const userId = req.user._id;
+    const count = await Portfolio.countDocuments({ userId });
+    if (count >= 3) {
+      return res.status(403).json({ message: "You can have a maximum of 3 portfolios. Delete one to create a new one." });
+    }
     const isPresent = await Portfolio.findOne({ userId, templateId });
     if (isPresent) {
       return res.status(409).json({ message: "Portfolio with same template already exists" });

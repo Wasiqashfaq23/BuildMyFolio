@@ -82,12 +82,14 @@ const Dashboard = () => {
           </div>
           <button
             onClick={() => navigate('/templates')}
-            className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+            disabled={portfolios.length >= 3}
+            className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600"
             aria-label="Create a new portfolio"
+            title={portfolios.length >= 3 ? "Maximum 3 portfolios allowed" : ""}
           >
             <FiPlus size={15} aria-hidden="true" />
-            <span className="hidden sm:inline">New Portfolio</span>
-            <span className="sm:hidden">New</span>
+            <span className="hidden sm:inline">{portfolios.length >= 3 ? "Limit Reached" : "New Portfolio"}</span>
+            <span className="sm:hidden">{portfolios.length >= 3 ? "Max" : "New"}</span>
           </button>
         </div>
 

@@ -1283,7 +1283,7 @@ function SectionEyebrowComp({ num, label }) {
 }
 
 export default function PrismaFolio({ data = {} }) {
-  const { navbar, hero, skills, experience, projects, education, certifications, contact, footer } = data;
+  const { hero, skills, experience, projects, education, certifications, contact } = data;
 
   const stats = [
     hero?.stat1Value && { val: hero.stat1Value, label: hero.stat1Label || "Stat 1" },
@@ -1297,14 +1297,14 @@ export default function PrismaFolio({ data = {} }) {
       <NoiseLayer />
 
       <NavBar>
-        <NavBrand>{navbar?.logo || "Portfolio"}</NavBrand>
+        <NavBrand>{hero?.name || "Portfolio"}</NavBrand>
         <NavCenter>
           {["skills", "experience", "projects", "education", "contact"].map(id => (
             <NavItem key={id} href={`#${id}`}>{id}</NavItem>
           ))}
         </NavCenter>
         <NavCTA href={contact?.email ? `mailto:${contact.email}` : "#contact"}>
-          {navbar?.ctaLabel || "Work Together"}
+          {hero?.ctaLabel || "Work Together"}
         </NavCTA>
       </NavBar>
 
@@ -1606,21 +1606,21 @@ export default function PrismaFolio({ data = {} }) {
                     <span className="arrow">→</span>
                   </SocialLink>
                 )}
-                {contact?.showTwitter !== false && contact?.twitter && (
+                {contact?.twitter && (
                   <SocialLink href={contact.twitter} target="_blank" rel="noopener noreferrer">
                     <span className="label">Twitter</span>
                     <span className="val">{contact.twitter.replace("https://twitter.com/", "")}</span>
                     <span className="arrow">→</span>
                   </SocialLink>
                 )}
-                {contact?.showFacebook === true && contact?.facebook && (
+                {contact?.facebook && (
                   <SocialLink href={contact.facebook} target="_blank" rel="noopener noreferrer">
                     <span className="label">Facebook</span>
                     <span className="val">{contact.facebook.replace("https://", "")}</span>
                     <span className="arrow">→</span>
                   </SocialLink>
                 )}
-                {contact?.showInstagram === true && contact?.instagram && (
+                {contact?.instagram && (
                   <SocialLink href={contact.instagram} target="_blank" rel="noopener noreferrer">
                     <span className="label">Instagram</span>
                     <span className="val">{contact.instagram.replace("https://", "")}</span>
@@ -1663,9 +1663,9 @@ export default function PrismaFolio({ data = {} }) {
 
       <FooterEl>
         <FooterText>
-          {footer?.text || `© ${new Date().getFullYear()} ${hero?.name || ""} · All rights reserved.`}
+          {`© ${new Date().getFullYear()} ${hero?.name || ""} · All rights reserved.`}
         </FooterText>
-        <FooterBrand>{navbar?.logo || "Portfolio"}</FooterBrand>
+        <FooterBrand>{hero?.name || "Portfolio"}</FooterBrand>
       </FooterEl>
     </>
   );

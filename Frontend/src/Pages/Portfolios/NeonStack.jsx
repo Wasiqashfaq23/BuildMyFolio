@@ -780,9 +780,9 @@ function Contact({ contact }) {
         {contact?.email && <ContactLink href={`mailto:${contact.email}`}>{contact.email} →</ContactLink>}
         {contact?.linkedin && <ContactLink href={contact.linkedin} target="_blank">LinkedIn →</ContactLink>}
         {contact?.github && <ContactLink href={contact.github} target="_blank">GitHub →</ContactLink>}
-        {contact?.showFacebook && contact?.facebook && <ContactLink href={contact.facebook} target="_blank">Facebook →</ContactLink>}
-        {contact?.showTwitter && contact?.twitter && <ContactLink href={contact.twitter} target="_blank">Twitter →</ContactLink>}
-        {contact?.showInstagram && contact?.instagram && <ContactLink href={contact.instagram} target="_blank">Instagram →</ContactLink>}
+        {contact?.facebook && <ContactLink href={contact.facebook} target="_blank">Facebook →</ContactLink>}
+        {contact?.twitter && <ContactLink href={contact.twitter} target="_blank">Twitter →</ContactLink>}
+        {contact?.instagram && <ContactLink href={contact.instagram} target="_blank">Instagram →</ContactLink>}
       </ContactLinks>
     </ContactSection>
   );
@@ -821,7 +821,7 @@ function Footer({ footer, contact, experience, certifications }) {
   return (
     <FooterContainer>
       <FooterWrapper>
-        <FooterLogo>{footer?.footerName || "My Portfolio"}</FooterLogo>
+        <FooterLogo>{footer?.fullName || "My Portfolio"}</FooterLogo>
         <FooterNav>
           <FooterNavLink href="#about">About</FooterNavLink>
           <FooterNavLink href="#skills">Skills</FooterNavLink>
@@ -834,12 +834,12 @@ function Footer({ footer, contact, experience, certifications }) {
         <SocialIcons>
           {contact?.github && <SocialIcon href={contact.github} target="_blank"><GitHub /></SocialIcon>}
           {contact?.linkedin && <SocialIcon href={contact.linkedin} target="_blank"><LinkedInIcon /></SocialIcon>}
-          {contact?.showFacebook && contact?.facebook && <SocialIcon href={contact.facebook} target="_blank"><FacebookIcon /></SocialIcon>}
-          {contact?.showTwitter && contact?.twitter && <SocialIcon href={contact.twitter} target="_blank"><TwitterIcon /></SocialIcon>}
-          {contact?.showInstagram && contact?.instagram && <SocialIcon href={contact.instagram} target="_blank"><InstagramIcon /></SocialIcon>}
+          {contact?.facebook && <SocialIcon href={contact.facebook} target="_blank"><FacebookIcon /></SocialIcon>}
+          {contact?.twitter && <SocialIcon href={contact.twitter} target="_blank"><TwitterIcon /></SocialIcon>}
+          {contact?.instagram && <SocialIcon href={contact.instagram} target="_blank"><InstagramIcon /></SocialIcon>}
         </SocialIcons>
         <Copyright>
-          &copy; {footer?.copyrightYear || new Date().getFullYear()} {footer?.footerName || ""}. All rights reserved.
+          &copy; {new Date().getFullYear()} {footer?.fullName || ""}. All rights reserved.
         </Copyright>
       </FooterWrapper>
     </FooterContainer>
@@ -859,12 +859,12 @@ const GradientWrapper = styled.div`
 `;
 
 export default function NeonStack({ data = {} }) {
-  const { navbar, hero, skills, experience, projects, education, certifications, contact, footer } = data;
+  const { hero, skills, experience, projects, education, certifications, contact } = data;
 
   return (
     <ThemeProvider theme={darkTheme}>
       <Body>
-        <Navbar navbar={navbar} contact={contact} experience={experience} certifications={certifications} />
+        <Navbar navbar={hero} contact={contact} experience={experience} certifications={certifications} />
         <Hero hero={hero} />
         <GradientWrapper>
           <Skills skills={skills} />
@@ -876,7 +876,7 @@ export default function NeonStack({ data = {} }) {
           <Certifications certifications={certifications} />
           <Contact contact={contact} />
         </GradientWrapper>
-        <Footer footer={footer} contact={contact} experience={experience} certifications={certifications} />
+        <Footer footer={hero} contact={contact} experience={experience} certifications={certifications} />
       </Body>
     </ThemeProvider>
   );

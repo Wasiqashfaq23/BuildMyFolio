@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FiGrid, FiArrowRight } from "react-icons/fi";
+import AppNavbar from "../components/common/AppNavbar";
+import Spinner from "../components/common/Spinner";
 
 export default function Templates() {
   const [templates, setTemplates] = useState([]);
@@ -15,76 +18,79 @@ export default function Templates() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return (
-    <div className="min-h-screen bg-[#080808] flex items-center justify-center">
-      <p className="text-[#555] text-sm">Loading templates...</p>
-    </div>
-  );
-
-  if (error) return (
-    <div className="min-h-screen bg-[#080808] flex items-center justify-center">
-      <p className="text-red-400 text-sm">{error}</p>
-    </div>
-  );
-
   return (
-    <div className="min-h-screen bg-[#080808] px-4 sm:px-6 py-8 sm:py-12">
-      <div className="max-w-5xl mx-auto">
+    <div className="min-h-screen bg-slate-50 flex flex-col">
+      <AppNavbar backTo="/dashboard" backLabel="Dashboard" />
 
-        <button
-          onClick={() => navigate("/dashboard")}
-          className="text-xs text-[#aaa] hover:text-[#f5f5f5] border border-[#222] px-3 py-1.5 rounded-lg transition mb-8"
-        >
-          ← Dashboard
-        </button>
-
-        <div className="mb-8 sm:mb-10">
-          <h1 className="text-xl sm:text-2xl font-medium text-[#f5f5f5]">Choose a template</h1>
-          <p className="text-sm text-[#555] mt-1">Pick a style that fits you — customize everything after.</p>
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900">Choose a Template</h1>
+          <p className="text-sm text-slate-500 mt-0.5">Pick a design and customize it with your content</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {templates.map((t) => (
-            <div key={t._id} className="bg-[#0f0f0f] border border-[#1a1a1a] rounded-2xl overflow-hidden hover:border-[#333] transition group">
-
-              <div className="p-3 pb-0">
-                <div className="w-full h-44 sm:h-48 rounded-xl overflow-hidden bg-[#161616]">
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <Spinner size="md" />
+          </div>
+        ) : error ? (
+          <div role="alert" className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+            {error}
+          </div>
+        ) : templates.length === 0 ? (
+          <div className="bg-white rounded-lg border border-slate-200 text-center py-16 px-4">
+            <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-3" aria-hidden="true">
+              <FiGrid className="text-slate-400" size={22} />
+            </div>
+            <h3 className="text-base font-semibold text-slate-900 mb-1">No templates available</h3>
+            <p className="text-sm text-slate-500">Check back soon for new templates</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5" role="list" aria-label="Available templates">
+            {templates.map((template) => (
+              <article
+                key={template._id}
+                className="bg-white rounded-lg border border-slate-200 overflow-hidden hover:border-blue-200 hover:shadow-sm transition-all"
+                role="listitem"
+              >
+                <div className="aspect-video bg-slate-100 overflow-hidden">
                   <img
-                    src={t.image}
-                    alt={t.templateName}
+                    src={template.image}
+                    alt={`Preview of ${template.templateName}`}
                     className="w-full h-full object-cover"
+                    loading="lazy"
                     onError={(e) => {
                       e.target.style.display = "none";
-                      e.target.nextSibling.style.display = "flex";
+                      e.target.nextElementSibling.style.display = "flex";
                     }}
                   />
-                  <div className="w-full h-full items-center justify-center text-[#333] text-sm" style={{ display: "none" }}>
-                    No preview available
+                  <div className="w-full h-full items-center justify-center text-slate-400 text-xs hidden">
+                    No preview
                   </div>
                 </div>
-              </div>
 
-              <div className="p-4">
-                <span className="text-xs font-medium text-[#555] bg-[#161616] border border-[#222] px-2 py-1 rounded-md capitalize">
-                  {t.category}
-                </span>
-                <p className="text-[#f5f5f5] font-medium mt-2 mb-1">{t.templateName}</p>
-                {t.description && (
-                  <p className="text-[#444] text-xs mb-3">{t.description}</p>
-                )}
-                <button
-                  onClick={() => navigate(`/create/${t._id}`)}
-                  className="w-full py-2 text-sm border border-[#222] rounded-lg text-[#888] hover:text-[#f5f5f5] hover:border-[#444] transition mt-2"
-                >
-                  Use this template →
-                </button>
-              </div>
-
-            </div>
-          ))}
-        </div>
-
-      </div>
+                <div className="p-4 sm:p-5">
+                  <span className="inline-block px-2 py-0.5 text-[11px] font-medium text-blue-700 bg-blue-50 border border-blue-100 rounded capitalize mb-2">
+                    {template.category}
+                  </span>
+                  <h3 className="text-sm font-semibold text-slate-900 mb-1">{template.templateName}</h3>
+                  {template.description && (
+                    <p className="text-xs text-slate-500 line-clamp-2 mb-3">{template.description}</p>
+                  )}
+                  <button
+                    onClick={() => navigate(`/create/${template._id}`)}
+                    className="w-full py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-1.5"
+                    aria-label={`Use ${template.templateName} template`}
+                  >
+                    Use Template
+                    <FiArrowRight size={13} aria-hidden="true" />
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
+      </main>
     </div>
   );
 }

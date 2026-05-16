@@ -1257,7 +1257,7 @@ function WinHeader({ title, tag, tagColor }) {
 }
 
 export default function NeonOS({ data = {} }) {
-  const { navbar, hero, skills, experience, projects, education, certifications, contact, footer } = data;
+  const { hero, skills, experience, projects, education, certifications, contact } = data;
 
   const navItems = [
     { id: "skills", label: "skills" },
@@ -1277,14 +1277,14 @@ export default function NeonOS({ data = {} }) {
       <PageShell>
         <NavBar>
           <NavLeft>
-            <NavLogo>{navbar?.logo || "OS"}</NavLogo>
+            <NavLogo>{hero?.logo || (hero?.name ? hero.name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase() : "OS")}</NavLogo>
             <NavSystem>
-              <span>@{(navbar?.handle || "user").replace(/^@/, "")}</span>
+              <span>@{(hero?.handle || (hero?.name ? hero.name.split(" ")[0].toLowerCase() : "user")).replace(/^@/, "")}</span>
             </NavSystem>
           </NavLeft>
 
           <NavCenter>
-            {navbar?.systemName || "PORTFOLIO_OS v2.0"}
+            {hero?.systemName || (hero?.name ? `${hero.name.split(" ")[0].toUpperCase()}_OS` : "PORTFOLIO_OS")}
           </NavCenter>
 
           <NavRight>
@@ -1567,21 +1567,21 @@ export default function NeonOS({ data = {} }) {
                         <span className="val">{contact.linkedin.replace("https://linkedin.com/in/", "")}</span>
                       </ContactRow>
                     )}
-                    {contact?.showTwitter !== false && contact?.twitter && (
+                    {contact?.twitter && (
                       <ContactRow href={contact.twitter} target="_blank" rel="noopener noreferrer">
                         <span className="icon">✦</span>
                         <span className="label">twitter/x</span>
                         <span className="val">{contact.twitter.replace("https://twitter.com/", "")}</span>
                       </ContactRow>
                     )}
-                    {contact?.showFacebook === true && contact?.facebook && (
+                    {contact?.facebook && (
                       <ContactRow href={contact.facebook} target="_blank" rel="noopener noreferrer">
                         <span className="icon">◉</span>
                         <span className="label">facebook</span>
                         <span className="val">{contact.facebook.replace("https://", "")}</span>
                       </ContactRow>
                     )}
-                    {contact?.showInstagram === true && contact?.instagram && (
+                    {contact?.instagram && (
                       <ContactRow href={contact.instagram} target="_blank" rel="noopener noreferrer">
                         <span className="icon">◎</span>
                         <span className="label">instagram</span>
@@ -1614,7 +1614,7 @@ export default function NeonOS({ data = {} }) {
 
           <FooterEl>
             <FooterText>
-              {footer?.text || `© ${new Date().getFullYear()} ${hero?.name || ""} — All rights reserved.`}
+              {`© ${new Date().getFullYear()} ${hero?.name || ""} — All rights reserved.`}
             </FooterText>
             <FooterBadge>PORTFOLIO_OS v2.0</FooterBadge>
           </FooterEl>

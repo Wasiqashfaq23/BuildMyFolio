@@ -1302,7 +1302,7 @@ function getImg(img) {
 }
 
 export default function AuroraStudio({ data = {} }) {
-  const { navbar, hero, skills, experience, projects, education, certifications, contact, footer } = data;
+  const { hero, skills, experience, projects, education, certifications, contact } = data;
 
   const marqueeItems = [
     "Creative Developer",
@@ -1345,7 +1345,7 @@ export default function AuroraStudio({ data = {} }) {
       </FloatShape>
 
       <NavBar>
-        <NavBrand>{navbar?.logo || "Portfolio"}</NavBrand>
+        <NavBrand>{hero?.name || "Portfolio"}</NavBrand>
         <NavLinks>
           {["skills", "experience", "projects", "education", "contact"].map(id => (
             <NavLink key={id} href={`#${id}`}>
@@ -1354,7 +1354,7 @@ export default function AuroraStudio({ data = {} }) {
           ))}
         </NavLinks>
         <NavCTA href={contact?.email ? `mailto:${contact.email}` : "#contact"}>
-          {navbar?.ctaLabel || "Hire Me"}
+          {hero?.ctaLabel || "Hire Me"}
         </NavCTA>
       </NavBar>
 
@@ -1658,7 +1658,7 @@ export default function AuroraStudio({ data = {} }) {
                   </div>
                 </ContactItem>
               )}
-              {contact?.showTwitter !== false && contact?.twitter && (
+              {contact?.twitter && (
                 <ContactItem href={contact.twitter} target="_blank" rel="noopener noreferrer">
                   <div className="icon">✦</div>
                   <div className="text">
@@ -1667,7 +1667,7 @@ export default function AuroraStudio({ data = {} }) {
                   </div>
                 </ContactItem>
               )}
-              {contact?.showFacebook === true && contact?.facebook && (
+              {contact?.facebook && (
                 <ContactItem href={contact.facebook} target="_blank" rel="noopener noreferrer">
                   <div className="icon">◉</div>
                   <div className="text">
@@ -1676,7 +1676,7 @@ export default function AuroraStudio({ data = {} }) {
                   </div>
                 </ContactItem>
               )}
-              {contact?.showInstagram === true && contact?.instagram && (
+              {contact?.instagram && (
                 <ContactItem href={contact.instagram} target="_blank" rel="noopener noreferrer">
                   <div className="icon">◎</div>
                   <div className="text">
@@ -1732,9 +1732,9 @@ export default function AuroraStudio({ data = {} }) {
 
       <Footer>
         <FooterText>
-          {footer?.text || `© ${new Date().getFullYear()} ${hero?.name || ""} · All rights reserved.`}
+          {`© ${new Date().getFullYear()} ${hero?.name || ""} · All rights reserved.`}
         </FooterText>
-        <FooterBrand>{navbar?.logo || "Portfolio"}</FooterBrand>
+        <FooterBrand>{hero?.name || "Portfolio"}</FooterBrand>
       </Footer>
     </>
   );

@@ -1,205 +1,15 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
-const inputClass = "w-full bg-[#111] border border-[#222] rounded-lg px-3 py-2.5 text-sm text-[#f5f5f5] outline-none focus:border-[#444] transition placeholder:text-[#333]";
-
-async function uploadToCloudinary(file) {
-  const fd = new FormData();
-  fd.append("image", file);
-  const res = await fetch(`${import.meta.env.VITE_API_URL}/upload`, {
-    method: "POST",
-    credentials: "include",
-    body: fd,
-  });
-  const contentType = res.headers.get("content-type");
-  if (!contentType?.includes("application/json")) {
-    const text = await res.text();
-    throw new Error(`Server error: ${res.status} — ${text.slice(0, 100)}`);
-  }
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.message || "Upload failed");
-  return data.url;
-}
-
-function FieldRenderer({ field, value, onChange, showInstruction = true }) {
-  const [input, setInput] = useState("");
-  const [uploading, setUploading] = useState(false);
-  const [uploadError, setUploadError] = useState("");
-  const fileInputRef = useRef(null);
-
-  if (field.type === "text" || field.type === "email" || field.type === "link") {
-    return (
-      <input
-        type={field.type === "link" ? "url" : field.type}
-        placeholder={field.placeholder || ""}
-        required={field.required}
-        value={value || ""}
-        onChange={(e) => onChange(e.target.value)}
-        className={inputClass}
-      />
-    );
-  }
-
-  if (field.type === "textarea") {
-    return (
-      <textarea
-        placeholder={field.placeholder || ""}
-        required={field.required}
-        rows={3}
-        value={value || ""}
-        onChange={(e) => onChange(e.target.value)}
-        className={inputClass + " resize-none"}
-      />
-    );
-  }
-
-  if (field.type === "boolean") {
-    return (
-      <div className="flex items-center gap-3">
-        <div onClick={() => onChange(!value)} className={`w-10 h-5 rounded-full cursor-pointer transition relative ${value ? "bg-[#f5f5f5]" : "bg-[#222]"}`}>
-          <div className={`absolute top-0.5 w-4 h-4 rounded-full transition-all ${value ? "bg-[#080808] left-5" : "bg-[#555] left-0.5"}`} />
-        </div>
-        <span className="text-sm text-[#555]">{value ? "On" : "Off"}</span>
-      </div>
-    );
-  }
-
-  if (field.type === "tags") {
-    const tags = value || [];
-    function addTag() {
-      if (input.trim() && !tags.includes(input.trim())) {
-        onChange([...tags, input.trim()]);
-        setInput("");
-      }
-    }
-    return (
-      <div>
-        {showInstruction && field.instruction && <p className="text-xs text-[#444] mb-2">{field.instruction}</p>}
-        <div className="flex gap-2 mb-2">
-          <input type="text" placeholder={field.placeholder || "Type and press Enter"} value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addTag(); } }}
-            className={inputClass} />
-          <button type="button" onClick={addTag} className="border border-[#222] text-[#888] px-3 rounded-lg text-sm hover:border-[#444] transition shrink-0">Add</button>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {tags.map((tag, i) => (
-            <span key={i} className="flex items-center gap-1.5 bg-[#161616] border border-[#222] text-[#888] text-xs px-2.5 py-1 rounded-full">
-              {tag}
-              <button type="button" onClick={() => onChange(tags.filter((_, j) => j !== i))} className="text-[#444] hover:text-red-400">×</button>
-            </span>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  if (field.type === "image") {
-    const images = value || [];
-
-    async function handleUpload(e) {
-      const files = Array.from(e.target.files);
-      if (!files.length) return;
-      if (fileInputRef.current) fileInputRef.current.value = "";
-      setUploading(true);
-      setUploadError("");
-      try {
-        const urls = await Promise.all(files.map((f) => uploadToCloudinary(f)));
-        onChange(
-          field.multiple
-            ? [...images, ...urls].slice(0, field.max || 4)
-            : [urls[0]]
-        );
-      } catch (err) {
-        setUploadError(err.message || "Upload failed");
-      } finally {
-        setUploading(false);
-      }
-    }
-
-    return (
-      <div>
-        {showInstruction && field.instruction && <p className="text-xs text-[#444] mb-2">{field.instruction}</p>}
-        <label className={`flex items-center gap-3 cursor-pointer border border-dashed border-[#222] rounded-lg px-4 py-3 transition ${uploading ? "opacity-50 cursor-not-allowed" : "hover:border-[#444]"}`}>
-          <span className="text-xs text-[#555]">{uploading ? "Uploading..." : "Choose image"}</span>
-          <input ref={fileInputRef} type="file" accept="image/*" multiple={field.multiple} disabled={uploading} onChange={handleUpload} className="hidden" />
-        </label>
-        {uploadError && <p className="text-xs text-red-400 mt-1.5">{uploadError}</p>}
-        {uploading && <p className="text-xs text-[#555] mt-1.5 animate-pulse">Uploading to Cloudinary...</p>}
-        <div className="flex gap-2 mt-2 flex-wrap">
-          {images.map((url, i) => (
-            <div key={i} className="relative group">
-              <img src={url} alt={`upload-${i}`} className="w-16 h-16 object-cover rounded-lg border border-[#222]" />
-              <button type="button" onClick={() => onChange(images.filter((_, j) => j !== i))}
-                className="absolute -top-1 -right-1 w-4 h-4 bg-[#222] text-[#888] rounded-full text-xs flex items-center justify-center hover:text-red-400 opacity-0 group-hover:opacity-100 transition">×</button>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  if (field.type === "array") {
-    const items = value || [];
-    function addItem() {
-      if (field.max && items.length >= field.max) return;
-      onChange([...items, {}]);
-    }
-    function updateItem(index, subField, subValue) {
-      onChange(items.map((item, i) => i === index ? { ...item, [subField]: subValue } : item));
-    }
-    function removeItem(index) {
-      onChange(items.filter((_, i) => i !== index));
-    }
-    return (
-      <div className="flex flex-col gap-3">
-        {showInstruction && field.instruction && <p className="text-xs text-[#444]">{field.instruction}</p>}
-        {items.map((item, index) => (
-          <div key={index} className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-xl p-3 sm:p-4 flex flex-col gap-4">
-            <div className="flex items-center justify-between">
-              <span className="text-xs text-[#333]">#{index + 1}</span>
-              <button type="button" onClick={() => removeItem(index)} className="text-xs text-[#333] hover:text-red-400 transition">Remove</button>
-            </div>
-            {field.item.fields.map((subField) => (
-              <div key={subField.name}>
-                <label className="block text-xs text-[#444] mb-1.5">{subField.label || subField.name}</label>
-                {subField.instruction && <p className="text-xs text-[#333] mb-1.5">{subField.instruction}</p>}
-                <FieldRenderer field={subField} value={item[subField.name]} onChange={(val) => updateItem(index, subField.name, val)} showInstruction={false} />
-              </div>
-            ))}
-          </div>
-        ))}
-        {(!field.max || items.length < field.max) && (
-          <button type="button" onClick={addItem} className="border border-dashed border-[#222] text-[#444] py-2.5 rounded-lg text-sm hover:border-[#444] hover:text-[#888] transition">
-            + Add {field.label || field.name}
-          </button>
-        )}
-        {field.min > 0 && items.length < field.min && <p className="text-xs text-[#444]">Add at least {field.min}</p>}
-      </div>
-    );
-  }
-
-  if (field.type === "object") {
-    return (
-      <div className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-xl p-3 sm:p-4 flex flex-col gap-3">
-        {field.fields.map((subField) => (
-          <div key={subField.name}>
-            <label className="block text-xs text-[#444] mb-1.5">{subField.label || subField.name}</label>
-            <FieldRenderer field={subField} value={value?.[subField.name]} onChange={(val) => onChange({ ...value, [subField.name]: val })} showInstruction={false} />
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  return null;
-}
+import { FiCheck, FiChevronLeft, FiChevronRight, FiEdit2, FiAlertCircle } from "react-icons/fi";
+import AppNavbar from "../components/common/AppNavbar";
+import Spinner from "../components/common/Spinner";
+import FieldRenderer from "../components/forms/FieldRenderer";
+import { PageLoading, PageError } from "../components/common/PageShell";
 
 function pruneEmptyValue(value) {
   if (Array.isArray(value)) {
     return value.map(pruneEmptyValue).filter((item) => item !== undefined);
   }
-
   if (value && typeof value === "object" && !(value instanceof File)) {
     const entries = Object.entries(value)
       .map(([key, val]) => [key, pruneEmptyValue(val)])
@@ -207,12 +17,59 @@ function pruneEmptyValue(value) {
     if (entries.length === 0) return undefined;
     return Object.fromEntries(entries);
   }
-
-  if (typeof value === "string") {
-    return value.trim() === "" ? undefined : value;
-  }
-
+  if (typeof value === "string") return value.trim() === "" ? undefined : value;
   return value === undefined || value === null ? undefined : value;
+}
+
+function isFieldEmpty(value, field) {
+  if (value === undefined || value === null || value === "") return true;
+  if (field.type === "tags" && Array.isArray(value) && value.length === 0) return true;
+  if (field.type === "image" && Array.isArray(value) && value.length === 0) return true;
+  if (field.type === "array" && Array.isArray(value) && value.length === 0) return true;
+  return false;
+}
+
+function getMissingRequired(sections, formData) {
+  const missing = [];
+  sections.forEach((sec, secIndex) => {
+    if (sec.type === "array") {
+      const items = formData[sec.sectionId] || [];
+      if (sec.min && items.length < sec.min) {
+        missing.push({ sectionIndex: secIndex, sectionLabel: sec.label, fieldLabel: sec.label, message: `Add at least ${sec.min}` });
+      }
+      if (sec.item?.fields) {
+        items.forEach((item, itemIndex) => {
+          sec.item.fields.forEach((f) => {
+            if (f.required && isFieldEmpty(item[f.name], f)) {
+              missing.push({ sectionIndex: secIndex, sectionLabel: sec.label, fieldLabel: `${f.label || f.name} (item #${itemIndex + 1})`, message: "Required" });
+            }
+          });
+        });
+      }
+    } else if (sec.type === "tags") {
+      if (sec.required && isFieldEmpty(formData[sec.sectionId], sec)) {
+        missing.push({ sectionIndex: secIndex, sectionLabel: sec.label, fieldLabel: sec.label, message: "Required" });
+      }
+    } else if (sec.fields) {
+      sec.fields.forEach((f) => {
+        const val = formData[sec.sectionId]?.[f.name];
+        if (f.required && isFieldEmpty(val, f)) {
+          missing.push({ sectionIndex: secIndex, sectionLabel: sec.label, fieldLabel: f.label || f.name, message: "Required" });
+        }
+      });
+    }
+  });
+  return missing;
+}
+
+function getDisplayValue(value, field) {
+  if (value === undefined || value === null || value === "") return null;
+  if (field.type === "boolean") return value ? "Yes" : "No";
+  if (field.type === "tags" && Array.isArray(value)) return value.length ? value.join(", ") : null;
+  if (field.type === "image" && Array.isArray(value)) return value.length ? `${value.length} image(s)` : null;
+  if (field.type === "resume") return value ? value.split("/").pop() : null;
+  if (typeof value === "string") return value;
+  return JSON.stringify(value);
 }
 
 function EditPortfolio() {
@@ -228,6 +85,8 @@ function EditPortfolio() {
   const [saveError, setSaveError] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
+  const [validationErrors, setValidationErrors] = useState([]);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/portfolio/id/${portfolioId}`, { credentials: "include" })
@@ -252,7 +111,6 @@ function EditPortfolio() {
   async function handleSave() {
     setSaving(true);
     setSaveError("");
-    (true)
     try {
       const payload = pruneEmptyValue(formData) || {};
       const res = await fetch(`${import.meta.env.VITE_API_URL}/portfolio/${portfolioId}`, {
@@ -276,133 +134,309 @@ function EditPortfolio() {
     }
   }
 
-  if (loading) return (
-    <div className="min-h-screen bg-[#080808] flex items-center justify-center">
-      <p className="text-[#555] text-sm">Loading...</p>
-    </div>
-  );
-
-  if (error || !template || !portfolio) return (
-    <div className="min-h-screen bg-[#080808] flex items-center justify-center px-4">
-      <p className="text-red-400 text-sm">{error || "Portfolio not found."}</p>
-    </div>
-  );
+  if (loading) return <PageLoading message="Loading portfolio..." />;
+  if (error || !template || !portfolio) return <PageError message={error || "Portfolio not found."} onRetry={() => window.location.reload()} />;
 
   const sections = template.sections;
   const currentSection = sections[currentIndex];
   const isFirst = currentIndex === 0;
   const isLast = currentIndex === sections.length - 1;
   const sectionData = formData[currentSection.sectionId];
-  const progress = Math.round(((currentIndex + 1) / sections.length) * 100);
+
+  function isSectionFilled(index) {
+    const sec = sections[index];
+    return formData[sec.sectionId] !== undefined && formData[sec.sectionId] !== null;
+  }
 
   function handleSectionChange(value) {
     setFormData((prev) => ({ ...prev, [currentSection.sectionId]: value }));
   }
 
   return (
-    <div className="min-h-screen bg-[#080808]">
-      <div className="border-b border-[#1a1a1a] px-4 sm:px-6 lg:px-10 py-3 sm:py-4 flex items-center justify-between gap-3">
-        <span className="text-sm font-bold text-[#f5f5f5] tracking-widest uppercase shrink-0">Portfolio.</span>
-        <div className="flex items-center gap-2 sm:gap-4 flex-wrap justify-end">
-          <span className="hidden sm:inline text-xs text-[#444]">Step {currentIndex + 1} of {sections.length}</span>
-          <div className="hidden sm:block w-24 lg:w-32 h-1 bg-[#1a1a1a] rounded-full overflow-hidden">
-            <div className="h-full bg-[#f5f5f5] rounded-full transition-all" style={{ width: `${progress}%` }} />
-          </div>
-          <button onClick={() => setSidebarOpen((v) => !v)} className="md:hidden text-xs text-[#888] border border-[#222] px-2.5 py-1.5 rounded-lg transition hover:border-[#444]">☰ Sections</button>
-          <button onClick={() => navigate("/dashboard")} className="text-xs text-[#aaa] hover:text-[#f5f5f5] border border-[#222] px-3 py-1.5 rounded-lg transition">← Dashboard</button>
-        </div>
-      </div>
+    <div className="min-h-screen bg-slate-50 flex flex-col">
+      <AppNavbar backTo="/dashboard" backLabel="Dashboard" />
 
-      <div className="sm:hidden px-4 pt-3 pb-1 flex items-center gap-3">
-        <span className="text-xs text-[#444] shrink-0">{currentIndex + 1}/{sections.length}</span>
-        <div className="flex-1 h-1 bg-[#1a1a1a] rounded-full overflow-hidden">
-          <div className="h-full bg-[#f5f5f5] rounded-full transition-all" style={{ width: `${progress}%` }} />
-        </div>
-      </div>
-
-      {sidebarOpen && <div className="fixed inset-0 z-40 bg-black/60 md:hidden" onClick={() => setSidebarOpen(false)} />}
-
-      <aside className={`fixed top-0 left-0 z-50 h-full w-64 bg-[#0d0d0d] border-r border-[#1a1a1a] py-6 px-3 flex flex-col gap-1 transition-transform duration-300 md:hidden ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
-        <div className="flex items-center justify-between px-2 mb-4">
-          <p className="text-xs text-[#333] uppercase tracking-widest">Sections</p>
-          <button onClick={() => setSidebarOpen(false)} className="text-[#555] hover:text-[#f5f5f5] text-lg leading-none">×</button>
-        </div>
-        {sections.map((section, i) => (
-          <button key={section.sectionId} type="button" onClick={() => { setCurrentIndex(i); setSidebarOpen(false); }}
-            className={`text-left px-3 py-2 rounded-lg text-sm transition flex items-center gap-2 ${currentIndex === i ? "bg-[#161616] text-[#f5f5f5]" : "text-[#555] hover:text-[#888]"}`}>
-            <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${i <= currentIndex ? "bg-[#f5f5f5]" : "bg-[#333]"}`} />
-            {section.label}
-          </button>
-        ))}
-      </aside>
-
-      <div className="flex">
-        <aside className="hidden md:flex w-44 lg:w-52 border-r border-[#1a1a1a] py-8 px-3 flex-col gap-1 shrink-0 sticky top-0 h-screen overflow-y-auto">
-          <p className="text-xs text-[#333] uppercase tracking-widest mb-3 px-2">Sections</p>
-          {sections.map((section, i) => (
-            <button key={section.sectionId} type="button" onClick={() => setCurrentIndex(i)}
-              className={`text-left px-3 py-2 rounded-lg text-sm transition flex items-center gap-2 ${currentIndex === i ? "bg-[#161616] text-[#f5f5f5]" : "text-[#555] hover:text-[#888]"}`}>
-              <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${i <= currentIndex ? "bg-[#f5f5f5]" : "bg-[#333]"}`} />
-              {section.label}
-            </button>
-          ))}
+      <div className="flex-1 flex">
+        {/* Sidebar - section tracker */}
+        <aside className={`${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 fixed lg:static inset-y-0 left-0 top-14 z-30 w-64 bg-white border-r border-slate-200 overflow-y-auto transition-transform lg:transition-none`}>
+          <nav className="p-4" aria-label="Form sections">
+            <p className="text-xs font-medium text-slate-400 uppercase tracking-wide mb-3 px-2">Sections</p>
+            <ul className="space-y-1">
+              {sections.map((sec, i) => {
+                const filled = isSectionFilled(i);
+                const active = i === currentIndex;
+                return (
+                  <li key={sec.sectionId}>
+                    <button
+                      onClick={() => { setCurrentIndex(i); setSidebarOpen(false); }}
+                      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors text-left ${
+                        active
+                          ? "bg-blue-50 text-blue-700 font-medium"
+                          : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                      }`}
+                      aria-current={active ? "step" : undefined}
+                    >
+                      <span className={`w-5 h-5 flex items-center justify-center rounded-full shrink-0 ${
+                        active ? "bg-blue-600 text-white" : filled ? "bg-green-100 text-green-600" : "bg-slate-100 text-slate-400"
+                      }`}>
+                        {filled && !active ? <FiCheck size={11} /> : <span className="text-[10px] font-bold">{i + 1}</span>}
+                      </span>
+                      <span className="truncate">{sec.label}</span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
         </aside>
 
-        <main className="flex-1 px-4 sm:px-6 lg:px-10 py-6 sm:py-8 lg:py-10 overflow-y-auto">
-          <div className="w-full max-w-xl mx-auto md:mx-0">
-            <div className="mb-6 sm:mb-8">
-              <div className="flex gap-1 mb-4 sm:mb-6">
-                {sections.map((_, i) => (
-                  <div key={i} className={`h-0.5 flex-1 rounded-full transition-all ${i <= currentIndex ? "bg-[#f5f5f5]" : "bg-[#1a1a1a]"}`} />
-                ))}
+        {/* Mobile sidebar overlay */}
+        {sidebarOpen && (
+          <div className="fixed inset-0 top-14 z-20 bg-black/30 lg:hidden" onClick={() => setSidebarOpen(false)} />
+        )}
+
+        {/* Main content */}
+        <main className="flex-1 min-w-0">
+          {/* Mobile section indicator */}
+          <div className="lg:hidden bg-white border-b border-slate-200 px-4 py-3 flex items-center gap-3">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="text-sm font-medium text-blue-600 hover:text-blue-700"
+              aria-label="Open section list"
+            >
+              {currentIndex + 1}/{sections.length}
+            </button>
+            <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+              <div className="h-full bg-blue-600 rounded-full transition-all duration-300" style={{ width: `${Math.round(((currentIndex + 1) / sections.length) * 100)}%` }} />
+            </div>
+          </div>
+
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+            {/* Section header */}
+            <div className="mb-6">
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900">{currentSection.label}</h2>
+              {currentSection.instruction && (
+                <p className="text-sm text-slate-500 mt-1">{currentSection.instruction}</p>
+              )}
+            </div>
+
+            {/* Form content */}
+            <div className="bg-white rounded-lg border border-slate-200 p-5 sm:p-6 mb-6">
+              <div className="space-y-5">
+                {currentSection.type === "array" || currentSection.type === "tags" ? (
+                  <FieldRenderer
+                    field={currentSection}
+                    value={sectionData}
+                    onChange={handleSectionChange}
+                  />
+                ) : (
+                  currentSection.fields?.map((field) => (
+                    <div key={field.name}>
+                      <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                        {field.label || field.name}
+                        {field.required && <span className="text-red-500 ml-0.5" aria-label="required">*</span>}
+                      </label>
+                      {field.instruction && (
+                        <p className="text-xs text-slate-400 mb-2">{field.instruction}</p>
+                      )}
+                      <FieldRenderer
+                        field={field}
+                        value={sectionData?.[field.name] ?? field.default}
+                        onChange={(val) => handleSectionChange({ ...sectionData, [field.name]: val })}
+                      />
+                    </div>
+                  ))
+                )}
               </div>
-              <h2 className="text-lg sm:text-xl font-medium text-[#f5f5f5] mb-1">{currentSection.label}</h2>
-              {currentSection.instruction && <p className="text-sm text-[#444]">{currentSection.instruction}</p>}
             </div>
 
-            <div className="flex flex-col gap-4 sm:gap-5 mb-8 sm:mb-10">
-              {currentSection.type === "array" || currentSection.type === "tags" ? (
-                <FieldRenderer field={currentSection} value={sectionData} onChange={handleSectionChange} />
-              ) : (
-                currentSection.fields?.map((field) => (
-                  <div key={field.name}>
-                    <label className="block text-sm text-[#555] mb-1.5">
-                      {field.label || field.name}
-                      {field.required && <span className="text-[#444] ml-1">*</span>}
-                    </label>
-                    {field.instruction && <p className="text-xs text-[#333] mb-1.5">{field.instruction}</p>}
-                    <FieldRenderer
-                      field={field}
-                      value={sectionData?.[field.name] ?? field.default}
-                      onChange={(val) => handleSectionChange({ ...sectionData, [field.name]: val })}
-                    />
-                  </div>
-                ))
-              )}
-            </div>
+            {/* Error feedback */}
+            {saveError && (
+              <div role="alert" className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm mb-6">
+                {saveError}
+              </div>
+            )}
 
-            {saveError && <p className="text-xs text-red-400 mb-4">{saveError}</p>}
-
-            <div className="flex items-center justify-between pt-5 sm:pt-6 border-t border-[#111]">
-              <button type="button" onClick={() => setCurrentIndex((i) => i - 1)} disabled={isFirst}
-                className="border border-[#222] text-[#666] px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-sm hover:border-[#444] hover:text-[#f5f5f5] transition disabled:opacity-20 disabled:cursor-not-allowed">
-                ← Back
+            {/* Navigation */}
+            <div className="flex items-center justify-between pt-4 border-t border-slate-200">
+              <button
+                type="button"
+                onClick={() => setCurrentIndex((i) => i - 1)}
+                disabled={isFirst}
+                className="flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors disabled:opacity-40 disabled:hover:bg-white"
+              >
+                <FiChevronLeft size={14} aria-hidden="true" />
+                Back
               </button>
+
               {isLast ? (
-                <button type="button" onClick={handleSave} disabled={saving}
-                  className="bg-[#f5f5f5] text-[#080808] px-5 sm:px-6 py-2 sm:py-2.5 rounded-lg text-sm font-medium hover:bg-white transition disabled:opacity-40">
-                  {saving ? "Saving..." : "Save Changes"}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const errors = getMissingRequired(sections, formData);
+                    if (errors.length > 0) {
+                      setValidationErrors(errors);
+                    } else {
+                      setValidationErrors([]);
+                      setShowPreview(true);
+                    }
+                  }}
+                  className="flex items-center gap-1.5 px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Review & Save
+                  <FiChevronRight size={14} aria-hidden="true" />
                 </button>
               ) : (
-                <button type="button" onClick={() => setCurrentIndex((i) => i + 1)}
-                  className="bg-[#f5f5f5] text-[#080808] px-5 sm:px-6 py-2 sm:py-2.5 rounded-lg text-sm font-medium hover:bg-white transition">
-                  Next →
+                <button
+                  type="button"
+                  onClick={() => setCurrentIndex((i) => i + 1)}
+                  className="flex items-center gap-1.5 px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Next
+                  <FiChevronRight size={14} aria-hidden="true" />
                 </button>
               )}
             </div>
+
+            {/* Validation errors */}
+            {validationErrors.length > 0 && (
+              <div className="mt-4 bg-red-50 border border-red-200 rounded-lg p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <FiAlertCircle className="text-red-600" size={16} />
+                  <p className="text-sm font-medium text-red-700">Please fill in all required fields</p>
+                </div>
+                <ul className="space-y-1">
+                  {validationErrors.map((err, i) => (
+                    <li key={i} className="text-xs text-red-600 flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => { setCurrentIndex(err.sectionIndex); setValidationErrors([]); }}
+                        className="underline hover:text-red-800"
+                      >
+                        {err.sectionLabel}
+                      </button>
+                      <span className="text-red-400">—</span>
+                      <span>{err.fieldLabel}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </main>
       </div>
+
+      {/* Preview / Review step */}
+      {showPreview && (
+        <div className="fixed inset-0 z-50 bg-slate-50 overflow-y-auto">
+          <div className="sticky top-0 z-10 bg-white border-b border-slate-200 px-4 sm:px-6 py-4 flex items-center justify-between">
+            <h2 className="text-lg font-bold text-slate-900">Review Your Changes</h2>
+            <button
+              onClick={() => setShowPreview(false)}
+              className="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+            >
+              Back to Editing
+            </button>
+          </div>
+
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 space-y-6">
+            {sections.map((sec, secIndex) => (
+              <div key={sec.sectionId} className="bg-white rounded-lg border border-slate-200 overflow-hidden">
+                <div className="flex items-center justify-between px-5 py-3 bg-slate-50 border-b border-slate-200">
+                  <h3 className="text-sm font-semibold text-slate-800">{sec.label}</h3>
+                  <button
+                    onClick={() => { setCurrentIndex(secIndex); setShowPreview(false); }}
+                    className="flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700 transition-colors"
+                  >
+                    <FiEdit2 size={12} />
+                    Edit
+                  </button>
+                </div>
+                <div className="px-5 py-4">
+                  {sec.type === "array" ? (
+                    <div className="space-y-3">
+                      {(formData[sec.sectionId] || []).length === 0 ? (
+                        <p className="text-sm text-slate-400 italic">No items added</p>
+                      ) : (
+                        (formData[sec.sectionId] || []).map((item, itemIdx) => (
+                          <div key={itemIdx} className="bg-slate-50 rounded-lg p-3 border border-slate-100">
+                            <p className="text-xs font-medium text-slate-400 mb-2">#{itemIdx + 1}</p>
+                            <dl className="grid gap-1.5">
+                              {sec.item.fields.map((f) => {
+                                const display = getDisplayValue(item[f.name], f);
+                                if (!display) return null;
+                                return (
+                                  <div key={f.name} className="flex gap-2">
+                                    <dt className="text-xs font-medium text-slate-500 min-w-25">{f.label || f.name}:</dt>
+                                    <dd className="text-xs text-slate-700">{display}</dd>
+                                  </div>
+                                );
+                              })}
+                            </dl>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  ) : sec.type === "tags" ? (
+                    <div className="flex flex-wrap gap-1.5">
+                      {(formData[sec.sectionId] || []).length === 0 ? (
+                        <p className="text-sm text-slate-400 italic">No items added</p>
+                      ) : (
+                        (formData[sec.sectionId] || []).map((tag, i) => (
+                          <span key={i} className="bg-blue-50 border border-blue-200 text-blue-700 text-xs px-2.5 py-1 rounded-md">{tag}</span>
+                        ))
+                      )}
+                    </div>
+                  ) : (
+                    <dl className="grid gap-2">
+                      {(sec.fields || []).map((f) => {
+                        const val = formData[sec.sectionId]?.[f.name];
+                        const display = getDisplayValue(val, f);
+                        return (
+                          <div key={f.name} className="flex flex-col sm:flex-row sm:gap-3">
+                            <dt className="text-xs font-medium text-slate-500 sm:min-w-35">
+                              {f.label || f.name}
+                              {f.required && <span className="text-red-500 ml-0.5">*</span>}
+                            </dt>
+                            <dd className="text-sm text-slate-800">
+                              {display || <span className="text-slate-300 italic">Not provided</span>}
+                            </dd>
+                          </div>
+                        );
+                      })}
+                    </dl>
+                  )}
+                </div>
+              </div>
+            ))}
+
+            {/* Error feedback */}
+            {saveError && (
+              <div role="alert" className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                {saveError}
+              </div>
+            )}
+
+            {/* Save actions */}
+            <div className="flex items-center justify-between pt-4 border-t border-slate-200">
+              <button
+                onClick={() => setShowPreview(false)}
+                className="px-4 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+              >
+                Back to Editing
+              </button>
+              <button
+                onClick={handleSave}
+                disabled={saving}
+                className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors disabled:hover:bg-blue-600"
+              >
+                {saving && <Spinner size="sm" className="border-white/30 border-t-white" />}
+                {saving ? "Saving..." : "Save Changes"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

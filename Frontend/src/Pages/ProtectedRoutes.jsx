@@ -1,14 +1,19 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./Context/AuthContext";
-import { useAuth as useClerkAuth } from "@clerk/clerk-react";
+import Spinner from "../components/common/Spinner";
 
 function ProtectedRoute({ children, adminOnly = false }) {
   const { user, loading } = useAuth();
-  const { isSignedIn, isLoaded } = useClerkAuth();
 
-  if (loading || !isLoaded) return null;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
 
-  if (!isSignedIn && !user) return <Navigate to="/login" replace />;
+  if (!user) return <Navigate to="/login" replace />;
 
   if (adminOnly && !user.isAdmin) {
     return <Navigate to="/dashboard" replace />;

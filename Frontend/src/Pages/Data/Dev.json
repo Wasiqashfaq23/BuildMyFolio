@@ -4,34 +4,28 @@
   "title": "Developer Portfolio",
   "sections": [
     {
-      "sectionId": "navbar",
-      "label": "Navbar",
-      "instruction": "Configure the navigation bar.",
+      "sectionId": "hero",
+      "label": "Introduction",
+      "instruction": "Introduce yourself clearly and confidently.",
       "fields": [
         {
           "name": "openToWork",
           "label": "Open to Work",
-          "instruction": "Enable this to show your availability badge.",
+          "instruction": "Shows an availability badge on your profile.",
           "type": "boolean",
           "default": true
-        }
-      ]
-    },
-    {
-      "sectionId": "hero",
-      "label": "Hero Section",
-      "instruction": "Use this section to introduce yourself clearly.",
-      "fields": [
+        },
         {
           "name": "fullName",
           "label": "Full Name",
           "type": "text",
           "required": true,
-          "placeholder": "John doe"
+          "placeholder": "John Doe"
         },
         {
           "name": "role",
-          "label": "Your Role",
+          "label": "What You Do",
+          "instruction": "Your role or what you specialize in. No job needed.",
           "type": "text",
           "required": true,
           "placeholder": "Full Stack Developer"
@@ -40,28 +34,29 @@
           "name": "location",
           "label": "Location",
           "type": "text",
-          "placeholder": "Earth"
+          "placeholder": "San Francisco, CA"
         },
         {
           "name": "focus",
           "label": "Focus Areas",
-          "instruction": "List the technologies or areas you specialize in.",
+          "instruction": "Comma-separated list of your specialties.",
           "type": "text",
           "placeholder": "React, Node.js, MongoDB"
         },
         {
           "name": "tagline",
-          "label": "One Line Tagline",
-          "instruction": "Write a short sentence that describes what you do.",
+          "label": "Tagline",
+          "instruction": "One sentence that sums up what you do.",
           "type": "text",
           "required": true,
           "placeholder": "I build fast, clean and scalable web apps"
         },
         {
           "name": "description",
-          "label": "About You",
-          "instruction": "Write 2 to 3 sentences about yourself and who you help.",
+          "label": "Short Bio",
+          "instruction": "2-3 sentences about yourself and your experience.",
           "type": "textarea",
+          "required": true,
           "placeholder": "I am a full stack developer with 2 years of experience building web applications for startups and freelance clients..."
         }
       ]
@@ -69,7 +64,7 @@
     {
       "sectionId": "projects",
       "label": "Projects",
-      "instruction": "Add your best projects (minimum 2, maximum 6).",
+      "instruction": "Showcase your best work. Add 2-6 projects.",
       "type": "array",
       "min": 2,
       "max": 6,
@@ -84,7 +79,8 @@
           },
           {
             "name": "description",
-            "label": "What does it do?",
+            "label": "Description",
+            "instruction": "What does it do and what problem does it solve?",
             "type": "textarea",
             "required": true,
             "placeholder": "A web app that lets users create beautiful portfolios by filling a simple form..."
@@ -92,38 +88,35 @@
           {
             "name": "stack",
             "label": "Tech Stack",
-            "instruction": "Enter a technology and press Enter to add it.",
+            "instruction": "Type a technology and press Enter to add.",
             "type": "tags",
             "placeholder": "React"
           },
           {
             "name": "githubLink",
-            "label": "GitHub Repository URL",
-            "instruction": "Link this to the View Code button.",
+            "label": "GitHub URL",
             "type": "link",
-            "placeholder": "https://github.com/John/project"
+            "placeholder": "https://github.com/john/project"
           },
           {
             "name": "liveLink",
-            "label": "Live / Deployed URL",
-            "instruction": "Link this to the Live Demo button.",
+            "label": "Live Demo URL",
             "type": "link",
             "placeholder": "https://project.vercel.app"
           },
           {
             "name": "status",
-            "label": "Project Status",
+            "label": "Status",
             "type": "text",
             "placeholder": "Production / Open Source / In Progress"
           },
           {
             "name": "images",
-            "label": "Project Screenshots",
-            "instruction": "Upload up to 4 project screenshots.",
+            "label": "Screenshots",
+            "instruction": "Upload up to 4 screenshots.",
             "type": "image",
             "multiple": true,
-            "max": 4,
-            "required": false
+            "max": 4
           }
         ]
       }
@@ -131,7 +124,7 @@
     {
       "sectionId": "skills",
       "label": "Skills",
-      "instruction": "Group your skills into categories (e.g., Frontend, Backend, Tools).",
+      "instruction": "Group your skills into categories.",
       "type": "array",
       "item": {
         "fields": [
@@ -145,8 +138,9 @@
           {
             "name": "items",
             "label": "Skills",
-            "instruction": "Enter a skill and press Enter to add it.",
+            "instruction": "Type a skill and press Enter to add.",
             "type": "tags",
+            "required": true,
             "placeholder": "React"
           }
         ]
@@ -155,29 +149,28 @@
     {
       "sectionId": "contact",
       "label": "Contact",
-      "instruction": "Add the contact details visitors can use to reach you.",
+      "instruction": "How visitors can reach you.",
       "fields": [
         {
           "name": "email",
           "label": "Email Address",
-          "instruction": "Use this so visitors can email you directly.",
           "type": "email",
           "required": true,
-          "placeholder": "John@example.com"
+          "placeholder": "john@example.com"
         },
         {
           "name": "github",
           "label": "GitHub Profile URL",
           "type": "link",
           "required": true,
-          "placeholder": "https://github.com/John"
+          "placeholder": "https://github.com/john"
         },
         {
           "name": "linkedin",
           "label": "LinkedIn Profile URL",
           "type": "link",
           "required": true,
-          "placeholder": "https://linkedin.com/in/John"
+          "placeholder": "https://linkedin.com/in/john"
         }
       ]
     }

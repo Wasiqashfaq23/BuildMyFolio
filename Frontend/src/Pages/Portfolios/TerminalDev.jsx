@@ -891,7 +891,7 @@ function TermHeader({ cmd, flag }) {
 }
 
 export default function TerminalDev({ data = {} }) {
-  const { navbar, hero, skills, experience, projects, education, certifications, contact, footer } = data;
+  const { hero, skills, experience, projects, education, certifications, contact } = data;
 
   const navLinks = ["hero", "skills", "experience", "projects", "education", "certifications", "contact"];
 
@@ -903,10 +903,10 @@ export default function TerminalDev({ data = {} }) {
           <NavLogo>
             <StatusDot />
             <LogoBracket>[</LogoBracket>
-            {navbar?.logo || "DEV"}
+            {hero?.logo || (hero?.name ? hero.name.split(" ").map(w => w[0]).join("").toUpperCase() : "DEV")}
             <LogoBracket>]</LogoBracket>
             &nbsp;
-            <span style={{ color: T.muted }}>{navbar?.handle || "user@portfolio"}</span>
+            <span style={{ color: T.muted }}>{hero?.handle || (hero?.name ? `root@${hero.name.split(" ")[0].toLowerCase()}` : "user@portfolio")}</span>
             <Cursor />
           </NavLogo>
           <NavLinks>
@@ -1180,19 +1180,19 @@ export default function TerminalDev({ data = {} }) {
                     <span className="value">{contact.linkedin.replace("https://", "")}</span>
                   </ContactLink>
                 )}
-                {contact?.showTwitter !== false && contact?.twitter && (
+                {contact?.twitter && (
                   <ContactLink href={contact.twitter} target="_blank" rel="noopener noreferrer">
                     <span className="label">twitter/x</span>
                     <span className="value">{contact.twitter.replace("https://", "")}</span>
                   </ContactLink>
                 )}
-                {contact?.showFacebook === true && contact?.facebook && (
+                {contact?.facebook && (
                   <ContactLink href={contact.facebook} target="_blank" rel="noopener noreferrer">
                     <span className="label">facebook</span>
                     <span className="value">{contact.facebook.replace("https://", "")}</span>
                   </ContactLink>
                 )}
-                {contact?.showInstagram === true && contact?.instagram && (
+                {contact?.instagram && (
                   <ContactLink href={contact.instagram} target="_blank" rel="noopener noreferrer">
                     <span className="label">instagram</span>
                     <span className="value">{contact.instagram.replace("https://", "")}</span>
@@ -1219,7 +1219,7 @@ export default function TerminalDev({ data = {} }) {
         </Section>
 
         <FooterEl>
-          <span>$</span> {footer?.text || `© ${new Date().getFullYear()} — All rights reserved.`}
+          <span>$</span> {`© ${new Date().getFullYear()} — All rights reserved.`}
           <Cursor />
         </FooterEl>
       </CRTWrapper>

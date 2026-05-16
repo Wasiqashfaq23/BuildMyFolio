@@ -965,14 +965,14 @@ function Sec({ id, label, children }) {
 }
 
 export default function Canvas({ data = {} }) {
-  const { navbar, hero, skills, experience, projects, education, certifications, contact, footer } = data;
+  const { hero, skills, experience, projects, education, certifications, contact } = data;
 
   const socials = [
     contact?.github   && { plat: "github",    val: contact.github.replace("https://github.com/",""),    href: contact.github },
     contact?.linkedin && { plat: "linkedin",   val: contact.linkedin.replace("https://linkedin.com/in/",""), href: contact.linkedin },
-    contact?.showTwitter   !== false && contact?.twitter   && { plat: "twitter",   val: contact.twitter.replace("https://twitter.com/",""),  href: contact.twitter },
-    contact?.showFacebook  === true  && contact?.facebook  && { plat: "facebook",  val: contact.facebook.replace("https://facebook.com/",""), href: contact.facebook },
-    contact?.showInstagram === true  && contact?.instagram && { plat: "instagram", val: contact.instagram.replace("https://instagram.com/",""), href: contact.instagram },
+    contact?.twitter   && { plat: "twitter",   val: contact.twitter.replace("https://twitter.com/",""),  href: contact.twitter },
+    contact?.facebook  && { plat: "facebook",  val: contact.facebook.replace("https://facebook.com/",""), href: contact.facebook },
+    contact?.instagram && { plat: "instagram", val: contact.instagram.replace("https://instagram.com/",""), href: contact.instagram },
   ].filter(Boolean);
 
   const navIds = [
@@ -989,7 +989,7 @@ export default function Canvas({ data = {} }) {
       <Page>
         <Nav>
           <NavWrap>
-            <NavBrand>{navbar?.name || "Portfolio"}</NavBrand>
+            <NavBrand>{hero?.name || "Portfolio"}</NavBrand>
             <NavRight>
               <NavItems>
                 {navIds.map(id => (
@@ -999,7 +999,7 @@ export default function Canvas({ data = {} }) {
                 ))}
               </NavItems>
               <NavCTA href={contact?.email ? `mailto:${contact.email}` : "#contact"}>
-                {navbar?.ctaLabel || "Get in Touch"}
+                {hero?.ctaLabel || "Get in Touch"}
               </NavCTA>
             </NavRight>
           </NavWrap>
@@ -1258,9 +1258,9 @@ export default function Canvas({ data = {} }) {
 
           <FooterBar>
             <FooterText>
-              {footer?.text || `© ${new Date().getFullYear()} ${hero?.name || ""}. All rights reserved.`}
+              {`© ${new Date().getFullYear()} ${hero?.name || ""}. All rights reserved.`}
             </FooterText>
-            <FooterBrand>{navbar?.name || "Portfolio"}</FooterBrand>
+            <FooterBrand>{hero?.name || "Portfolio"}</FooterBrand>
           </FooterBar>
         </Wrap>
       </Page>

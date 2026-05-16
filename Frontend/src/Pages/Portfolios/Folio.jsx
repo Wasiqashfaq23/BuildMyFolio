@@ -918,8 +918,8 @@ function getImg(img) {
 
 export default function Folio({ data = {} }) {
   const {
-    navbar, hero, skills, experience,
-    projects, education, certifications, contact, footer,
+    hero, skills, experience,
+    projects, education, certifications, contact,
   } = data;
 
   const navSections = [
@@ -933,9 +933,9 @@ export default function Folio({ data = {} }) {
   const socialLinks = [
     contact?.github    && { label: "GitHub",    val: contact.github.replace("https://github.com/", ""),    href: contact.github },
     contact?.linkedin  && { label: "LinkedIn",  val: contact.linkedin.replace("https://linkedin.com/in/", ""), href: contact.linkedin },
-    contact?.showTwitter  !== false && contact?.twitter  && { label: "Twitter",  val: contact.twitter.replace("https://twitter.com/", ""),  href: contact.twitter },
-    contact?.showFacebook === true  && contact?.facebook && { label: "Facebook", val: contact.facebook.replace("https://facebook.com/", ""), href: contact.facebook },
-    contact?.showInstagram === true && contact?.instagram && { label: "Instagram", val: contact.instagram.replace("https://instagram.com/", ""), href: contact.instagram },
+    contact?.twitter  && { label: "Twitter",  val: contact.twitter.replace("https://twitter.com/", ""),  href: contact.twitter },
+    contact?.facebook && { label: "Facebook", val: contact.facebook.replace("https://facebook.com/", ""), href: contact.facebook },
+    contact?.instagram && { label: "Instagram", val: contact.instagram.replace("https://instagram.com/", ""), href: contact.instagram },
   ].filter(Boolean);
 
   return (
@@ -944,7 +944,7 @@ export default function Folio({ data = {} }) {
       <Page>
         <NavWrap>
           <NavInner>
-            <NavName>{navbar?.name || "Portfolio"}</NavName>
+            <NavName>{hero?.name || "Portfolio"}</NavName>
             <NavRight>
               <NavLinks>
                 {navSections.map(s => (
@@ -952,7 +952,7 @@ export default function Folio({ data = {} }) {
                 ))}
               </NavLinks>
               <NavCTA href={contact?.email ? `mailto:${contact.email}` : "#contact"}>
-                {navbar?.ctaLabel || "Get in Touch"}
+                {hero?.ctaLabel || "Get in Touch"}
               </NavCTA>
             </NavRight>
           </NavInner>
@@ -1193,9 +1193,9 @@ export default function Folio({ data = {} }) {
         <Container>
           <FooterWrap>
             <FooterText>
-              {footer?.text || `© ${new Date().getFullYear()} ${hero?.name || ""}. All rights reserved.`}
+              {`© ${new Date().getFullYear()} ${hero?.name || ""}. All rights reserved.`}
             </FooterText>
-            <FooterBrand>{navbar?.name || "Portfolio"}</FooterBrand>
+            <FooterBrand>{hero?.name || "Portfolio"}</FooterBrand>
           </FooterWrap>
         </Container>
 

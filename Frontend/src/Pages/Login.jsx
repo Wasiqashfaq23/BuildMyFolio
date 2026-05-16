@@ -1,64 +1,26 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { FiUser } from "react-icons/fi";
+import { FiLayout } from "react-icons/fi";
 import { useAuth } from "./Context/AuthContext";
-import { useSignIn } from '@clerk/clerk-react'
-import { FcGoogle } from 'react-icons/fc'
-import { FaGithub } from 'react-icons/fa'
-import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
-
-const inputClass = "w-full bg-input border border-border rounded-lg px-3 py-2.5 text-sm text-foreground outline-none focus:border-ring focus:ring-1 focus:ring-ring transition placeholder:text-muted-foreground";
+import Spinner from "../components/common/Spinner";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { signIn } = useSignIn()
-  const { user } = useAuth();
+  const { user, login } = useAuth();
   const navigate = useNavigate();
-  const { login } = useAuth();
 
   useEffect(() => {
-    if (user) {
-      navigate('/dashboard', { replace: true })
-    }
-  }, [user])
-
-
-  const handleGoogle = async () => {
-    NProgress.start()
-    try {
-      await signIn.authenticateWithRedirect({
-        strategy: "oauth_google",
-        redirectUrl: "/dashboard",
-        redirectUrlComplete: "/dashboard"
-
-      })
-    }
-    finally {
-      NProgress.done()
-    }
-  }
-  const handleGithub = async () => {
-    NProgress.start()
-    try {
-      await signIn.authenticateWithRedirect({
-        strategy: "oauth_github",
-        redirectUrl: "/dashboard",
-        redirectUrlComplete: "/dashboard"
-      })
-    }
-    finally {
-      NProgress.done()
-    }
-  } 
+    if (user) navigate('/dashboard', { replace: true });
+  }, [user, navigate]);
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
     setLoading(true);
+
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
         method: "POST",
@@ -67,9 +29,9 @@ function Login() {
         body: JSON.stringify({ email, password }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Invalid credentials");
+      if (!res.ok) throw new Error(data.message || "Login failed");
       login(data.user);
-      navigate("/dashboard");
+      navigate("/dashboard", { replace: true });
     } catch (err) {
       setError(err.message);
     } finally {
@@ -78,79 +40,92 @@ function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-[#080808] flex items-center justify-center px-4">
-      <div className="bg-[#0f0f0f] border border-[#1a1a1a] rounded-2xl p-8 w-full max-w-md">
+    <div className="min-h-screen bg-slate-50 flex flex-col">
+      {/* Navbar */}
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-start h-14">
+            <button onClick={() => navigate("/")} className="flex items-center gap-2.5" aria-label="Go to home page">
+              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center" aria-hidden="true">
+                <FiLayout className="text-white" size={15} />
+              </div>
+              <span className="text-base font-bold text-slate-900 hidden sm:inline">BuildMyFolio</span>
+            </button>
+          </div>
+        </div>
+      </header>
 
+      <div className="flex-1 flex items-center justify-center px-4 py-12">
+      <div className="w-full max-w-sm">
+        {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-10 h-10 bg-[#161616] border border-[#222] rounded-xl flex items-center justify-center mx-auto mb-4">
-            <FiUser className="text-[#555]" size={16} />
-          </div>
-          <h2 className="text-xl font-medium text-[#f5f5f5]">Welcome back</h2>
-          <p className="text-sm text-[#555] mt-1">Login to your account</p>
+          <h1 className="text-xl font-bold text-slate-900">Sign in to BuildMyFolio</h1>
+          <p className="text-sm text-slate-500 mt-1">Enter your credentials to continue</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-
-          <div>
-            <label className="block text-sm text-[#555] mb-1.5">Email</label>
-            <input
-              type="email"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className={inputClass}
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm text-[#555] mb-1.5">Password</label>
-            <input
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={6}
-              className={inputClass}
-            />
-            <div className="text-right mt-1.5">
-              <span className="text-xs text-[#444] hover:text-[#888] cursor-pointer transition">Forgot password?</span>
+        {/* Form */}
+        <div className="bg-white rounded-xl border border-slate-200 p-6 sm:p-8">
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+            <div>
+              <label htmlFor="login-email" className="block text-sm font-medium text-slate-700 mb-1.5">
+                Email address
+              </label>
+              <input
+                id="login-email"
+                type="email"
+                autoComplete="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                aria-describedby={error ? "login-error" : undefined}
+                className="w-full px-3 py-2.5 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow"
+              />
             </div>
-          </div>
 
-          {error && (
-            <div className="bg-[#1a0a0a] border border-[#3a1a1a] text-red-400 text-sm px-3 py-2.5 rounded-lg">
-              {error}
+            <div>
+              <label htmlFor="login-password" className="block text-sm font-medium text-slate-700 mb-1.5">
+                Password
+              </label>
+              <input
+                id="login-password"
+                type="password"
+                autoComplete="current-password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                minLength={6}
+                className="w-full px-3 py-2.5 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow"
+              />
             </div>
-          )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-[#f5f5f5] text-[#080808] py-2.5 rounded-lg text-sm font-medium hover:bg-white transition disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            {loading ? "Logging in..." : "Login"}
-          </button>
+            {error && (
+              <div id="login-error" role="alert" className="bg-red-50 border border-red-200 text-red-700 px-3 py-2.5 rounded-lg text-sm">
+                {error}
+              </div>
+            )}
 
-        </form>
-
-        <div className="mt-6 pt-5 border-t border-[#111] text-center">
-          <p className="text-sm text-[#444]">
-            Don't have an account?{" "}
-            <Link to="/signup" className="text-[#888] font-medium hover:text-[#f5f5f5] transition">
-              Sign up
-            </Link>
-          </p>
-          <div className="flex justify-center space-x-4 mt-4 border-t border-[#111] pt-4">
-            <button onClick={handleGoogle} className="bg-[#111] hover:bg-[#222] text-[#f5f5f5] py-2 px-4 rounded-lg transition">
-              <FcGoogle size={30} />
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-blue-600 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors disabled:hover:bg-blue-600 flex items-center justify-center gap-2"
+            >
+              {loading && <Spinner size="sm" className="border-white/30 border-t-white" />}
+              {loading ? "Signing in..." : "Sign in"}
             </button>
-            <button onClick={handleGithub} className="bg-[#111] hover:bg-[#222] text-[#f5f5f5] py-2 px-4 rounded-lg transition">
-              <FaGithub size={30} />
-            </button>
+          </form>
+
+          <div className="mt-5 pt-5 border-t border-slate-100 text-center">
+            <p className="text-sm text-slate-500">
+              Don't have an account?{" "}
+              <Link to="/signup" className="text-blue-600 font-medium hover:text-blue-700 transition-colors">
+                Create one
+              </Link>
+            </p>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

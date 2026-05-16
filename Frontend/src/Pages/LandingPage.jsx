@@ -1,88 +1,124 @@
 import { useNavigate } from "react-router-dom";
-import { FiLayout, FiEdit3, FiLink } from "react-icons/fi";
+import { FiLayout, FiEdit3, FiShare2, FiZap, FiArrowRight } from "react-icons/fi";
 
 function Landing() {
   const navigate = useNavigate();
 
+  const features = [
+    { icon: FiLayout, title: "Choose a Template", description: "Pick from professionally designed templates tailored for developers, designers, and creatives." },
+    { icon: FiEdit3, title: "Fill in Your Details", description: "Add your projects, skills, and experience through a guided, step-by-step form." },
+    { icon: FiShare2, title: "Publish Instantly", description: "Get a unique shareable link and publish your portfolio online in seconds." },
+  ];
+
   return (
-    <div className="bg-[#080808] min-h-screen">
-
-      <nav className="flex items-center justify-between px-4 sm:px-8 lg:px-10 py-4 sm:py-5 border-b border-[#1a1a1a]">
-        <div className="text-base sm:text-xl font-bold text-[#f5f5f5] tracking-widest uppercase">
-          Portfolio<span className="text-blue-700">.</span>
-        </div>
-        <div className="flex items-center gap-4 sm:gap-8">
-          <button onClick={() => navigate("/login")} className="cursor-pointer text-[#888] hover:text-[#f5f5f5] transition text-sm">
-            Login
-          </button>
-          <button onClick={() => navigate("/signup")} className="bg-[#f5f5f5] text-[#080808] cursor-pointer px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-sm font-medium hover:bg-white transition">
-            Get Started
-          </button>
-        </div>
-      </nav>
-
-      <div className="text-center px-4 sm:px-10 pt-16 sm:pt-24 pb-12 sm:pb-16">
-        <div className="inline-block border border-[#222] rounded-2xl px-4 py-1 mb-5 sm:mb-6">
-          <span className="text-[11px] text-[#ffffff] tracking-widest uppercase">Portfolio.</span>
-        </div>
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-[#f5f5f5] leading-tight tracking-tight max-w-2xl mx-auto mb-4 sm:mb-5">
-          Build your portfolio.<br />
-          <span className="text-[#333]">Land your next client.</span>
-        </h1>
-        <p className="text-sm sm:text-[15px] text-[#555] max-w-md mx-auto mb-7 sm:mb-9 leading-relaxed">
-          Create a stunning portfolio in minutes. Pick a template, fill your details, share your link.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <button onClick={() => navigate("/signup")} className="bg-[#f5f5f5] cursor-pointer text-[#080808] px-7 py-3 rounded-lg text-sm font-medium hover:bg-white transition">
-            Create your portfolio
-          </button>
-        </div>
-      </div>
-
-      <div className="border-t border-[#111] mx-4 sm:mx-10" />
-
-      <div className="grid grid-cols-1 sm:grid-cols-3 mx-4 sm:mx-10 mt-0 rounded-xl overflow-hidden border border-[#111]">
-        <div className="bg-[#080808] p-6 sm:p-7 border-b sm:border-b-0 sm:border-r border-[#111]">
-          <div className="w-8 h-8 border border-[#222] rounded-lg flex items-center justify-center mb-4">
-            <FiLayout className="text-[#555]" size={14} />
-          </div>
-          <div className="text-sm font-medium text-[#e5e5e5] mb-2">Pick a template</div>
-          <div className="text-xs text-[#444] leading-relaxed">
-            Choose from professionally designed templates built for your field.
+    <div className="min-h-screen bg-slate-50 flex flex-col">
+      {/* Navbar */}
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center" aria-hidden="true">
+                <FiLayout className="text-white" size={15} />
+              </div>
+              <span className="text-base font-bold text-slate-900">BuildMyFolio</span>
+            </div>
+            <nav className="flex items-center gap-2" aria-label="Main">
+              <button
+                onClick={() => navigate("/login")}
+                className="px-3 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 rounded-md hover:bg-slate-50 transition-colors"
+              >
+                Sign in
+              </button>
+              <button
+                onClick={() => navigate("/signup")}
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Get Started
+              </button>
+            </nav>
           </div>
         </div>
+      </header>
 
-        <div className="bg-[#080808] p-6 sm:p-7 border-b sm:border-b-0 sm:border-r border-[#111]">
-          <div className="w-8 h-8 border border-[#222] rounded-lg flex items-center justify-center mb-4">
-            <FiEdit3 className="text-[#555]" size={14} />
+      {/* Hero */}
+      <main className="flex-1">
+        <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-50 border border-blue-100 text-blue-700 rounded-full text-xs font-medium mb-6">
+            <FiZap size={12} aria-hidden="true" />
+            <span>Free Portfolio Builder</span>
           </div>
-          <div className="text-sm font-medium text-[#e5e5e5] mb-2">Fill your details</div>
-          <div className="text-xs text-[#444] leading-relaxed">
-            Add your work, skills, and contact info. No design skills needed.
+
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 leading-tight tracking-tight">
+            Build a Professional Portfolio
+            <br className="hidden sm:block" />
+            <span className="text-blue-600"> in Minutes</span>
+          </h1>
+
+          <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto mb-8 leading-relaxed">
+            Choose a template, fill in your details, and get a live portfolio link — no coding, no design skills, completely free.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <button
+              onClick={() => navigate("/signup")}
+              className="w-full sm:w-auto px-6 py-3 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+            >
+              Create Your Portfolio
+              <FiArrowRight size={14} aria-hidden="true" />
+            </button>
+            <button
+              onClick={() => navigate("/login")}
+              className="w-full sm:w-auto px-6 py-3 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+            >
+              Sign In
+            </button>
           </div>
+        </section>
+
+        {/* Features */}
+        <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24" aria-labelledby="how-heading">
+          <h2 id="how-heading" className="text-2xl font-bold text-slate-900 text-center mb-10">
+            How It Works
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {features.map((feature, i) => (
+              <article key={i} className="bg-white rounded-xl p-6 border border-slate-200">
+                <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mb-4" aria-hidden="true">
+                  <feature.icon className="text-blue-600" size={20} />
+                </div>
+                <h3 className="text-base font-semibold text-slate-900 mb-2">{feature.title}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">{feature.description}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24">
+          <div className="bg-slate-900 rounded-xl p-8 sm:p-12 text-center">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+              Ready to Get Started?
+            </h2>
+            <p className="text-slate-400 mb-6 max-w-lg mx-auto">
+              Join developers and creatives building professional portfolios. Free forever.
+            </p>
+            <button
+              onClick={() => navigate("/signup")}
+              className="px-6 py-3 text-sm font-medium text-slate-900 bg-white rounded-lg hover:bg-slate-100 transition-colors"
+            >
+              Create Free Account
+            </button>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-slate-200 bg-white py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-xs text-slate-400">BuildMyFolio — Free Portfolio Builder</p>
         </div>
-
-        <div className="bg-[#080808] p-6 sm:p-7">
-          <div className="w-8 h-8 border border-[#222] rounded-lg flex items-center justify-center mb-4">
-            <FiLink className="text-[#555]" size={14} />
-          </div>
-          <div className="text-sm font-medium text-[#e5e5e5] mb-2">Share your link</div>
-          <div className="text-xs text-[#444] leading-relaxed">
-            Get a unique link instantly. Share it with clients anywhere.
-          </div>
-        </div>
-      </div>
-
-      <div className="text-center px-4 sm:px-10 py-12 sm:py-16">
-        <div className="text-xl sm:text-[22px] font-medium text-[#f5f5f5] mb-2 tracking-tight">
-          Ready to stand out?
-        </div>
-        <div className="text-sm text-[#444] mb-6">Create Your First Portfolio</div>
-        <button onClick={() => navigate("/signup")} className="bg-[#f5f5f5] text-[#080808] cursor-pointer px-8 py-3 rounded-lg text-sm font-medium hover:bg-white transition">
-          Get started for free
-        </button>
-      </div>
-
+      </footer>
     </div>
   );
 }

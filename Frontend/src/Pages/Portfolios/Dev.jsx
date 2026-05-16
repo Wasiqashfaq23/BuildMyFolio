@@ -21,7 +21,6 @@ function TypingText({ text, speed = 60 }) {
 
 export default function Developer({ data = {} }) {
   const hero = data.hero || {};
-  const navbar = data.navbar || {};
   const projects = data.projects || [];
   const skills = data.skills || [];
   const contact = data.contact || {};
@@ -78,7 +77,7 @@ export default function Developer({ data = {} }) {
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          {navbar.openToWork && (
+          {hero.openToWork && (
             <div className="dev-open-to-work" style={{ background: "#00FF88", color: "#111", fontSize: "11px", padding: "6px 14px", fontWeight: "bold" }}>
               OPEN TO WORK
             </div>

@@ -97,7 +97,7 @@ async function deletePortfolio(req, res) {
 async function getAllPortfolios(req, res) {
   try {
     const userId = req.user._id;
-    const portfolios = await Portfolio.find({ userId });
+    const portfolios = await Portfolio.find({ userId }).populate("templateId");
     if (!portfolios || portfolios.length === 0) {
       return res.status(404).json({ message: "No portfolios found" });
     }

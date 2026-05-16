@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const { getPortfolio, createPortfolio, deletePortfolio, updatePortfolio, getAllPortfolios ,getPortfolioById} = require("../Controller/Portfolio")
+const { getPortfolio, createPortfolio, deletePortfolio, updatePortfolio, getAllPortfolios, getPortfolioById } = require("../Controller/Portfolio")
 const verifyToken = require("../Middleware/Auth")
 router.post("/", verifyToken, createPortfolio);
 router.get("/all", verifyToken, getAllPortfolios);

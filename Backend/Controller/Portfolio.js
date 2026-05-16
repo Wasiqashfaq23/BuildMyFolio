@@ -16,7 +16,11 @@ async function getPortfolio(req, res) {
   try {
     const { slug } = req.params;
     if (!slug) return res.status(400).json({ message: "No slug provided" });
-    const portfolio = await Portfolio.findOne({ slug }).populate("templateId");
+    const portfolio = await Portfolio.findOneAndUpdate(
+      { slug },
+      { $inc: { views: 1 } },
+      { new: true }
+    ).populate("templateId");
     if (!portfolio) return res.status(404).json({ message: "Portfolio not found" });
     return res.status(200).json(portfolio);
   } catch (err) {

@@ -18,7 +18,6 @@ function PublicPortfolio() {
   const publicUrl = `${window.location.origin}/p/${slug}`;
   const navigate = useNavigate();
 
-
   useEffect(() => {
     fetch(`${API_URL}/portfolio/${slug}`)
       .then(res => {
@@ -102,7 +101,6 @@ function PublicPortfolio() {
           </button>
         </div>
       )}
-
 
       <PortfolioComponent data={portfolio.userData} />
     </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FiPlus, FiFolder, FiCheckCircle, FiEdit, FiTrash2, FiExternalLink, FiLogOut, FiLayout } from 'react-icons/fi'
+import { FiPlus, FiFolder, FiCheckCircle, FiEdit, FiTrash2, FiExternalLink, FiLogOut, FiLayout, FiEye } from 'react-icons/fi'
 import { useAuth } from './Context/AuthContext'
 import Spinner from '../components/common/Spinner'
 
@@ -40,6 +40,7 @@ const Dashboard = () => {
   }
 
   const publishedCount = portfolios.filter(p => p.slug).length
+  const totalViews = portfolios.reduce((sum, p) => sum + (p.views || 0), 0)
   const displayName = user?.email?.split('@')[0]?.replace(/^./, c => c.toUpperCase()) || 'User'
 
   return (
@@ -91,7 +92,7 @@ const Dashboard = () => {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-6" aria-label="Portfolio statistics">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6" aria-label="Portfolio statistics">
           <div className="bg-white rounded-lg p-4 border border-slate-200">
             <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">Total</p>
             <p className="text-2xl font-bold text-slate-900 mt-1">{portfolios.length}</p>
@@ -99,6 +100,10 @@ const Dashboard = () => {
           <div className="bg-white rounded-lg p-4 border border-slate-200">
             <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">Published</p>
             <p className="text-2xl font-bold text-slate-900 mt-1">{publishedCount}</p>
+          </div>
+          <div className="bg-white rounded-lg p-4 border border-slate-200">
+            <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">Total Views</p>
+            <p className="text-2xl font-bold text-slate-900 mt-1">{totalViews}</p>
           </div>
           <div className="bg-white rounded-lg p-4 border border-slate-200 hidden sm:block">
             <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">Drafts</p>
@@ -144,16 +149,24 @@ const Dashboard = () => {
                     <h3 className="text-sm font-semibold text-slate-900 truncate">
                       {portfolio.templateId?.templateName || "My Portfolio"}
                     </h3>
-                    <p className="text-xs mt-1 flex items-center gap-1.5">
-                      {portfolio.slug ? (
-                        <>
-                          <FiCheckCircle size={11} className="text-green-600" aria-hidden="true" />
-                          <span className="text-green-600 font-medium">Published</span>
-                        </>
-                      ) : (
-                        <span className="text-slate-400">Draft</span>
+                    <div className="flex items-center gap-3 mt-1">
+                      <p className="text-xs flex items-center gap-1.5">
+                        {portfolio.slug ? (
+                          <>
+                            <FiCheckCircle size={11} className="text-green-600" aria-hidden="true" />
+                            <span className="text-green-600 font-medium">Published</span>
+                          </>
+                        ) : (
+                          <span className="text-slate-400">Draft</span>
+                        )}
+                      </p>
+                      {portfolio.views > 0 && (
+                        <span className="text-xs text-slate-400 flex items-center gap-1">
+                          <FiEye size={11} aria-hidden="true" />
+                          {portfolio.views} view{portfolio.views !== 1 ? 's' : ''}
+                        </span>
                       )}
-                    </p>
+                    </div>
                   </div>
 
                   <div className="flex items-center gap-2 shrink-0">

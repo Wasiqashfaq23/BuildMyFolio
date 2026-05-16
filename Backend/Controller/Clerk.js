@@ -20,11 +20,10 @@ const syncClerkUser = async (req, res) => {
             await user.save()
         }
 const token = generateToken(user)
-const isProd = process.env.NODE_ENV?.toLowerCase() === "production";
 res.cookie('token', token, {
   httpOnly: true,
-  secure: isProd,
-  sameSite: isProd ? "none" : "lax",
+  secure: process.env.NODE_ENV === 'production' || false,
+  sameSite: 'lax',
   maxAge: 24 * 60 * 60 * 1000
 })
 res.json({ 

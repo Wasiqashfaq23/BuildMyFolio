@@ -3,14 +3,6 @@ const bcrypt = require("bcryptjs");
 const generateToken = require("../Utils/Auth");
 const jwt = require("jsonwebtoken");
 
-const isProd = process.env.NODE_ENV?.toLowerCase() === "production";
-const cookieOptions = {
-  httpOnly: true,
-  secure: isProd,
-  sameSite: isProd ? "none" : "lax",
-  maxAge: 24 * 60 * 60 * 1000,
-};
-
 async function handleSignup(req, res) {
   try {
     const { email, password } = req.body;
@@ -25,7 +17,12 @@ async function handleSignup(req, res) {
     const hashPassword = bcrypt.hashSync(password, salt);
     const newUser = await User.create({ email, password: hashPassword });
     const token = generateToken(newUser);
-    res.cookie("token", token, cookieOptions);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production" || false,
+      sameSite: "lax",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
     return res.status(201).json({
       message: "User created successfully",
       user: { id: newUser._id, email: newUser.email, isAdmin: newUser.isAdmin }
@@ -51,7 +48,12 @@ async function handleLogin(req, res) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
     const token = generateToken(user);
-    res.cookie("token", token, cookieOptions);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production" || false,
+      sameSite: "lax",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
     return res.status(200).json({
       message: "Login successful",
       user: { id: user._id, email: user.email, isAdmin: user.isAdmin }
@@ -67,8 +69,8 @@ async function handleLogout(req, res) {
     
     res.clearCookie("token", {
       httpOnly: true,
-      secure: isProd,
-      sameSite: isProd ? "none" : "lax",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
     });
     return res.status(200).json({ message: "Logged out successfully" });
   } catch (err) {

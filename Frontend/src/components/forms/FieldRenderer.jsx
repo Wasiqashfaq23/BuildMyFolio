@@ -58,7 +58,7 @@ function FieldRenderer({ field, value, onChange, showInstruction = true }) {
           type="button"
           onClick={() => onChange(!value)}
           className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-            value ? "bg-blue-600" : "bg-slate-300"
+            value ? "bg-blue-600" : "bg-slate-200"
           }`}
         >
           <span

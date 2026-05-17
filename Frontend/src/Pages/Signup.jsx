@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "./Context/AuthContext";
 import Spinner from "../components/common/Spinner";
+import GoogleButton from "../components/common/GoogleButton";
 import logo from "../assets/logo.png";
 
 function Signup() {
@@ -62,6 +63,17 @@ function Signup() {
 
         {/* Form */}
         <div className="bg-white rounded-xl border border-slate-200 p-6 sm:p-8">
+          <GoogleButton onError={(msg) => setError(msg)} />
+
+          <div className="relative my-5">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-slate-200" />
+            </div>
+            <div className="relative flex justify-center text-xs">
+              <span className="bg-white px-3 text-slate-400">or sign up with email</span>
+            </div>
+          </div>
+
           <form onSubmit={handleSubmit} className="space-y-4" noValidate>
             <div>
               <label htmlFor="signup-email" className="block text-sm font-medium text-slate-700 mb-1.5">

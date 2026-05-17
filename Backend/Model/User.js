@@ -6,6 +6,7 @@ const Schema = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    googleId: { type: String },
     password: {
         type: String,
     },

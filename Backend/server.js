@@ -5,6 +5,7 @@ const userRouter = require("./Routes/User.js")
 const templateRouter = require("./Routes/Template.js")
 const portfolioRouter = require("./Routes/Portfolio.js")
 const UploadRouter = require("./Routes/Upload.js")
+const googleRouter = require("./Routes/Google.js")
 const port = process.env.PORT;
 const { ConnectToDatabase } = require("./Config/connect.js");
 const cookieParser = require('cookie-parser');
@@ -21,6 +22,7 @@ app.use("/", userRouter)
 app.use("/template", templateRouter)
 app.use("/portfolio", portfolioRouter)
 app.use("/upload", UploadRouter);
+app.use("/auth", googleRouter);
 
 ConnectToDatabase().then(() => {
     console.log("MongoDB connected "); app.listen(port, () => {

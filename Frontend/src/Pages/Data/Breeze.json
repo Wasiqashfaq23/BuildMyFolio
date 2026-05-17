@@ -1,0 +1,175 @@
+{
+  "portfolioType": "Breeze",
+  "templateComponent": "Breeze",
+  "title": "Breeze — Clean White & Teal Portfolio",
+  "sections": [
+    {
+      "sectionId": "hero",
+      "label": "Introduction",
+      "instruction": "Introduce yourself professionally. A clear photo and bio go a long way.",
+      "fields": [
+        {
+          "name": "fullName",
+          "label": "Full Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Morgan Chen"
+        },
+        {
+          "name": "role",
+          "label": "Your Role",
+          "instruction": "Your job title or area of expertise.",
+          "type": "text",
+          "required": true,
+          "placeholder": "UX Designer & Frontend Developer"
+        },
+        {
+          "name": "tagline",
+          "label": "Tagline",
+          "instruction": "A short, memorable sentence about your work.",
+          "type": "text",
+          "required": true,
+          "placeholder": "Designing interfaces people love to use."
+        },
+        {
+          "name": "description",
+          "label": "Short Bio",
+          "instruction": "2-3 sentences about yourself and your experience.",
+          "type": "textarea",
+          "required": true,
+          "placeholder": "I'm a designer-developer hybrid with 4 years of experience building user-friendly products. I care deeply about accessibility, clean code, and thoughtful interactions."
+        },
+        {
+          "name": "profileImage",
+          "label": "Profile Photo",
+          "instruction": "Clear headshot — shown as circular image.",
+          "type": "image",
+          "multiple": false
+        },
+        {
+          "name": "resumeLink",
+          "label": "Resume",
+          "instruction": "Upload your resume as a PDF (max 5MB).",
+          "type": "resume"
+        },
+        {
+          "name": "openToWork",
+          "label": "Open to Work",
+          "instruction": "Shows an availability badge in the navbar.",
+          "type": "boolean",
+          "default": false
+        }
+      ]
+    },
+    {
+      "sectionId": "projects",
+      "label": "Projects",
+      "instruction": "Showcase your best work. Add 2 to 6 projects.",
+      "type": "array",
+      "min": 2,
+      "max": 6,
+      "item": {
+        "fields": [
+          {
+            "name": "name",
+            "label": "Project Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "Expense Tracker App"
+          },
+          {
+            "name": "description",
+            "label": "Description",
+            "instruction": "What it does and what makes it interesting.",
+            "type": "textarea",
+            "required": true,
+            "placeholder": "A clean, intuitive expense tracking app with real-time charts and budget alerts..."
+          },
+          {
+            "name": "stack",
+            "label": "Tech Stack",
+            "instruction": "Type a technology and press Enter to add.",
+            "type": "tags",
+            "placeholder": "React"
+          },
+          {
+            "name": "githubLink",
+            "label": "GitHub URL",
+            "type": "link",
+            "placeholder": "https://github.com/you/project"
+          },
+          {
+            "name": "liveLink",
+            "label": "Live Demo URL",
+            "type": "link",
+            "placeholder": "https://yourproject.vercel.app"
+          },
+          {
+            "name": "images",
+            "label": "Project Screenshot",
+            "instruction": "Upload one screenshot or banner image for this project.",
+            "type": "image",
+            "multiple": false
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "skills",
+      "label": "Skills",
+      "instruction": "Group your skills into categories.",
+      "type": "array",
+      "item": {
+        "fields": [
+          {
+            "name": "categoryName",
+            "label": "Category Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "Design"
+          },
+          {
+            "name": "items",
+            "label": "Skills",
+            "instruction": "Type a skill and press Enter to add.",
+            "type": "tags",
+            "required": true,
+            "placeholder": "Figma"
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "contact",
+      "label": "Contact",
+      "instruction": "How visitors can reach you.",
+      "fields": [
+        {
+          "name": "email",
+          "label": "Email Address",
+          "type": "email",
+          "required": true,
+          "placeholder": "morgan@example.com"
+        },
+        {
+          "name": "github",
+          "label": "GitHub Profile URL",
+          "type": "link",
+          "placeholder": "https://github.com/morgan"
+        },
+        {
+          "name": "linkedin",
+          "label": "LinkedIn Profile URL",
+          "type": "link",
+          "placeholder": "https://linkedin.com/in/morgan"
+        },
+        {
+          "name": "website",
+          "label": "Personal Website",
+          "type": "link",
+          "placeholder": "https://yoursite.com"
+        }
+      ]
+    }
+  ]
+}

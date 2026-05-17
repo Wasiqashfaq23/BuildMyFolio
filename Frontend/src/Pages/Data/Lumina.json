@@ -1,0 +1,168 @@
+{
+  "portfolioType": "Lumina",
+  "templateComponent": "Lumina",
+  "title": "Lumina — Dark Glassmorphism Portfolio",
+  "sections": [
+    {
+      "sectionId": "hero",
+      "label": "Introduction",
+      "instruction": "Introduce yourself with impact. This is the first thing visitors see.",
+      "fields": [
+        {
+          "name": "fullName",
+          "label": "Full Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Alex Rivera"
+        },
+        {
+          "name": "role",
+          "label": "Your Role",
+          "instruction": "Your title or what you specialize in.",
+          "type": "text",
+          "required": true,
+          "placeholder": "Full Stack Developer"
+        },
+        {
+          "name": "tagline",
+          "label": "Tagline",
+          "instruction": "One sentence that captures your essence.",
+          "type": "text",
+          "required": true,
+          "placeholder": "I craft digital experiences that leave a mark."
+        },
+        {
+          "name": "description",
+          "label": "Short Bio",
+          "instruction": "2-3 sentences about yourself, your background, and what makes you unique.",
+          "type": "textarea",
+          "required": true,
+          "placeholder": "I'm a developer with a passion for building elegant, high-performance web applications. With years of experience working across the full stack, I love turning complex problems into simple, beautiful interfaces."
+        },
+        {
+          "name": "openToWork",
+          "label": "Open to Work",
+          "instruction": "Shows an availability badge in the navbar.",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "name": "resumeLink",
+          "label": "Resume",
+          "instruction": "Upload your resume as a PDF (max 5MB).",
+          "type": "resume"
+        }
+      ]
+    },
+    {
+      "sectionId": "projects",
+      "label": "Projects",
+      "instruction": "Showcase your best work. Add 2 to 6 projects.",
+      "type": "array",
+      "min": 2,
+      "max": 6,
+      "item": {
+        "fields": [
+          {
+            "name": "name",
+            "label": "Project Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "Portfolio Maker"
+          },
+          {
+            "name": "description",
+            "label": "Description",
+            "instruction": "What does it do and what problem does it solve?",
+            "type": "textarea",
+            "required": true,
+            "placeholder": "A web app that lets users create stunning portfolios by filling a simple form..."
+          },
+          {
+            "name": "stack",
+            "label": "Tech Stack",
+            "instruction": "Type a technology and press Enter to add.",
+            "type": "tags",
+            "placeholder": "React"
+          },
+          {
+            "name": "githubLink",
+            "label": "GitHub URL",
+            "type": "link",
+            "placeholder": "https://github.com/you/project"
+          },
+          {
+            "name": "liveLink",
+            "label": "Live Demo URL",
+            "type": "link",
+            "placeholder": "https://yourproject.vercel.app"
+          },
+          {
+            "name": "images",
+            "label": "Project Screenshot",
+            "instruction": "Upload one screenshot or banner image for this project.",
+            "type": "image",
+            "multiple": false
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "skills",
+      "label": "Skills",
+      "instruction": "Group your skills into categories.",
+      "type": "array",
+      "item": {
+        "fields": [
+          {
+            "name": "categoryName",
+            "label": "Category Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "Frontend"
+          },
+          {
+            "name": "items",
+            "label": "Skills",
+            "instruction": "Type a skill and press Enter to add.",
+            "type": "tags",
+            "required": true,
+            "placeholder": "React"
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "contact",
+      "label": "Contact",
+      "instruction": "How visitors can reach you.",
+      "fields": [
+        {
+          "name": "email",
+          "label": "Email Address",
+          "type": "email",
+          "required": true,
+          "placeholder": "alex@example.com"
+        },
+        {
+          "name": "github",
+          "label": "GitHub Profile URL",
+          "type": "link",
+          "placeholder": "https://github.com/alex"
+        },
+        {
+          "name": "linkedin",
+          "label": "LinkedIn Profile URL",
+          "type": "link",
+          "placeholder": "https://linkedin.com/in/alex"
+        },
+        {
+          "name": "twitter",
+          "label": "Twitter / X URL",
+          "type": "link",
+          "placeholder": "https://twitter.com/alex"
+        }
+      ]
+    }
+  ]
+}

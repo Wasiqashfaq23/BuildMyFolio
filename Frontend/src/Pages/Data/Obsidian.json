@@ -1,0 +1,223 @@
+{
+  "portfolioType": "Obsidian",
+  "templateComponent": "Obsidian",
+  "title": "Obsidian — Premium Black & Amber Portfolio",
+  "sections": [
+    {
+      "sectionId": "hero",
+      "label": "Introduction",
+      "instruction": "Make a bold first impression. This is your headline statement.",
+      "fields": [
+        {
+          "name": "fullName",
+          "label": "Full Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Jordan Blake"
+        },
+        {
+          "name": "roles",
+          "label": "Roles (animated)",
+          "instruction": "Comma-separated — these cycle in the animation.",
+          "type": "text",
+          "required": true,
+          "placeholder": "Backend Engineer, Cloud Architect, Open Source Dev"
+        },
+        {
+          "name": "tagline",
+          "label": "Tagline",
+          "instruction": "One punchy sentence that defines your work.",
+          "type": "text",
+          "required": true,
+          "placeholder": "Building systems that scale to millions."
+        },
+        {
+          "name": "description",
+          "label": "Short Bio",
+          "instruction": "2-3 sentences about your background and expertise.",
+          "type": "textarea",
+          "required": true,
+          "placeholder": "I design and build robust backend systems and cloud infrastructure. Passionate about open source and high-availability architectures."
+        },
+        {
+          "name": "yearsExp",
+          "label": "Years of Experience",
+          "instruction": "Shown as a stat in the hero. E.g. '5+' or '7'.",
+          "type": "text",
+          "placeholder": "5+"
+        },
+        {
+          "name": "projectCount",
+          "label": "Projects Shipped",
+          "instruction": "Shown as a stat in the hero. E.g. '30+'.",
+          "type": "text",
+          "placeholder": "30+"
+        },
+        {
+          "name": "techCount",
+          "label": "Technologies Mastered",
+          "instruction": "Shown as a stat in the hero. E.g. '15+'.",
+          "type": "text",
+          "placeholder": "15+"
+        },
+        {
+          "name": "resumeLink",
+          "label": "Resume",
+          "instruction": "Upload your resume as a PDF (max 5MB).",
+          "type": "resume"
+        }
+      ]
+    },
+    {
+      "sectionId": "experience",
+      "label": "Work Experience",
+      "instruction": "Add your professional history. You can add up to 8 roles.",
+      "type": "array",
+      "min": 0,
+      "max": 8,
+      "item": {
+        "fields": [
+          {
+            "name": "role",
+            "label": "Job Title",
+            "type": "text",
+            "required": true,
+            "placeholder": "Senior Backend Engineer"
+          },
+          {
+            "name": "company",
+            "label": "Company",
+            "type": "text",
+            "required": true,
+            "placeholder": "Stripe"
+          },
+          {
+            "name": "duration",
+            "label": "Duration",
+            "type": "text",
+            "required": true,
+            "placeholder": "Jan 2022 – Present"
+          },
+          {
+            "name": "description",
+            "label": "Description",
+            "instruction": "Key responsibilities and achievements. Numbers help.",
+            "type": "textarea",
+            "placeholder": "Designed and maintained payment processing APIs handling $1B+ in annual transactions..."
+          },
+          {
+            "name": "skills",
+            "label": "Skills Used",
+            "instruction": "Type a skill and press Enter to add.",
+            "type": "tags",
+            "placeholder": "Node.js"
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "projects",
+      "label": "Projects",
+      "instruction": "Showcase your best work. Add 1 to 6 projects.",
+      "type": "array",
+      "min": 1,
+      "max": 6,
+      "item": {
+        "fields": [
+          {
+            "name": "name",
+            "label": "Project Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "Distributed Task Queue"
+          },
+          {
+            "name": "description",
+            "label": "Description",
+            "instruction": "What it does and why it matters.",
+            "type": "textarea",
+            "required": true,
+            "placeholder": "A high-throughput task queue built on Redis, supporting millions of jobs per day with zero data loss..."
+          },
+          {
+            "name": "stack",
+            "label": "Tech Stack",
+            "instruction": "Type a technology and press Enter to add.",
+            "type": "tags",
+            "placeholder": "Node.js"
+          },
+          {
+            "name": "githubLink",
+            "label": "GitHub URL",
+            "type": "link",
+            "placeholder": "https://github.com/you/project"
+          },
+          {
+            "name": "liveLink",
+            "label": "Live Demo URL",
+            "type": "link",
+            "placeholder": "https://yourproject.vercel.app"
+          },
+          {
+            "name": "images",
+            "label": "Project Screenshot",
+            "instruction": "Upload one screenshot or banner image for this project.",
+            "type": "image",
+            "multiple": false
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "skills",
+      "label": "Skills",
+      "instruction": "Group your skills into categories.",
+      "type": "array",
+      "item": {
+        "fields": [
+          {
+            "name": "categoryName",
+            "label": "Category Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "Backend"
+          },
+          {
+            "name": "items",
+            "label": "Skills",
+            "instruction": "Type a skill and press Enter to add.",
+            "type": "tags",
+            "required": true,
+            "placeholder": "Node.js"
+          }
+        ]
+      }
+    },
+    {
+      "sectionId": "contact",
+      "label": "Contact",
+      "instruction": "How visitors can reach you.",
+      "fields": [
+        {
+          "name": "email",
+          "label": "Email Address",
+          "type": "email",
+          "required": true,
+          "placeholder": "jordan@example.com"
+        },
+        {
+          "name": "github",
+          "label": "GitHub Profile URL",
+          "type": "link",
+          "placeholder": "https://github.com/jordan"
+        },
+        {
+          "name": "linkedin",
+          "label": "LinkedIn Profile URL",
+          "type": "link",
+          "placeholder": "https://linkedin.com/in/jordan"
+        }
+      ]
+    }
+  ]
+}

@@ -6,7 +6,6 @@ const Schema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    clerkId: { type: String },
     password: {
         type: String,
     },
@@ -14,11 +13,6 @@ const Schema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    authType: {
-        type: String,
-        enum: ['local', 'google', 'github'],
-        default: 'local'
-    }
 }, { timestamps: true });
 
 const User = mongoose.model("user", Schema)

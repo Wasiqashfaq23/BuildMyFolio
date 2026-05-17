@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useClerk } from "@clerk/clerk-react";
 import { AuthContext } from "./AuthContext";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8001";
@@ -7,7 +6,6 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8001";
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { signOut: clerkSignOut } = useClerk();
 
   useEffect(() => {
     fetch(`${API_URL}/me`, { credentials: "include" })
@@ -22,13 +20,11 @@ export function AuthProvider({ children }) {
   }
 
   function logout() {
-    Promise.all([
-      fetch(`${API_URL}/logout`, { method: "POST", credentials: "include" }),
-      clerkSignOut({ redirectUrl: "/login" }).catch(() => {}),
-    ]).finally(() => {
-      setUser(null);
-      window.location.href = "/login";
-    });
+    fetch(`${API_URL}/logout`, { method: "POST", credentials: "include" })
+      .finally(() => {
+        setUser(null);
+        window.location.href = "/login";
+      });
   }
 
   return (

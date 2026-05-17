@@ -9,8 +9,6 @@ import AdminUploadTemplate from "./Pages/UploadTemplate";
 import PublicPortfolio from "./Pages/PublicPortfolio";
 import ProtectedRoute from "./Pages/ProtectedRoutes";
 import EditPortfolio from "./Pages/EditPortfolio";
-import SSOCallback from "./Pages/SSOCallback";
-import OAuthSync from "./Pages/OAuthSync";
 
 const App = () => {
   return (
@@ -19,8 +17,6 @@ const App = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/p/:slug" element={<PublicPortfolio />} />
-      <Route path="/sso-callback" element={<SSOCallback />} />
-      <Route path="/oauth-sync" element={<OAuthSync />} />
 
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
       <Route path="/templates" element={<ProtectedRoute><Templates /></ProtectedRoute>} />

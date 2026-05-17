@@ -3,7 +3,8 @@ const bcrypt = require("bcryptjs");
 const generateToken = require("../Utils/Auth");
 const jwt = require("jsonwebtoken");
 
-const isProd = process.env.NODE_ENV?.toLowerCase() === "production";
+const env = process.env.NODE_ENV?.toLowerCase();
+const isProd = env === "production" || env === "deployment";
 const cookieOptions = {
   httpOnly: true,
   secure: isProd,

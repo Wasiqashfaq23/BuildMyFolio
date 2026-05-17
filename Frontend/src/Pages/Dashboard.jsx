@@ -4,6 +4,7 @@ import { FiPlus, FiFolder, FiCheckCircle, FiEdit, FiTrash2, FiExternalLink, FiLo
 import logo from '../assets/logo.png'
 import { useAuth } from './Context/AuthContext'
 import Spinner from '../components/common/Spinner'
+import ThemeToggle from '../components/common/ThemeToggle'
 
 const VITE_API_URL = import.meta.env.VITE_API_URL || "http://localhost:8001"
 
@@ -45,22 +46,19 @@ const Dashboard = () => {
   const displayName = user?.email?.split('@')[0]?.replace(/^./, c => c.toUpperCase()) || 'User'
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-40">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col">
+      <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700/60 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14">
-            <button
-              onClick={() => navigate("/dashboard")}
-              className="flex items-center"
-              aria-label="Go to dashboard"
-            >
+            <button onClick={() => navigate("/dashboard")} className="flex items-center" aria-label="Go to dashboard">
               <img src={logo} alt="BuildMyFolio" className="h-10" />
             </button>
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-slate-600 font-medium hidden sm:inline">{displayName}</span>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-slate-600 dark:text-slate-400 font-medium hidden sm:inline">{displayName}</span>
+              <ThemeToggle />
               <button
                 onClick={() => setShowLogoutConfirm(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium text-slate-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                 aria-label="Sign out"
               >
                 <FiLogOut size={15} aria-hidden="true" />
@@ -72,11 +70,10 @@ const Dashboard = () => {
       </header>
 
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-slate-900">Dashboard</h1>
-            <p className="text-sm text-slate-500 mt-0.5">Welcome back, {displayName}</p>
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Dashboard</h1>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Welcome back, {displayName}</p>
           </div>
           <button
             onClick={() => navigate('/templates')}
@@ -93,22 +90,17 @@ const Dashboard = () => {
 
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6" aria-label="Portfolio statistics">
-          <div className="bg-white rounded-lg p-4 border border-slate-200">
-            <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">Total</p>
-            <p className="text-2xl font-bold text-slate-900 mt-1">{portfolios.length}</p>
-          </div>
-          <div className="bg-white rounded-lg p-4 border border-slate-200">
-            <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">Published</p>
-            <p className="text-2xl font-bold text-slate-900 mt-1">{publishedCount}</p>
-          </div>
-          <div className="bg-white rounded-lg p-4 border border-slate-200">
-            <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">Total Views</p>
-            <p className="text-2xl font-bold text-slate-900 mt-1">{totalViews}</p>
-          </div>
-          <div className="bg-white rounded-lg p-4 border border-slate-200 hidden sm:block">
-            <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">Drafts</p>
-            <p className="text-2xl font-bold text-slate-900 mt-1">{portfolios.length - publishedCount}</p>
-          </div>
+          {[
+            { label: "Total", value: portfolios.length },
+            { label: "Published", value: publishedCount },
+            { label: "Total Views", value: totalViews },
+            { label: "Drafts", value: portfolios.length - publishedCount, hidden: true },
+          ].map(({ label, value, hidden }) => (
+            <div key={label} className={`bg-white dark:bg-slate-900 rounded-lg p-4 border border-slate-200 dark:border-slate-700/60${hidden ? " hidden sm:block" : ""}`}>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wide">{label}</p>
+              <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{value}</p>
+            </div>
+          ))}
         </div>
 
         {/* Portfolio List */}
@@ -116,20 +108,20 @@ const Dashboard = () => {
           <h2 id="portfolios-heading" className="sr-only">Your Portfolios</h2>
 
           {loading ? (
-            <div className="bg-white rounded-lg border border-slate-200 flex items-center justify-center py-20">
+            <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700/60 flex items-center justify-center py-20">
               <Spinner size="md" />
             </div>
           ) : error ? (
-            <div role="alert" className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+            <div role="alert" className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700/50 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg text-sm">
               {error}
             </div>
           ) : portfolios.length === 0 ? (
-            <div className="bg-white rounded-lg border border-slate-200 text-center py-16 px-4">
-              <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-3" aria-hidden="true">
-                <FiFolder className="text-slate-400" size={22} />
+            <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700/60 text-center py-16 px-4">
+              <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-3" aria-hidden="true">
+                <FiFolder className="text-slate-400 dark:text-slate-500" size={22} />
               </div>
-              <h3 className="text-base font-semibold text-slate-900 mb-1">No portfolios yet</h3>
-              <p className="text-sm text-slate-500 mb-5">Create your first portfolio to get started</p>
+              <h3 className="text-base font-semibold text-slate-900 dark:text-white mb-1">No portfolios yet</h3>
+              <p className="text-sm text-slate-500 dark:text-slate-400 mb-5">Create your first portfolio to get started</p>
               <button
                 onClick={() => navigate('/templates')}
                 className="px-4 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center gap-2"
@@ -143,25 +135,25 @@ const Dashboard = () => {
               {portfolios.map((portfolio) => (
                 <article
                   key={portfolio._id}
-                  className="bg-white rounded-lg border border-slate-200 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4"
+                  className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700/60 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4"
                 >
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-sm font-semibold text-slate-900 truncate">
+                    <h3 className="text-sm font-semibold text-slate-900 dark:text-white truncate">
                       {portfolio.templateId?.templateName || "My Portfolio"}
                     </h3>
                     <div className="flex items-center gap-3 mt-1">
                       <p className="text-xs flex items-center gap-1.5">
                         {portfolio.slug ? (
                           <>
-                            <FiCheckCircle size={11} className="text-green-600" aria-hidden="true" />
-                            <span className="text-green-600 font-medium">Published</span>
+                            <FiCheckCircle size={11} className="text-green-600 dark:text-green-400" aria-hidden="true" />
+                            <span className="text-green-600 dark:text-green-400 font-medium">Published</span>
                           </>
                         ) : (
-                          <span className="text-slate-400">Draft</span>
+                          <span className="text-slate-400 dark:text-slate-500">Draft</span>
                         )}
                       </p>
                       {portfolio.views > 0 && (
-                        <span className="text-xs text-slate-400 flex items-center gap-1">
+                        <span className="text-xs text-slate-400 dark:text-slate-500 flex items-center gap-1">
                           <FiEye size={11} aria-hidden="true" />
                           {portfolio.views} view{portfolio.views !== 1 ? 's' : ''}
                         </span>
@@ -175,7 +167,7 @@ const Dashboard = () => {
                         href={`/p/${portfolio.slug}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-3 py-1.5 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 transition-colors flex items-center gap-1"
+                        className="px-3 py-1.5 text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700/50 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors flex items-center gap-1"
                         aria-label={`View ${portfolio.name || "portfolio"} live`}
                       >
                         <FiExternalLink size={12} aria-hidden="true" />
@@ -184,7 +176,7 @@ const Dashboard = () => {
                     )}
                     <button
                       onClick={() => navigate(`/edit/${portfolio._id}`)}
-                      className="px-3 py-1.5 text-xs font-medium text-slate-700 bg-slate-50 border border-slate-200 rounded-md hover:bg-slate-100 transition-colors flex items-center gap-1"
+                      className="px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors flex items-center gap-1"
                       aria-label={`Edit ${portfolio.name || "portfolio"}`}
                     >
                       <FiEdit size={12} aria-hidden="true" />
@@ -193,7 +185,7 @@ const Dashboard = () => {
                     <button
                       onClick={() => setDeleteConfirmId(portfolio._id)}
                       disabled={deletingId === portfolio._id}
-                      className="px-3 py-1.5 text-xs font-medium text-red-600 bg-red-50 border border-red-200 rounded-md hover:bg-red-100 transition-colors flex items-center gap-1"
+                      className="px-3 py-1.5 text-xs font-medium text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700/50 rounded-md hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors flex items-center gap-1"
                       aria-label={`Delete ${portfolio.name || "portfolio"}`}
                     >
                       {deletingId === portfolio._id ? (
@@ -213,14 +205,14 @@ const Dashboard = () => {
       {/* Sign-out confirmation modal */}
       {showLogoutConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="logout-title">
-          <div className="absolute inset-0 bg-black/40" onClick={() => setShowLogoutConfirm(false)} />
-          <div className="relative bg-white rounded-xl shadow-lg border border-slate-200 p-6 w-full max-w-sm">
-            <h2 id="logout-title" className="text-lg font-bold text-slate-900 mb-2">Sign out?</h2>
-            <p className="text-sm text-slate-500 mb-6">Are you sure you want to sign out of your account?</p>
+          <div className="absolute inset-0 bg-black/40 dark:bg-black/60" onClick={() => setShowLogoutConfirm(false)} />
+          <div className="relative bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700/60 p-6 w-full max-w-sm">
+            <h2 id="logout-title" className="text-lg font-bold text-slate-900 dark:text-white mb-2">Sign out?</h2>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">Are you sure you want to sign out of your account?</p>
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setShowLogoutConfirm(false)}
-                className="flex-1 px-4 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+                className="flex-1 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
               >
                 Cancel
               </button>
@@ -238,14 +230,14 @@ const Dashboard = () => {
       {/* Delete confirmation modal */}
       {deleteConfirmId && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="delete-title">
-          <div className="absolute inset-0 bg-black/40" onClick={() => setDeleteConfirmId(null)} />
-          <div className="relative bg-white rounded-xl shadow-lg border border-slate-200 p-6 w-full max-w-sm">
-            <h2 id="delete-title" className="text-lg font-bold text-slate-900 mb-2">Delete portfolio?</h2>
-            <p className="text-sm text-slate-500 mb-6">This action cannot be undone. Your portfolio will be permanently removed.</p>
+          <div className="absolute inset-0 bg-black/40 dark:bg-black/60" onClick={() => setDeleteConfirmId(null)} />
+          <div className="relative bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700/60 p-6 w-full max-w-sm">
+            <h2 id="delete-title" className="text-lg font-bold text-slate-900 dark:text-white mb-2">Delete portfolio?</h2>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">This action cannot be undone. Your portfolio will be permanently removed.</p>
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setDeleteConfirmId(null)}
-                className="flex-1 px-4 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+                className="flex-1 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
               >
                 Cancel
               </button>

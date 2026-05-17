@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 import logo from "../../assets/logo.png";
+import ThemeToggle from "./ThemeToggle";
 
 const AppNavbar = ({ backTo, backLabel }) => {
   const navigate = useNavigate();
@@ -16,14 +17,14 @@ const AppNavbar = ({ backTo, backLabel }) => {
   );
 
   return (
-    <header className="bg-white border-b border-slate-200 sticky top-0 z-40">
+    <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700/60 sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           {backTo ? (
             <>
               <button
                 onClick={() => navigate(backTo)}
-                className="flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+                className="flex items-center gap-1.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
                 aria-label={backLabel || "Go back"}
               >
                 <FiArrowLeft size={16} aria-hidden="true" />
@@ -34,9 +35,9 @@ const AppNavbar = ({ backTo, backLabel }) => {
           ) : (
             <>
               {logoEl}
-              <div />
             </>
           )}
+          <ThemeToggle />
         </div>
       </div>
     </header>

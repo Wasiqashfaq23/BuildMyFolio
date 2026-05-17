@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "./Context/AuthContext";
 import Spinner from "../components/common/Spinner";
 import GoogleButton from "../components/common/GoogleButton";
+import ThemeToggle from "../components/common/ThemeToggle";
 import logo from "../assets/logo.png";
 
 function Login() {
@@ -21,7 +22,6 @@ function Login() {
     e.preventDefault();
     setError("");
     setLoading(true);
-
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
         method: "POST",
@@ -41,13 +41,14 @@ function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-40">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col">
+      <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700/60 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-start h-14">
+          <div className="flex items-center justify-between h-14">
             <button onClick={() => navigate("/")} className="flex items-center" aria-label="Go to home page">
               <img src={logo} alt="BuildMyFolio" className="h-10" />
             </button>
+            <ThemeToggle />
           </div>
         </div>
       </header>
@@ -55,25 +56,25 @@ function Login() {
       <div className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-sm">
           <div className="text-center mb-8">
-            <h1 className="text-xl font-bold text-slate-900">Sign in to BuildMyFolio</h1>
-            <p className="text-sm text-slate-500 mt-1">Enter your credentials to continue</p>
+            <h1 className="text-xl font-bold text-slate-900 dark:text-white">Sign in to BuildMyFolio</h1>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Enter your credentials to continue</p>
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-6 sm:p-8">
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700/60 p-6 sm:p-8">
             <GoogleButton onError={(msg) => setError(msg)} />
 
             <div className="relative my-5">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-slate-200" />
+                <div className="w-full border-t border-slate-200 dark:border-slate-700" />
               </div>
               <div className="relative flex justify-center text-xs">
-                <span className="bg-white px-3 text-slate-400">or continue with email</span>
+                <span className="bg-white dark:bg-slate-900 px-3 text-slate-400 dark:text-slate-500">or continue with email</span>
               </div>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4" noValidate>
               <div>
-                <label htmlFor="login-email" className="block text-sm font-medium text-slate-700 mb-1.5">
+                <label htmlFor="login-email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
                   Email address
                 </label>
                 <input
@@ -85,12 +86,12 @@ function Login() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   aria-describedby={error ? "login-error" : undefined}
-                  className="w-full px-3 py-2.5 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow"
+                  className="w-full px-3 py-2.5 text-sm bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow"
                 />
               </div>
 
               <div>
-                <label htmlFor="login-password" className="block text-sm font-medium text-slate-700 mb-1.5">
+                <label htmlFor="login-password" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
                   Password
                 </label>
                 <input
@@ -102,12 +103,12 @@ function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   minLength={6}
-                  className="w-full px-3 py-2.5 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow"
+                  className="w-full px-3 py-2.5 text-sm bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow"
                 />
               </div>
 
               {error && (
-                <div id="login-error" role="alert" className="bg-red-50 border border-red-200 text-red-700 px-3 py-2.5 rounded-lg text-sm">
+                <div id="login-error" role="alert" className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700/50 text-red-700 dark:text-red-400 px-3 py-2.5 rounded-lg text-sm">
                   {error}
                 </div>
               )}
@@ -122,10 +123,10 @@ function Login() {
               </button>
             </form>
 
-            <div className="mt-5 pt-5 border-t border-slate-100 text-center">
-              <p className="text-sm text-slate-500">
+            <div className="mt-5 pt-5 border-t border-slate-100 dark:border-slate-700/60 text-center">
+              <p className="text-sm text-slate-500 dark:text-slate-400">
                 Don't have an account?{" "}
-                <Link to="/signup" className="text-blue-600 font-medium hover:text-blue-700 transition-colors">
+                <Link to="/signup" className="text-blue-600 dark:text-blue-400 font-medium hover:text-blue-700 dark:hover:text-blue-300 transition-colors">
                   Create one
                 </Link>
               </p>

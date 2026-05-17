@@ -153,14 +153,14 @@ function EditPortfolio() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col">
       <AppNavbar backTo="/dashboard" backLabel="Dashboard" />
 
       <div className="flex-1 flex">
-        {/* Sidebar - section tracker */}
-        <aside className={`${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 fixed lg:static inset-y-0 left-0 top-14 z-30 w-64 bg-white border-r border-slate-200 overflow-y-auto transition-transform lg:transition-none`}>
+        {/* Sidebar */}
+        <aside className={`${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 fixed lg:static inset-y-0 left-0 top-14 z-30 w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700/60 overflow-y-auto transition-transform lg:transition-none`}>
           <nav className="p-4" aria-label="Form sections">
-            <p className="text-xs font-medium text-slate-400 uppercase tracking-wide mb-3 px-2">Sections</p>
+            <p className="text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wide mb-3 px-2">Sections</p>
             <ul className="space-y-1">
               {sections.map((sec, i) => {
                 const filled = isSectionFilled(i);
@@ -171,13 +171,13 @@ function EditPortfolio() {
                       onClick={() => { setCurrentIndex(i); setSidebarOpen(false); }}
                       className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors text-left ${
                         active
-                          ? "bg-blue-50 text-blue-700 font-medium"
-                          : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                          ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 font-medium"
+                          : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
                       }`}
                       aria-current={active ? "step" : undefined}
                     >
                       <span className={`w-5 h-5 flex items-center justify-center rounded-full shrink-0 ${
-                        active ? "bg-blue-600 text-white" : filled ? "bg-green-100 text-green-600" : "bg-slate-100 text-slate-400"
+                        active ? "bg-blue-600 text-white" : filled ? "bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400" : "bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500"
                       }`}>
                         {filled && !active ? <FiCheck size={11} /> : <span className="text-[10px] font-bold">{i + 1}</span>}
                       </span>
@@ -190,54 +190,46 @@ function EditPortfolio() {
           </nav>
         </aside>
 
-        {/* Mobile sidebar overlay */}
         {sidebarOpen && (
           <div className="fixed inset-0 top-14 z-20 bg-black/30 lg:hidden" onClick={() => setSidebarOpen(false)} />
         )}
 
-        {/* Main content */}
         <main className="flex-1 min-w-0">
           {/* Mobile section indicator */}
-          <div className="lg:hidden bg-white border-b border-slate-200 px-4 py-3 flex items-center gap-3">
+          <div className="lg:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700/60 px-4 py-3 flex items-center gap-3">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="text-sm font-medium text-blue-600 hover:text-blue-700"
+              className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
               aria-label="Open section list"
             >
               {currentIndex + 1}/{sections.length}
             </button>
-            <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+            <div className="flex-1 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
               <div className="h-full bg-blue-600 rounded-full transition-all duration-300" style={{ width: `${Math.round(((currentIndex + 1) / sections.length) * 100)}%` }} />
             </div>
           </div>
 
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-            {/* Section header */}
             <div className="mb-6">
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900">{currentSection.label}</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">{currentSection.label}</h2>
               {currentSection.instruction && (
-                <p className="text-sm text-slate-500 mt-1">{currentSection.instruction}</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">{currentSection.instruction}</p>
               )}
             </div>
 
-            {/* Form content */}
-            <div className="bg-white rounded-lg border border-slate-200 p-5 sm:p-6 mb-6">
+            <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700/60 p-5 sm:p-6 mb-6">
               <div className="space-y-5">
                 {currentSection.type === "array" || currentSection.type === "tags" ? (
-                  <FieldRenderer
-                    field={currentSection}
-                    value={sectionData}
-                    onChange={handleSectionChange}
-                  />
+                  <FieldRenderer field={currentSection} value={sectionData} onChange={handleSectionChange} />
                 ) : (
                   currentSection.fields?.map((field) => (
                     <div key={field.name}>
-                      <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
                         {field.label || field.name}
                         {field.required && <span className="text-red-500 ml-0.5" aria-label="required">*</span>}
                       </label>
                       {field.instruction && (
-                        <p className="text-xs text-slate-400 mb-2">{field.instruction}</p>
+                        <p className="text-xs text-slate-400 dark:text-slate-500 mb-2">{field.instruction}</p>
                       )}
                       <FieldRenderer
                         field={field}
@@ -250,20 +242,18 @@ function EditPortfolio() {
               </div>
             </div>
 
-            {/* Error feedback */}
             {saveError && (
-              <div role="alert" className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm mb-6">
+              <div role="alert" className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700/50 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg text-sm mb-6">
                 {saveError}
               </div>
             )}
 
-            {/* Navigation */}
-            <div className="flex items-center justify-between pt-4 border-t border-slate-200">
+            <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-700/60">
               <button
                 type="button"
                 onClick={() => setCurrentIndex((i) => i - 1)}
                 disabled={isFirst}
-                className="flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors disabled:opacity-40 disabled:hover:bg-white"
+                className="flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors disabled:opacity-40"
               >
                 <FiChevronLeft size={14} aria-hidden="true" />
                 Back
@@ -298,20 +288,19 @@ function EditPortfolio() {
               )}
             </div>
 
-            {/* Validation errors */}
             {validationErrors.length > 0 && (
-              <div className="mt-4 bg-red-50 border border-red-200 rounded-lg p-4">
+              <div className="mt-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700/50 rounded-lg p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <FiAlertCircle className="text-red-600" size={16} />
-                  <p className="text-sm font-medium text-red-700">Please fill in all required fields</p>
+                  <FiAlertCircle className="text-red-600 dark:text-red-400" size={16} />
+                  <p className="text-sm font-medium text-red-700 dark:text-red-400">Please fill in all required fields</p>
                 </div>
                 <ul className="space-y-1">
                   {validationErrors.map((err, i) => (
-                    <li key={i} className="text-xs text-red-600 flex items-center gap-2">
+                    <li key={i} className="text-xs text-red-600 dark:text-red-400 flex items-center gap-2">
                       <button
                         type="button"
                         onClick={() => { setCurrentIndex(err.sectionIndex); setValidationErrors([]); }}
-                        className="underline hover:text-red-800"
+                        className="underline hover:text-red-800 dark:hover:text-red-300"
                       >
                         {err.sectionLabel}
                       </button>
@@ -328,12 +317,12 @@ function EditPortfolio() {
 
       {/* Preview / Review step */}
       {showPreview && (
-        <div className="fixed inset-0 z-50 bg-slate-50 overflow-y-auto">
-          <div className="sticky top-0 z-10 bg-white border-b border-slate-200 px-4 sm:px-6 py-4 flex items-center justify-between">
-            <h2 className="text-lg font-bold text-slate-900">Review Your Changes</h2>
+        <div className="fixed inset-0 z-50 bg-slate-50 dark:bg-slate-950 overflow-y-auto">
+          <div className="sticky top-0 z-10 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700/60 px-4 sm:px-6 py-4 flex items-center justify-between">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white">Review Your Changes</h2>
             <button
               onClick={() => setShowPreview(false)}
-              className="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+              className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
             >
               Back to Editing
             </button>
@@ -341,12 +330,12 @@ function EditPortfolio() {
 
           <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 space-y-6">
             {sections.map((sec, secIndex) => (
-              <div key={sec.sectionId} className="bg-white rounded-lg border border-slate-200 overflow-hidden">
-                <div className="flex items-center justify-between px-5 py-3 bg-slate-50 border-b border-slate-200">
-                  <h3 className="text-sm font-semibold text-slate-800">{sec.label}</h3>
+              <div key={sec.sectionId} className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700/60 overflow-hidden">
+                <div className="flex items-center justify-between px-5 py-3 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700/60">
+                  <h3 className="text-sm font-semibold text-slate-800 dark:text-white">{sec.label}</h3>
                   <button
                     onClick={() => { setCurrentIndex(secIndex); setShowPreview(false); }}
-                    className="flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700 transition-colors"
+                    className="flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
                   >
                     <FiEdit2 size={12} />
                     Edit
@@ -356,19 +345,19 @@ function EditPortfolio() {
                   {sec.type === "array" ? (
                     <div className="space-y-3">
                       {(formData[sec.sectionId] || []).length === 0 ? (
-                        <p className="text-sm text-slate-400 italic">No items added</p>
+                        <p className="text-sm text-slate-400 dark:text-slate-500 italic">No items added</p>
                       ) : (
                         (formData[sec.sectionId] || []).map((item, itemIdx) => (
-                          <div key={itemIdx} className="bg-slate-50 rounded-lg p-3 border border-slate-100">
-                            <p className="text-xs font-medium text-slate-400 mb-2">#{itemIdx + 1}</p>
+                          <div key={itemIdx} className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 border border-slate-100 dark:border-slate-700/50">
+                            <p className="text-xs font-medium text-slate-400 dark:text-slate-500 mb-2">#{itemIdx + 1}</p>
                             <dl className="grid gap-1.5">
                               {sec.item.fields.map((f) => {
                                 const display = getDisplayValue(item[f.name], f);
                                 if (!display) return null;
                                 return (
                                   <div key={f.name} className="flex gap-2">
-                                    <dt className="text-xs font-medium text-slate-500 min-w-25">{f.label || f.name}:</dt>
-                                    <dd className="text-xs text-slate-700">{display}</dd>
+                                    <dt className="text-xs font-medium text-slate-500 dark:text-slate-400 min-w-25">{f.label || f.name}:</dt>
+                                    <dd className="text-xs text-slate-700 dark:text-slate-300">{display}</dd>
                                   </div>
                                 );
                               })}
@@ -380,10 +369,10 @@ function EditPortfolio() {
                   ) : sec.type === "tags" ? (
                     <div className="flex flex-wrap gap-1.5">
                       {(formData[sec.sectionId] || []).length === 0 ? (
-                        <p className="text-sm text-slate-400 italic">No items added</p>
+                        <p className="text-sm text-slate-400 dark:text-slate-500 italic">No items added</p>
                       ) : (
                         (formData[sec.sectionId] || []).map((tag, i) => (
-                          <span key={i} className="bg-blue-50 border border-blue-200 text-blue-700 text-xs px-2.5 py-1 rounded-md">{tag}</span>
+                          <span key={i} className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700/50 text-blue-700 dark:text-blue-400 text-xs px-2.5 py-1 rounded-md">{tag}</span>
                         ))
                       )}
                     </div>
@@ -394,12 +383,12 @@ function EditPortfolio() {
                         const display = getDisplayValue(val, f);
                         return (
                           <div key={f.name} className="flex flex-col sm:flex-row sm:gap-3">
-                            <dt className="text-xs font-medium text-slate-500 sm:min-w-35">
+                            <dt className="text-xs font-medium text-slate-500 dark:text-slate-400 sm:min-w-35">
                               {f.label || f.name}
                               {f.required && <span className="text-red-500 ml-0.5">*</span>}
                             </dt>
-                            <dd className="text-sm text-slate-800">
-                              {display || <span className="text-slate-300 italic">Not provided</span>}
+                            <dd className="text-sm text-slate-800 dark:text-slate-200">
+                              {display || <span className="text-slate-300 dark:text-slate-600 italic">Not provided</span>}
                             </dd>
                           </div>
                         );
@@ -410,18 +399,16 @@ function EditPortfolio() {
               </div>
             ))}
 
-            {/* Error feedback */}
             {saveError && (
-              <div role="alert" className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+              <div role="alert" className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700/50 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg text-sm">
                 {saveError}
               </div>
             )}
 
-            {/* Save actions */}
-            <div className="flex items-center justify-between pt-4 border-t border-slate-200">
+            <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-700/60">
               <button
                 onClick={() => setShowPreview(false)}
-                className="px-4 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+                className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
               >
                 Back to Editing
               </button>

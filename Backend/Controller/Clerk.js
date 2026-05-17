@@ -22,7 +22,7 @@ const syncClerkUser = async (req, res) => {
 const token = generateToken(user)
 res.cookie('token', token, {
   httpOnly: true,
-  secure: process.env.NODE_ENV === 'production' || false,
+  secure: process.env.NODE_ENV === 'production' || 'DEPLOYMENT'  || false,
   sameSite: 'lax',
   maxAge: 24 * 60 * 60 * 1000
 })

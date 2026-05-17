@@ -19,7 +19,7 @@ async function handleSignup(req, res) {
     const token = generateToken(newUser);
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production" || false,
+      secure: process.env.NODE_ENV === "production" || 'DEPLOYMENT' || false,
       sameSite: "lax",
       maxAge: 24 * 60 * 60 * 1000,
     });
@@ -50,7 +50,7 @@ async function handleLogin(req, res) {
     const token = generateToken(user);
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production" || false,
+      secure: process.env.NODE_ENV === "production" || 'DEPLOYMENT' || false,
       sameSite: "lax",
       maxAge: 24 * 60 * 60 * 1000,
     });
@@ -69,7 +69,7 @@ async function handleLogout(req, res) {
     
     res.clearCookie("token", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === "production" || 'DEPLOYMENT' || false,
       sameSite: "strict",
     });
     return res.status(200).json({ message: "Logged out successfully" });

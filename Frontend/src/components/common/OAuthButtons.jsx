@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSignIn } from "@clerk/clerk-react";
 
-function OAuthButtons({ onError, mode = "signin" }) {
+function OAuthButtons({ onError = "signin" }) {
   const { signIn, isLoaded } = useSignIn();
   const [loadingProvider, setLoadingProvider] = useState(null);
 
